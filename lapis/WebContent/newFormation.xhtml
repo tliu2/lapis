@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head><title>Nouvelle Promotion</title>
+</h:head>
+<h:body>
+
+<div align="center">
+<h1 class="ui-widget-header ui-corner-all">Ajouter une promotion</h1>
+<br/>
+<h:form>
+	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+		<p:outputLabel for="year" value="Année universitaire" />
+        <p:selectOneMenu id="year" style="width:125px">
+            <f:selectItem itemLabel="2018-2019" itemValue="2018" />
+            <f:selectItem itemLabel="2017-2018" itemValue="2017" />
+            <f:selectItem itemLabel="2016-2017" itemValue="2016" />
+            <f:selectItem itemLabel="2015-2016" itemValue="2015" />
+        </p:selectOneMenu>
+        
+        <p:outputLabel for="formation" value="Formation" />
+        <p:inputText id="formation" />
+        
+        <p:outputLabel for="level" value="Niveau" />
+        <p:selectOneMenu id="level" style="width:125px">
+            <f:selectItem itemLabel="1" itemValue="1" />
+            <f:selectItem itemLabel="2" itemValue="2" />
+            <f:selectItem itemLabel="3" itemValue="3" />
+            <f:selectItem itemLabel="4" itemValue="4" />
+            <f:selectItem itemLabel="5" itemValue="5" />
+        </p:selectOneMenu>
+        
+        <p:button value="Créer" icon="pi pi-user-plus" style="margin-right:20px;"/>
+	</h:panelGrid>
+		
+</h:form>
+     
+</div>
+<br/><br/>
+
+
+
+<ui:include src="/WEB-INF/snippets/training-course-ad.xhtml"/>
+</h:body></html>
