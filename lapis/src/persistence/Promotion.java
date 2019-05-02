@@ -60,5 +60,7 @@ public class Promotion {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	
+	
 
 }

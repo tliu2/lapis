@@ -45,5 +45,8 @@ public class UniversityYear {
 	public void setLast(int last) {
 		this.last = last;
 	}
+	public String toString() {
+		return first+"-"+last;	
+	}
 
 }
