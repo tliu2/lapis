@@ -1,4 +1,4 @@
-package coreservlets;
+package beans;
 
 import java.util.Date;
 import javax.faces.bean.*;
