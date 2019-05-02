@@ -27,13 +27,8 @@ public class TestPersist {
 		session.persist(criterion);
 		
 		Evaluation evaluation = new Evaluation(criterion,40);
-		session.persist(evaluation);
 		List<Evaluation> evaluationList = new ArrayList<Evaluation>();
 		evaluationList.add(evaluation);
-		
-		EvaluationScore evaluationScore = new EvaluationScore(evaluation, 12);
-		session.persist(evaluationScore);
-		List<EvaluationScore> evaluationScoreList = new ArrayList<EvaluationScore>();
 		
 		Project project = new Project("Jeu de Go", "Description rapide", course, evaluationList, 2, 3, 15);
 		session.persist(project);
@@ -66,6 +61,9 @@ public class TestPersist {
 		StudentScore studentScore = new StudentScore(student, 17);
 		session.persist(studentScore);
 		List<StudentScore> studentScoreList = new ArrayList<StudentScore>();
+		
+		EvaluationScore evaluationScore = new EvaluationScore(evaluation, 12);
+		List<EvaluationScore> evaluationScoreList = new ArrayList<EvaluationScore>();
 		
 		Team team = new Team(project, studentList, evaluationScoreList, 17, studentScoreList);
 		session.persist(team);

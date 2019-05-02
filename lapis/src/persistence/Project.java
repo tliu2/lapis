@@ -25,7 +25,7 @@ public class Project {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Course.class)
 	private Course course;
 	
-	@ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Evaluation.class)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Evaluation.class)
 	private List<Evaluation> evaluation = new ArrayList<Evaluation>();
 	
 	private int minStudentCount;

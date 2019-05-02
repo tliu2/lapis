@@ -3,17 +3,24 @@ package persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+@Entity
 public class ProjectInfo {
 	
 	@Id
 	@GeneratedValue
 	private int id;
+	
+	@OneToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Project.class)
 	private Project project;
 	private String supervisorName;
 	private boolean isHof;
