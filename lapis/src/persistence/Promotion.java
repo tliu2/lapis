@@ -16,16 +16,16 @@ public class Promotion {
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = UniversityYear.class)
 	private UniversityYear year;
-	private String diplomName;
+	private String diplomaName;
 	private int level;
 	
 	public Promotion() {
 
 	}
 
-	public Promotion(UniversityYear year, String diplomName, int level) {
+	public Promotion(UniversityYear year, String diplomaName, int level) {
 		this.year = year;
-		this.diplomName = diplomName;
+		this.diplomaName = diplomaName;
 		this.level = level;
 	}
 
@@ -45,12 +45,12 @@ public class Promotion {
 		this.year = year;
 	}
 
-	public String getDiplomName() {
-		return diplomName;
+	public String getDiplomaName() {
+		return diplomaName;
 	}
 
-	public void setDiplomName(String diplomName) {
-		this.diplomName = diplomName;
+	public void setDiplomaName(String diplomaName) {
+		this.diplomaName = diplomaName;
 	}
 
 	public int getLevel() {

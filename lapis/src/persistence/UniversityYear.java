@@ -45,8 +45,10 @@ public class UniversityYear {
 	public void setLast(int last) {
 		this.last = last;
 	}
-	public String toString() {
-		return first+"-"+last;	
-	}
 
+	@Override
+	public String toString() {
+		return "UniversityYear [id=" + id + ", first=" + first + ", last=" + last + "]";
+	}
+	
 }

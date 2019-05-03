@@ -3,7 +3,6 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 
@@ -13,19 +12,20 @@ import persistence.UniversityYear;
 @ManagedBean
 public class PromotionBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
-	private List<UniversityYear> universityYears = getUniversityYear();
+	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
+
 	private UniversityYear year;
-	private String diplomName;
+	private String diplomaName;
 	private int level;
 
-	public PromotionBean() {
-	}
+	private PromotionCreation promotionCreation = new PromotionCreation();
 
-	@PostConstruct
-	public void init() {
+	public PromotionBean() {
+		universityYears = promotionCreation.readUniversityYears();
+
 		items = new ArrayList<SelectItem>();
 		for (UniversityYear universityYear : universityYears) {
-			SelectItem menuChoice = new SelectItem(universityYear.toString());
+			SelectItem menuChoice = new SelectItem(universityYear.getFirst() + "-" + universityYear.getLast());
 			items.add(menuChoice);
 		}
 	}
@@ -38,12 +38,12 @@ public class PromotionBean {
 		this.year = year;
 	}
 
-	public String getDiplomName() {
-		return diplomName;
+	public String getDiplomaName() {
+		return diplomaName;
 	}
 
-	public void setDiplomName(String diplomName) {
-		this.diplomName = diplomName;
+	public void setDiplomaName(String diplomName) {
+		this.diplomaName = diplomName;
 	}
 
 	public int getLevel() {
@@ -52,10 +52,6 @@ public class PromotionBean {
 
 	public void setLevel(int level) {
 		this.level = level;
-	}
-
-	public String doAction() {
-		return ("show-test-data");
 	}
 
 	public List<SelectItem> getItems() {
@@ -74,8 +70,9 @@ public class PromotionBean {
 		this.universityYears = universityYears;
 	}
 
-	public List<UniversityYear> getUniversityYear() {
-		return PromotionCreation.testWhereClause();
+	public void createPromotion() {
+		System.out.println(year.toString());
+		System.out.println("created");
+		promotionCreation.createPromotion(year, diplomaName, level);
 	}
-
 }
