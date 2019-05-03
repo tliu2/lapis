@@ -36,21 +36,19 @@ public class PromotionService {
 			items.add(menuChoice);
 		}
 	}
-	
+
 	public String fromUniversityListToPromotion() {
 		String result = "createCourse";
 		System.out.println(year);
-		 if(year !=null && !year.toString().equals("")) {
-	        	
-	        	int id = promotionManager.getIdFromUniversityYearString(year);
-	        	System.out.println(id);
-	        	
-	        	promotions = promotionManager.readPromotionFromUniversityYear(id);
-	        }
-		 return result;
+		if (year != null && !year.toString().equals("")) {
+
+			int id = promotionManager.getIdFromUniversityYearString(year);
+			System.out.println(id);
+
+			promotions = promotionManager.readPromotionFromUniversityYear(id);
+		}
+		return result;
 	}
-
-
 
 	public List<SelectItem> getItems() {
 		return items;
@@ -108,9 +106,9 @@ public class PromotionService {
 			}
 		}
 		promotionCreation.createPromotion(yearObject, diplomaName, level);
-		
+
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public List<Promotion> getPromotions() {
@@ -128,8 +126,5 @@ public class PromotionService {
 	public void setPromotion(String promotion) {
 		this.promotion = promotion;
 	}
-	
-	
-	
-	
+
 }
