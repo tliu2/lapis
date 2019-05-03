@@ -12,8 +12,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import business.AddStudent;
-import business.PromotionCreation;
+import business.StudentDAO;
+import business.UniversityYearDAO;
+import business.PromotionDAO;
 import persistence.Promotion;
 import persistence.UniversityYear;
 
@@ -26,9 +27,9 @@ public class AddStudentBean implements Serializable {
     private String promo;
     private List<String> universityYears;
     private Map<String,String> promotions;
-    private AddStudent addStudent = new AddStudent();
-    private PromotionCreation promoCreate = new PromotionCreation();
-    
+    private StudentDAO addStudent = new StudentDAO();
+    private PromotionDAO promoDAO = new PromotionDAO();
+    private UniversityYearDAO yearDAO = new UniversityYearDAO();
     
     public AddStudentBean() {
     	
@@ -37,7 +38,7 @@ public class AddStudentBean implements Serializable {
     @PostConstruct
     public void init() {
     	
-    	List<UniversityYear> years = promoCreate.readUniversityYears();
+    	List<UniversityYear> years = yearDAO.readAllUniversityYears();
     	universityYears  = new ArrayList<String>();
     	for (UniversityYear universityYear : years) {
     		universityYears.add(universityYear.toString());
@@ -46,15 +47,16 @@ public class AddStudentBean implements Serializable {
     	List<Promotion> promotions = new ArrayList<Promotion>();
     	Map<String,String> map = new HashMap<String, String>();
     	
-    	/*for(UniversityYear universityYears: years) {
-    		promotions = addStudent.readPromotion(universityYears);
+    	for(UniversityYear y: years) {
+    		promotions = addStudent.readPromotion(y);
     		System.out.println(promotions.get(0).toString());
     		for(Promotion promos: promotions) {
     			map = new HashMap<String, String>();
                 map.put(promos.toString(), promos.toString());
     		}
-            data.put(universityYears.toString(), map);
-    	}*/
+            data.put(y.toString(), map);
+    	}
+    	
     	map = new HashMap<String, String>();
         map.put("L1-2001-2002", "L1-2001-2002");
         map.put("L2-2001-2002", "L2-2001-2002");
@@ -101,20 +103,20 @@ public class AddStudentBean implements Serializable {
 		this.promotions = promotions;
 	}
 
-	public AddStudent getAddStudent() {
+	public StudentDAO getAddStudent() {
 		return addStudent;
 	}
 
-	public void setAddStudent(AddStudent addStudent) {
+	public void setAddStudent(StudentDAO addStudent) {
 		this.addStudent = addStudent;
 	}
 
-	public PromotionCreation getPromoCreate() {
-		return promoCreate;
+	public PromotionDAO getPromoCreate() {
+		return promoDAO;
 	}
 
-	public void setPromoCreate(PromotionCreation promoCreate) {
-		this.promoCreate = promoCreate;
+	public void setPromoCreate(PromotionDAO promoCreate) {
+		this.promoDAO = promoCreate;
 	}
 
 	public void onChange() {

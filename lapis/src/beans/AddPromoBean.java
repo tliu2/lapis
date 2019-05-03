@@ -8,49 +8,30 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import com.sun.org.glassfish.gmbal.ManagedAttribute;
-
-import business.PromotionCreation;
-import business.PromotionManager;
-import persistence.Promotion;
+import business.PromotionDAO;
+import business.UniversityYearDAO;
 import persistence.UniversityYear;
 
-@ManagedBean(name = "promotionService")
-public class PromotionService {
+@ManagedBean
+public class AddPromoBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
 	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
 
-	private List<Promotion> promotions = new ArrayList<Promotion>();
-
 	private String year;
-	private String promotion;
 	private String diplomaName;
 	private int level;
 
-	private PromotionCreation promotionCreation = new PromotionCreation();
-	private PromotionManager promotionManager = new PromotionManager();
+	private PromotionDAO promotionCreation = new PromotionDAO();
+	private UniversityYearDAO yearDao = new UniversityYearDAO();
 
-	public PromotionService() {
-		universityYears = promotionCreation.readUniversityYears();
+	public AddPromoBean() {
+		universityYears = yearDao.readAllUniversityYears();
 
 		items = new ArrayList<SelectItem>();
 		for (UniversityYear universityYear : universityYears) {
 			SelectItem menuChoice = new SelectItem(universityYear.getFirst() + "-" + universityYear.getLast());
 			items.add(menuChoice);
 		}
-	}
-
-	public String fromUniversityListToPromotion() {
-		String result = "createCourse";
-		System.out.println(year);
-		if (year != null && !year.toString().equals("")) {
-
-			int id = promotionManager.getIdFromUniversityYearString(year);
-			System.out.println(id);
-
-			promotions = promotionManager.readPromotionFromUniversityYear(id);
-		}
-		return result;
 	}
 
 	public List<SelectItem> getItems() {
@@ -93,11 +74,11 @@ public class PromotionService {
 		this.level = level;
 	}
 
-	public PromotionCreation getPromotionCreation() {
+	public PromotionDAO getPromotionCreation() {
 		return promotionCreation;
 	}
 
-	public void setPromotionCreation(PromotionCreation promotionCreation) {
+	public void setPromotionCreation(PromotionDAO promotionCreation) {
 		this.promotionCreation = promotionCreation;
 	}
 
@@ -112,22 +93,6 @@ public class PromotionService {
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public List<Promotion> getPromotions() {
-		return promotions;
-	}
-
-	public void setPromotions(List<Promotion> promotions) {
-		this.promotions = promotions;
-	}
-
-	public String getPromotion() {
-		return promotion;
-	}
-
-	public void setPromotion(String promotion) {
-		this.promotion = promotion;
 	}
 
 }

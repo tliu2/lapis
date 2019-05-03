@@ -21,17 +21,17 @@
 
 				<p:outputLabel for="year" value="University Year" />
 				<p:selectOneMenu id="year" style="width:150px"
-					value="#{promotionBean.year}">
+					value="#{promotionCreationBean.year}">
 					<f:selectItem itemLabel="University Year" itemValue="" />
-					<f:selectItems value="#{promotionBean.items}" />
+					<f:selectItems value="#{promotionCreationBean.items}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="Diploma" value="Diploma" />
-				<p:inputText id="Diploma" value="#{promotionBean.diplomaName}" />
+				<p:inputText id="Diploma" value="#{promotionCreationBean.diplomaName}" />
 
 				<p:outputLabel for="level" value="Level" />
 				<p:selectOneMenu id="level" style="width:125px"
-					value="#{promotionBean.level}">
+					value="#{promotionCreationBean.level}">
 					<f:selectItem itemLabel="1" itemValue="1" />
 					<f:selectItem itemLabel="2" itemValue="2" />
 					<f:selectItem itemLabel="3" itemValue="3" />
@@ -39,7 +39,7 @@
 					<f:selectItem itemLabel="5" itemValue="5" />
 				</p:selectOneMenu>
 				<p:commandButton value="Create promotion" update="growl"
-					action="#{promotionBean.createPromotion}" />
+					action="#{promotionCreationBean.createPromotion}" />
 			</h:panelGrid>
 
 		</h:form>

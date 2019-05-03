@@ -8,10 +8,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import business.CourseCreation;
+import business.CourseDAO;
 import persistence.Promotion;
 
-public class CourseBean {
+public class AddCourseBean {
 
 	private int id;
 	private Promotion promotion; // need to change to type String and search in database with string instead
@@ -20,15 +20,15 @@ public class CourseBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
 
 	@ManagedProperty(value = "#{promotionService}")
-	private PromotionService promotionService;
+	private SelectPromoBean promotionService;
 	private List<Promotion> promotions = promotionService.getPromotions();
 
 //	@ManagedProperty(value ="#{promotionService.promotions}")
 //	private List<Promotion> promotions;
 
-	private CourseCreation courseCreation = new CourseCreation();
+	private CourseDAO courseCreation = new CourseDAO();
 
-	public CourseBean() {
+	public AddCourseBean() {
 		System.out.println(promotions.size());
 		items = new ArrayList<SelectItem>();
 		for (Promotion promotion : promotions) {
@@ -84,19 +84,19 @@ public class CourseBean {
 		this.promotions = promotions;
 	}
 
-	public CourseCreation getCourseCreation() {
+	public CourseDAO getCourseCreation() {
 		return courseCreation;
 	}
 
-	public void setCourseCreation(CourseCreation courseCreation) {
+	public void setCourseCreation(CourseDAO courseCreation) {
 		this.courseCreation = courseCreation;
 	}
 
-	public PromotionService getPromotionService() {
+	public SelectPromoBean getPromotionService() {
 		return promotionService;
 	}
 
-	public void setPromotionService(PromotionService promotionService) {
+	public void setPromotionService(SelectPromoBean promotionService) {
 		this.promotionService = promotionService;
 	}
 

@@ -6,28 +6,33 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import persistence.DBConnection;
-import persistence.Promotion;
 import persistence.UniversityYear;
 
-public class PromotionCreation {
+public class UniversityYearDAO {
 
-	public List<UniversityYear> readUniversityYears() {
+	public List<UniversityYear> readAllUniversityYears() {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
+
 		Query readQuery = session.createQuery("from UniversityYear");
 		List result = readQuery.list();
 		readTransaction.commit();
-		
+
 		return result;
 	}
 
-	
-	public void createPromotion(UniversityYear universityYear, String diplomaName, int level) {
+	public int getIdFromUniversityYearString(String year) {
+		int result = 0;
 		Session session = DBConnection.getSession();
+		String[] split = year.split("-");
+
 		Transaction readTransaction = session.beginTransaction();
-		Promotion promotion = new Promotion(universityYear, diplomaName, level);
-		session.persist(promotion);
+		Query readQuery = session.createQuery("from UniversityYear y where y.first = :first and y.last = :last");
+		readQuery.setString("first", split[0]);
+		readQuery.setString("last", split[1]);
+		List resultQuery = readQuery.list();
+		result = ((UniversityYear) resultQuery.get(0)).getId();
 		readTransaction.commit();
+		return result;
 	}
 }

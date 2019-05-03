@@ -1,8 +1,24 @@
-package persistence;
+package business;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+
+import persistence.Course;
+import persistence.Criterion;
+import persistence.Domain;
+import persistence.Evaluation;
+import persistence.EvaluationScore;
+import persistence.Language;
+import persistence.Project;
+import persistence.ProjectInfo;
+import persistence.Promotion;
+import persistence.Student;
+import persistence.StudentScore;
+import persistence.Team;
+import persistence.Tool;
+import persistence.ToolContent;
+import persistence.UniversityYear;
 
 public class DBConnection {
 	private static SessionFactory sessionFactory;

@@ -4,11 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import persistence.Course;
-import persistence.DBConnection;
 import persistence.Promotion;
 import persistence.UniversityYear;
 
-public class CourseCreation {
+public class CourseDAO {
 	public void createCourse(Promotion promotion, String name) {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();

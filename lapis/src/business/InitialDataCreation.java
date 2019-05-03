@@ -1,17 +1,39 @@
-package persistence;
+package business;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
-import business.Initiation;
+import persistence.Course;
+import persistence.Criterion;
+import persistence.Domain;
+import persistence.Evaluation;
+import persistence.EvaluationScore;
+import persistence.Language;
+import persistence.Project;
+import persistence.ProjectInfo;
+import persistence.Promotion;
+import persistence.Student;
+import persistence.StudentScore;
+import persistence.Team;
+import persistence.Tool;
+import persistence.ToolContent;
+import persistence.UniversityYear;
 
-public class TestPersist {
+public class InitialDataCreation {
+	
+	public static void createTables() {
+		AnnotationConfiguration config = DBConnection.getConfig();
+		SchemaExport schemaExport = new SchemaExport(config);
+		schemaExport.create(true, true);
+	}
 
 	public static void main(String[] args) {
-		DataInit.createTables();
+		createTables();
 
 		Session session = DBConnection.getSession();
 		Transaction persistTransaction1 = session.beginTransaction();
@@ -23,7 +45,7 @@ public class TestPersist {
             UniversityYear newYear = new UniversityYear(i, i + 1);
             years.add(newYear);
         }
-        Initiation.initUniversityList();
+//        Initiation.initUniversityList();
         for (UniversityYear universityYear : years) {
             session.persist(universityYear);
         }
