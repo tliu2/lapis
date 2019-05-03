@@ -61,6 +61,8 @@ public class Promotion {
 		this.level = level;
 	}
 	
-	
+	public String toString() {
+		return diplomaName+"-"+level;
+	}
 
 }
