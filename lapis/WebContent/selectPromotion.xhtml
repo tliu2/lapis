@@ -21,14 +21,9 @@
 					<f:selectItem itemLabel="University Year" itemValue="" />
 					<f:selectItems value="#{promotionService.items}" />
 				</p:selectOneMenu>
-
-			</h:panelGrid>
-
-
-		</h:form>
-		<h:form>
-			<h:commandButton value="Créer Promotion" id="creation"
+				<h:commandButton value="Créer Promotion" id="creation"
 				action="#{promotionService.fromUniversityListToPromotion}" />
+			</h:panelGrid>
 		</h:form>
 	</div>
 	<br />
