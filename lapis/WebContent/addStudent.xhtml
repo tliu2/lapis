@@ -1,60 +1,70 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head><title>New Student</title>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>New Student</title>
 </h:head>
 <h:body>
 
 
-<div align="center">
-<h1 class="ui-widget-header ui-corner-all">Add student to promotion</h1>
-<br/>
-<h:form> 
-        <h:panelGrid columns="2" cellpadding="5">
- 
-            <p:outputLabel for="years" value="University Year: " />
-            <p:selectOneMenu id="years" value="#{addStudentBean.univYear}" style="width:150px">
-                <p:ajax listener="#{addStudentBean.onChange}" update="promo" />
-                <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{addStudentBean.universityYears}" />
-            </p:selectOneMenu>
- 
-            <p:outputLabel for="promo" value="Promotion: " />
-            <p:selectOneMenu id="promo" value="#{addStudentBean.promo}" style="width:150px">
-                <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{addStudentBean.promotions}"/>
-            </p:selectOneMenu>
+	<div align="center">
+		<h1 class="ui-widget-header ui-corner-all">Add student to
+			promotion</h1>
+		<br />
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5">
 
-            
-		    <div class="ui-g ui-fluid">
-		    	<div class="ui-g-12 ui-md-4">
-		        	<div class="ui-inputgroup">
-		            	<!-- <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span> -->
-		            	<p:inputText placeholder="Last name" />      
-		        	</div>
-		    	</div>
-		    <div class="ui-g-12 ui-md-4">
-		        <div class="ui-inputgroup">
-		            <p:inputText placeholder="First name" />     
-		        </div>
-		    </div>
-		 
-		    <div class="ui-g-12 ui-md-4">
-		        <div class="ui-inputgroup">
-		            <p:inputText placeholder="INE (optionnel)" />   
-		        </div>
-		    </div>
-		</div>
-            <h:outputText value="#{selectorView.text3}" />
-        </h:panelGrid>
-    <p:button value="Add" icon="pi pi-user-plus" style="margin-right:20px;"/>
-</h:form>
-     
-</div>
-<br/><br/><br/>
+				<p:outputLabel for="years" value="University Year: " />
+				<p:selectOneMenu id="years" value="#{addStudentBean.univYear}"
+					style="width:150px">
+					<p:ajax listener="#{addStudentBean.onChange}" update="promo" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{addStudentBean.universityYears}" />
+				</p:selectOneMenu>
 
-</h:body></html>
+				<p:outputLabel for="promo" value="Promotion: " />
+				<p:selectOneMenu id="promo" value="#{addStudentBean.promo}"
+					style="width:150px">
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{addStudentBean.promotions}" />
+				</p:selectOneMenu>
+
+
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<!-- <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span> -->
+							<p:inputText placeholder="Last name" />
+						</div>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<p:inputText placeholder="First name" />
+						</div>
+					</div>
+
+					<div class="ui-g-12 ui-md-4">
+						<div class="ui-inputgroup">
+							<p:inputText placeholder="INE (optionnel)" />
+						</div>
+					</div>
+				</div>
+				<h:outputText value="#{selectorView.text3}" />
+			</h:panelGrid>
+			<p:button value="Add" icon="pi pi-user-plus"
+				style="margin-right:20px;" />
+		</h:form>
+
+	</div>
+	<br />
+	<br />
+	<br />
+
+</h:body>
+</html>
