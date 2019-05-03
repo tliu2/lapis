@@ -22,8 +22,18 @@ public class Course {
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Promotion.class)
 	private Promotion promotion;
+	private String name;
 
-	public Course(Promotion promotion) {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Course(Promotion promotion, String name) {
+		this.name=name;
 		this.promotion = promotion;
 	}
 

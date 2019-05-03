@@ -9,14 +9,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import business.PromotionCreation;
+import persistence.Promotion;
 import persistence.UniversityYear;
 
 @ManagedBean
 public class PromotionBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
 	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
+	private List<Promotion> promotions = new ArrayList<Promotion>();
 
 	private String year;
+	private String promotion;
 	private String diplomaName;
 	private int level;
 
@@ -31,6 +34,21 @@ public class PromotionBean {
 			items.add(menuChoice);
 		}
 	}
+	
+	public String fromUniversityListToPromotion() {
+		String result = "createCourse";
+		System.out.println(year);
+		 if(year !=null && !year.toString().equals("")) {
+	        	
+	        	int id = promotionCreation.getIdFromUniversityYearString(year);
+	        	System.out.println(id);
+	        	
+	        	promotions = promotionCreation.readPromotionFromUniversityYear(id);
+	        }
+		 return result;
+	}
+
+
 
 	public List<SelectItem> getItems() {
 		return items;
@@ -92,4 +110,24 @@ public class PromotionBean {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
         FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+
+	public List<Promotion> getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(List<Promotion> promotions) {
+		this.promotions = promotions;
+	}
+
+	public String getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(String promotion) {
+		this.promotion = promotion;
+	}
+	
+	
+	
+	
 }

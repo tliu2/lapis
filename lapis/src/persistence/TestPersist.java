@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import business.Initiation;
+
 public class TestPersist {
 
 	public static void main(String[] args) {
@@ -14,13 +16,49 @@ public class TestPersist {
 		Session session = DBConnection.getSession();
 		Transaction persistTransaction1 = session.beginTransaction();
 		
-		UniversityYear year = new UniversityYear(2019, 2020);
-		session.persist(year);
+		int START_YEAR = 2000;
+        int END_YEAR = 2100;
+        List<UniversityYear> years = new ArrayList<UniversityYear>();
+        for (int i = START_YEAR; i < END_YEAR; i++) {
+            UniversityYear newYear = new UniversityYear(i, i + 1);
+            years.add(newYear);
+        }
+        Initiation.initUniversityList();
+        for (UniversityYear universityYear : years) {
+            session.persist(universityYear);
+        }
+
+        Promotion promotion1 = new Promotion(years.get(0), "Licence", 1);
+        Promotion promotion2 = new Promotion(years.get(0), "Licence", 2);
+        Promotion promotion3 = new Promotion(years.get(0), "Licence", 3);
+        Promotion promotion4 = new Promotion(years.get(0), "Master", 1);
+        Promotion promotion5 = new Promotion(years.get(0), "Master", 2);
+        session.persist(promotion1);
+        session.persist(promotion2);
+        session.persist(promotion3);
+        session.persist(promotion4);
+        session.persist(promotion5);
+        
+        int FIRST_LICENCE = 1;
+        int LAST_LICENCE = 3;
+        int FIRST_MASTER = 1;
+        int LAST_MASTER = 2;
+        List<Promotion> promos = new ArrayList<Promotion>();
+        for (int j = 1; j< END_YEAR-START_YEAR; j++) {
+            for (int i = FIRST_LICENCE; i <= LAST_LICENCE; i++) {
+                Promotion newPromo = new Promotion(years.get(j), "Licence", i);
+                promos.add(newPromo);
+            }
+            for (int i = FIRST_MASTER; i <= LAST_MASTER; i++) {
+                Promotion newPromo = new Promotion(years.get(j), "Master", i);
+                promos.add(newPromo);
+            }
+        }
+        for (Promotion promotion : promos) {
+            session.persist(promotion);
+        }
 		
-		Promotion promotion = new Promotion(year, "Licence", 3);
-		session.persist(promotion);
-		
-		Course course = new Course(promotion);
+		Course course = new Course(promos.get(0), "GLP");
 		session.persist(course);
 		
 		Criterion criterion = new Criterion("Qualité", "Bien ou pas bien");
@@ -53,7 +91,7 @@ public class TestPersist {
 		ProjectInfo projectInfo = new ProjectInfo(project, "Tianxiao Liu", true, domainList, languageList, toolContentList, "Detailed Description");
 		session.persist(projectInfo);
 		
-		Student student = new Student("Antoine", "Leguay", "9862498ZJ87Z", "21616900", promotion);
+		Student student = new Student("Antoine", "Leguay", "9862498ZJ87Z", "21616900", promos.get(0));
 		session.persist(student);
 		List<Student> studentList = new ArrayList<Student>();
 		studentList.add(student);
