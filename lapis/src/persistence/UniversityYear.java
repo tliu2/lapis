@@ -48,7 +48,7 @@ public class UniversityYear {
 
 	@Override
 	public String toString() {
-		return "UniversityYear [id=" + id + ", first=" + first + ", last=" + last + "]";
+		return first + "-" + last;
 	}
 	
 }

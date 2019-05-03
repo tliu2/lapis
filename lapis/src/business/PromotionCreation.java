@@ -23,7 +23,6 @@ public class PromotionCreation {
 	}
 	
 	public void createPromotion(UniversityYear universityYear, String diplomaName, int level) {
-		System.out.println("Start creation !");
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
 		Promotion promotion = new Promotion(universityYear, diplomaName, level);

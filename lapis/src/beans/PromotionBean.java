@@ -3,7 +3,9 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import business.PromotionCreation;
@@ -14,7 +16,7 @@ public class PromotionBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
 	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
 
-	private UniversityYear year;
+	private String year;
 	private String diplomaName;
 	private int level;
 
@@ -28,30 +30,6 @@ public class PromotionBean {
 			SelectItem menuChoice = new SelectItem(universityYear.getFirst() + "-" + universityYear.getLast());
 			items.add(menuChoice);
 		}
-	}
-
-	public UniversityYear getYear() {
-		return year;
-	}
-
-	public void setYear(UniversityYear year) {
-		this.year = year;
-	}
-
-	public String getDiplomaName() {
-		return diplomaName;
-	}
-
-	public void setDiplomaName(String diplomName) {
-		this.diplomaName = diplomName;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
 	}
 
 	public List<SelectItem> getItems() {
@@ -70,9 +48,48 @@ public class PromotionBean {
 		this.universityYears = universityYears;
 	}
 
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getDiplomaName() {
+		return diplomaName;
+	}
+
+	public void setDiplomaName(String diplomaName) {
+		this.diplomaName = diplomaName;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public PromotionCreation getPromotionCreation() {
+		return promotionCreation;
+	}
+
+	public void setPromotionCreation(PromotionCreation promotionCreation) {
+		this.promotionCreation = promotionCreation;
+	}
+
 	public void createPromotion() {
-		System.out.println(year.toString());
-		System.out.println("created");
-		promotionCreation.createPromotion(year, diplomaName, level);
+		UniversityYear yearObject = null;
+		for (UniversityYear universityYear : universityYears) {
+			if (universityYear.toString().equals(year)) {
+				yearObject = universityYear;
+			}
+		}
+		promotionCreation.createPromotion(yearObject, diplomaName, level);
+		
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }
