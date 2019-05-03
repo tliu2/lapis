@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import business.PromotionCreation;
+import business.PromotionManager;
 import persistence.Promotion;
 import persistence.UniversityYear;
 
@@ -24,6 +25,7 @@ public class PromotionService {
 	private int level;
 
 	private PromotionCreation promotionCreation = new PromotionCreation();
+	private PromotionManager promotionManager = new PromotionManager();
 
 	public PromotionService() {
 		universityYears = promotionCreation.readUniversityYears();
@@ -40,10 +42,10 @@ public class PromotionService {
 		System.out.println(year);
 		 if(year !=null && !year.toString().equals("")) {
 	        	
-	        	int id = promotionCreation.getIdFromUniversityYearString(year);
+	        	int id = promotionManager.getIdFromUniversityYearString(year);
 	        	System.out.println(id);
 	        	
-	        	promotions = promotionCreation.readPromotionFromUniversityYear(id);
+	        	promotions = promotionManager.readPromotionFromUniversityYear(id);
 	        }
 		 return result;
 	}
