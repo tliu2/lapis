@@ -15,9 +15,9 @@
 <h:form>
 	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 		<p:outputLabel for="year" value="Année universitaire" />
-        <p:selectOneMenu id="year" style="width:150px" value="#{promotionBean.year}">
+        <p:selectOneMenu id="year" style="width:150px" value="#{promotionService.year}">
             <f:selectItem itemLabel="University Year" itemValue="" />
-            <f:selectItems value="#{promotionBean.items}" />
+            <f:selectItems value="#{promotionService.items}" />
         </p:selectOneMenu>
         
 	</h:panelGrid>
@@ -25,7 +25,7 @@
 		
 </h:form>
 <h:form>
-<h:commandButton value="Créer Promotion" id="creation" action="#{promotionBean.fromUniversityListToPromotion}"/>
+<h:commandButton value="Créer Promotion" id="creation" action="#{promotionService.fromUniversityListToPromotion}"/>
  </h:form>    
 </div>
 <br/><br/>
