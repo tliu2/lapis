@@ -1,16 +1,11 @@
 package beans;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.bean.*;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import business.PromotionCreation;
 import persistence.UniversityYear;
@@ -22,16 +17,20 @@ public class PromotionBean {
 	private UniversityYear year;
 	private String diplomName;
 	private int level;
-	
+
 	public PromotionBean() {
-		for(UniversityYear universityYear : universityYears) {
+	}
+
+	@PostConstruct
+	public void init() {
+		items = new ArrayList<SelectItem>();
+		for (UniversityYear universityYear : universityYears) {
 			SelectItem menuChoice = new SelectItem(universityYear.toString());
 			items.add(menuChoice);
-			
 		}
 	}
- 
-  public UniversityYear getYear() {
+
+	public UniversityYear getYear() {
 		return year;
 	}
 
@@ -42,8 +41,6 @@ public class PromotionBean {
 	public String getDiplomName() {
 		return diplomName;
 	}
-
-	
 
 	public void setDiplomName(String diplomName) {
 		this.diplomName = diplomName;
@@ -58,9 +55,9 @@ public class PromotionBean {
 	}
 
 	public String doAction() {
-		return("show-test-data");
+		return ("show-test-data");
 	}
-	
+
 	public List<SelectItem> getItems() {
 		return items;
 	}
@@ -77,8 +74,8 @@ public class PromotionBean {
 		this.universityYears = universityYears;
 	}
 
-	public List<UniversityYear> getUniversityYear(){	
-			return PromotionCreation.testWhereClause();
+	public List<UniversityYear> getUniversityYear() {
+		return PromotionCreation.testWhereClause();
 	}
-	
+
 }

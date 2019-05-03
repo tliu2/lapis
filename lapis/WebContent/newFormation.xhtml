@@ -15,8 +15,9 @@
 <h:form>
 	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 		<p:outputLabel for="year" value="Année universitaire" />
-        <p:selectOneMenu id="year" style="width:125px" Value="#{promotionBean.year}">
-            <f:selectItem itemLabel="years" itemValue="#{promotionBean.items}" />
+        <p:selectOneMenu id="year" style="width:150px" Value="#{promotionBean.year}">
+            <f:selectItem itemLabel="University Year" itemValue="" />
+            <f:selectItems value="#{promotionBean.items}" />
         </p:selectOneMenu>
         
         <p:outputLabel for="formation" value="Formation" />
