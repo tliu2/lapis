@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -16,11 +15,11 @@ import business.PromotionManager;
 import persistence.Promotion;
 import persistence.UniversityYear;
 
-@ManagedBean
+@ManagedBean(name = "promotionService")
 public class PromotionService {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
 	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
-	
+
 	private List<Promotion> promotions = new ArrayList<Promotion>();
 
 	private String year;

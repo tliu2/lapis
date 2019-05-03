@@ -88,9 +88,9 @@ public class PromotionBean {
 			}
 		}
 		promotionCreation.createPromotion(yearObject, diplomaName, level);
-		
+
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
-	
+
 }
