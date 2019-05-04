@@ -12,12 +12,12 @@ public class Promotion {
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = UniversityYear.class)
 	private UniversityYear year;
 	private String diplomaName;
 	private int level;
-	
+
 	public Promotion() {
 
 	}
@@ -59,9 +59,9 @@ public class Promotion {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	
+
 	public String toString() {
-		return diplomaName+"-"+level;
+		return diplomaName + " " + level;
 	}
 
 }

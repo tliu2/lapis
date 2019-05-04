@@ -3,31 +3,29 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
-import com.sun.org.glassfish.gmbal.ManagedAttribute;
-
-import business.PromotionDAO;
 import business.UniversityYearDAO;
-import persistence.Promotion;
 import persistence.UniversityYear;
 
-@ManagedBean(name = "promotionService")
+@ManagedBean
 public class SelectPromoBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
 	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
 
-	private List<Promotion> promotions = new ArrayList<Promotion>();
-
 	private String year;
+	
+	@ManagedProperty(value = "#{navig}")
+	private NavigationBean navig;
 
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
-	private PromotionDAO promoDAO = new PromotionDAO();
 
 	public SelectPromoBean() {
+		System.out.println("ok");
 		universityYears = yearDAO.readAllUniversityYears();
 
 		items = new ArrayList<SelectItem>();
@@ -37,20 +35,12 @@ public class SelectPromoBean {
 		}
 	}
 
-	public String fromUniversityListToPromotion() {
-		String result = "createCourse";
-		System.out.println(year);
-		if (year != null && !year.toString().equals("")) {
-
-			int id = yearDAO.getIdFromUniversityYearString(year);
-			System.out.println(id);
-
-			promotions = promoDAO.readPromotionFromUniversityYear(id);
-			System.out.println("nbPromo : " + promotions.size());
-		}
-		return result;
+	public String toAddCourse() {
+		navig.setYear(year);
+		System.out.println(navig.getYear());
+		return "addCourse";
 	}
-
+	
 	public List<SelectItem> getItems() {
 		return items;
 	}
@@ -66,7 +56,7 @@ public class SelectPromoBean {
 	public void setUniversityYears(List<UniversityYear> universityYears) {
 		this.universityYears = universityYears;
 	}
-
+	
 	public String getYear() {
 		return year;
 	}
@@ -79,18 +69,17 @@ public class SelectPromoBean {
 		return yearDAO;
 	}
 
-	public PromotionDAO getPromoDAO() {
-		return promoDAO;
+	public void setYearDAO(UniversityYearDAO yearDAO) {
+		this.yearDAO = yearDAO;
 	}
 
-	public List<Promotion> getPromotions() {
-		return promotions;
+	public NavigationBean getNavig() {
+		return navig;
 	}
 
-	public void setPromotions(List<Promotion> promotions) {
-		this.promotions = promotions;
+	public void setNavig(NavigationBean navig) {
+		this.navig = navig;
 	}
-
-
-
+	
+	
 }

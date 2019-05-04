@@ -26,6 +26,7 @@ public class UniversityYearDAO {
 		Session session = DBConnection.getSession();
 		String[] split = year.split("-");
 
+		System.out.println("here");
 		Transaction readTransaction = session.beginTransaction();
 		Query readQuery = session.createQuery("from UniversityYear y where y.first = :first and y.last = :last");
 		readQuery.setString("first", split[0]);

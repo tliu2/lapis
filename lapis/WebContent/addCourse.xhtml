@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>Nouvelle Promotion</title>
+	<title>Add new course</title>
 </h:head>
 <h:body>
 
@@ -15,21 +15,19 @@
 			the Selected Promotion</h1>
 		<br />
 		<h:form>
+			<p:growl id="growl" life="2000" />
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-
 				<p:outputLabel for="promotion" value="Promotion: " />
-				<p:selectOneMenu id="promotion" value="#{courseBean.promotion}"
+				<p:selectOneMenu id="promotion" value="#{addCourseBean.promoString}"
 					style="width:150px">
-					<f:selectItem itemLabel="Select Promotion" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItems value="#{courseBean.items}" />
+					<f:selectItem itemLabel="Select Promotion" itemValue="" />
+					<f:selectItems value="#{addCourseBean.items}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="course" value="Course Name" />
-				<p:inputText id="course" value="#{courseBean.name}" />
-
-				<h:commandButton value="Add Course" id="creation"
-					action="#{courseBean.createCourse}" />
+				<p:inputText id="course" value="#{addCourseBean.name}" />
+				<p:commandButton value="Add Course" id="creation" update="growl"
+					action="#{addCourseBean.createCourse}" />
 
 			</h:panelGrid>
 

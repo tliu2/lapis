@@ -19,7 +19,7 @@ public class PromotionDAO {
 		readTransaction.commit();
 	}
 
-	public List<Promotion> readPromotionFromUniversityYear(int id) {
+	public List<Promotion> readPromoByYearId(int id) {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
 		Query readQuery = session.createQuery("from Promotion p where p.year.id = :id");

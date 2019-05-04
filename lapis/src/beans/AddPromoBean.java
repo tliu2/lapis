@@ -15,13 +15,14 @@ import persistence.UniversityYear;
 @ManagedBean
 public class AddPromoBean {
 	private List<SelectItem> items = new ArrayList<SelectItem>();
+	
 	private List<UniversityYear> universityYears = new ArrayList<UniversityYear>();
 
 	private String year;
 	private String diplomaName;
 	private int level;
 
-	private PromotionDAO promotionCreation = new PromotionDAO();
+	private PromotionDAO promoDAO = new PromotionDAO();
 	private UniversityYearDAO yearDao = new UniversityYearDAO();
 
 	public AddPromoBean() {
@@ -32,6 +33,19 @@ public class AddPromoBean {
 			SelectItem menuChoice = new SelectItem(universityYear.getFirst() + "-" + universityYear.getLast());
 			items.add(menuChoice);
 		}
+	}
+
+	public void createPromotion() {
+		UniversityYear yearObject = null;
+		for (UniversityYear universityYear : universityYears) {
+			if (universityYear.toString().equals(year)) {
+				yearObject = universityYear;
+			}
+		}
+		promoDAO.createPromotion(yearObject, diplomaName, level);
+
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public List<SelectItem> getItems() {
@@ -75,24 +89,10 @@ public class AddPromoBean {
 	}
 
 	public PromotionDAO getPromotionCreation() {
-		return promotionCreation;
+		return promoDAO;
 	}
 
 	public void setPromotionCreation(PromotionDAO promotionCreation) {
-		this.promotionCreation = promotionCreation;
+		this.promoDAO = promotionCreation;
 	}
-
-	public void createPromotion() {
-		UniversityYear yearObject = null;
-		for (UniversityYear universityYear : universityYears) {
-			if (universityYear.toString().equals(year)) {
-				yearObject = universityYear;
-			}
-		}
-		promotionCreation.createPromotion(yearObject, diplomaName, level);
-
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion created !", null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
 }

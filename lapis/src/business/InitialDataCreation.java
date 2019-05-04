@@ -45,7 +45,7 @@ public class InitialDataCreation {
             UniversityYear newYear = new UniversityYear(i, i + 1);
             years.add(newYear);
         }
-//        Initiation.initUniversityList();
+        
         for (UniversityYear universityYear : years) {
             session.persist(universityYear);
         }
