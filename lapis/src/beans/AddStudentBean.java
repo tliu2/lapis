@@ -1,6 +1,5 @@
 package beans;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,71 +11,102 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import business.PromotionDAO;
 import business.StudentDAO;
 import business.UniversityYearDAO;
-import business.PromotionDAO;
 import persistence.Promotion;
 import persistence.UniversityYear;
 
 @ManagedBean
 @ViewScoped
-public class AddStudentBean implements Serializable {
-     
-    private Map<String,Map<String,String>> data = new HashMap<String, Map<String,String>>();
-    private String univYear;  
-    private String promo;
-    private List<String> universityYears;
-    private Map<String,String> promotions;
-    private StudentDAO addStudent = new StudentDAO();
-    private PromotionDAO promoDAO = new PromotionDAO();
-    private UniversityYearDAO yearDAO = new UniversityYearDAO();
-    
-    public AddStudentBean() {
-    	
-    }
-    
-    @PostConstruct
-    public void init() {
-    	
-    	List<UniversityYear> years = yearDAO.readAllUniversityYears();
-    	universityYears  = new ArrayList<String>();
-    	for (UniversityYear universityYear : years) {
-    		universityYears.add(universityYear.toString());
-    	}
-    	
-    	List<Promotion> promotions = new ArrayList<Promotion>();
-    	Map<String,String> map = new HashMap<String, String>();
-    	
-    	for(UniversityYear y: years) {
-    		promotions = addStudent.readPromotion(y);
-    		System.out.println(promotions.get(0).toString());
-    		for(Promotion promos: promotions) {
-    			map = new HashMap<String, String>();
-                map.put(promos.toString(), promos.toString());
-    		}
-            data.put(y.toString(), map);
-    	}
-    	
-    	map = new HashMap<String, String>();
-        map.put("L1-2001-2002", "L1-2001-2002");
-        map.put("L2-2001-2002", "L2-2001-2002");
-        data.put(universityYears.get(0), map);
-    }
+public class AddStudentBean {
 
-	public Map<String, Map<String, String>> getData() {
+	private Map<String, List<String>> data = new HashMap<String, List<String>>();
+
+	private String year;
+	private String promo;
+
+	private List<String> years;
+	private List<String> promotions;
+
+	private String firstname;
+	private String lastname;
+	private String ine;
+	private String ucpNumber;
+
+	private StudentDAO studentDAO = new StudentDAO();
+	private PromotionDAO promoDAO = new PromotionDAO();
+	private UniversityYearDAO yearDAO = new UniversityYearDAO();
+
+	public AddStudentBean() {
+
+	}
+
+	@PostConstruct
+	public void init() {
+
+		List<UniversityYear> allYears = yearDAO.readAllUniversityYears();
+		years = new ArrayList<String>();
+		for (UniversityYear universityYear : allYears) {
+			years.add(universityYear.toString());
+		}
+
+		for (UniversityYear universityYear : allYears) {
+			int id = universityYear.getId();
+			List<Promotion> promos = promoDAO.readPromoByYearId(id);
+			List<String> promoList = new ArrayList<String>();
+			for (Promotion promo : promos) {
+				promoList.add(promo.toString());
+			}
+			data.put(universityYear.toString(), promoList);
+		}
+	}
+
+	public void onChange() {
+		if (year != null && !year.equals("")) {
+			promotions = data.get(year);
+		} else {
+			promotions = new ArrayList<String>();
+		}
+	}
+	
+	public void createStudent() {
+		FacesMessage msg;
+		if (promo != null && year != null && firstname != null && !firstname.equals("") && lastname != null && !lastname.equals("")) {
+			
+			Promotion promotion = null;
+			int id = yearDAO.getIdFromUniversityYearString(year);
+			List<Promotion> promos = promoDAO.readPromoByYearId(id);
+			for (Promotion pro : promos) {
+				if (pro.toString().equals(promo)) {
+					promotion = pro;
+				}
+			}
+			
+			studentDAO.createStudent(promotion, firstname, lastname, ine, ucpNumber);
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Student created !", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		} else {
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid : missing information !", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			
+		}
+	}
+
+	public Map<String, List<String>> getData() {
 		return data;
 	}
 
-	public void setData(Map<String, Map<String, String>> data) {
+	public void setData(Map<String, List<String>> data) {
 		this.data = data;
 	}
 
-	public String getUnivYear() {
-		return univYear;
+	public String getYear() {
+		return year;
 	}
 
-	public void setUnivYear(String univYear) {
-		this.univYear = univYear;
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public String getPromo() {
@@ -87,52 +117,76 @@ public class AddStudentBean implements Serializable {
 		this.promo = promo;
 	}
 
-	public List<String> getUniversityYears() {
-		return universityYears;
+	public List<String> getYears() {
+		return years;
 	}
 
-	public void setUniversityYears(List<String> universityYears) {
-		this.universityYears = universityYears;
+	public void setYears(List<String> years) {
+		this.years = years;
 	}
 
-	public Map<String, String> getPromotions() {
+	public List<String> getPromotions() {
 		return promotions;
 	}
 
-	public void setPromotions(Map<String, String> promotions) {
+	public void setPromotions(List<String> promotions) {
 		this.promotions = promotions;
 	}
 
-	public StudentDAO getAddStudent() {
-		return addStudent;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setAddStudent(StudentDAO addStudent) {
-		this.addStudent = addStudent;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public PromotionDAO getPromoCreate() {
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getIne() {
+		return ine;
+	}
+
+	public void setIne(String ine) {
+		this.ine = ine;
+	}
+
+	public String getUcpNumber() {
+		return ucpNumber;
+	}
+
+	public void setUcpNumber(String ucpNumber) {
+		this.ucpNumber = ucpNumber;
+	}
+
+	public StudentDAO getStudentDAO() {
+		return studentDAO;
+	}
+
+	public void setStudentDAO(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
+	}
+
+	public PromotionDAO getPromoDAO() {
 		return promoDAO;
 	}
 
-	public void setPromoCreate(PromotionDAO promoCreate) {
-		this.promoDAO = promoCreate;
+	public void setPromoDAO(PromotionDAO promoDAO) {
+		this.promoDAO = promoDAO;
 	}
 
-	public void onChange() {
-        if(univYear !=null && !univYear.equals(""))
-            promotions = data.get(univYear);
-        else
-            promotions = new HashMap<String, String>();
-    }
-     
-    public void displayLocation() {
-        FacesMessage msg;
-        if(promo != null && univYear != null)
-            msg = new FacesMessage("Selected", promo + " of " + univYear);
-        else
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "promo is not selected."); 
-             
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }
+	public UniversityYearDAO getYearDAO() {
+		return yearDAO;
+	}
+
+	public void setYearDAO(UniversityYearDAO yearDAO) {
+		this.yearDAO = yearDAO;
+	}
+
 }

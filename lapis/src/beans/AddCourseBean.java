@@ -18,8 +18,6 @@ import persistence.Promotion;
 @ManagedBean
 public class AddCourseBean {
 
-	private int id;
-
 	private String name;
 
 	private List<SelectItem> items = new ArrayList<SelectItem>();
@@ -38,11 +36,14 @@ public class AddCourseBean {
 	private PromotionDAO promoDAO = new PromotionDAO();
 
 	public AddCourseBean() {
-
 	}
 
+	/**
+	 * This method is executed after constructor and injection of attributes (including "navig").
+	 */
 	@PostConstruct
 	public void init() {
+		
 		year = navig.getYear();
 
 		retrievePromoForYear();
@@ -81,14 +82,6 @@ public class AddCourseBean {
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Course created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {

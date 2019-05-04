@@ -14,15 +14,17 @@
 			promotion</h1>
 		<br />
 		<h:form>
+			<p:growl id="growl" life="2000" />
+			
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="years" value="University Year: " />
-				<p:selectOneMenu id="years" value="#{addStudentBean.univYear}"
+				<p:selectOneMenu id="years" value="#{addStudentBean.year}"
 					style="width:150px">
 					<p:ajax listener="#{addStudentBean.onChange}" update="promo" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItems value="#{addStudentBean.universityYears}" />
+					<f:selectItems value="#{addStudentBean.years}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="promo" value="Promotion: " />
@@ -34,29 +36,19 @@
 				</p:selectOneMenu>
 
 
-				<div class="ui-g ui-fluid">
-					<div class="ui-g-12 ui-md-4">
-						<div class="ui-inputgroup">
-							<!-- <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span> -->
-							<p:inputText placeholder="Last name" />
-						</div>
-					</div>
-					<div class="ui-g-12 ui-md-4">
-						<div class="ui-inputgroup">
-							<p:inputText placeholder="First name" />
-						</div>
-					</div>
-
-					<div class="ui-g-12 ui-md-4">
-						<div class="ui-inputgroup">
-							<p:inputText placeholder="INE (optionnel)" />
-						</div>
-					</div>
-				</div>
-				<h:outputText value="#{selectorView.text3}" />
+				<p:outputLabel for="firstname" value="Firstname" />
+				<p:inputText id="firstname" value="#{addStudentBean.firstname}" />
+				<p:outputLabel for="lastname" value="Lastname" />
+				<p:inputText id="lastname" value="#{addStudentBean.lastname}" />
+				<p:outputLabel for="ine" value="INE (optionnal)" />
+				<p:inputText id="ine" value="#{addStudentBean.ine}" />
+				<p:outputLabel for="ucpNumber" value="UCP Number" />
+				<p:inputText id="ucpNumber" value="#{addStudentBean.ucpNumber}" />
+				
+				<p:commandButton value="Create student" id="creation" update="growl"
+					action="#{addStudentBean.createStudent}" />
 			</h:panelGrid>
-			<p:button value="Add" icon="pi pi-user-plus"
-				style="margin-right:20px;" />
+
 		</h:form>
 
 	</div>

@@ -1,25 +1,20 @@
 package business;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import persistence.Promotion;
-import persistence.UniversityYear;
+import persistence.Student;
 
 public class StudentDAO {
-	
-	public List<Promotion> readPromotion(UniversityYear year) {
-		System.out.println(year.toString());
+
+	public void createStudent(Promotion promotion, String firstname, String lastname, String ine, String ucpNumber) {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
-		Query readQuery = session.createQuery("from Promotion p where p.year=:year");
-		readQuery.setEntity("year", year);
-		List result = readQuery.list();
+		Student student = new Student(firstname, lastname, ine, ucpNumber, promotion);
+		session.persist(student);
 		readTransaction.commit();
-		return result;
+
 	}
+
 }
