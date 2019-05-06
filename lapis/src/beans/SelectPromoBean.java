@@ -20,7 +20,7 @@ public class SelectPromoBean {
 	private String year;
 	
 	@ManagedProperty(value = "#{navig}")
-	private NavigationBean navig;
+	private PromoToCourseBean navig;
 
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
 
@@ -73,11 +73,11 @@ public class SelectPromoBean {
 		this.yearDAO = yearDAO;
 	}
 
-	public NavigationBean getNavig() {
+	public PromoToCourseBean getNavig() {
 		return navig;
 	}
 
-	public void setNavig(NavigationBean navig) {
+	public void setNavig(PromoToCourseBean navig) {
 		this.navig = navig;
 	}
 	

@@ -27,7 +27,7 @@ public class AddCourseBean {
 	private String promoString;
 
 	@ManagedProperty(value = "#{navig}")
-	private NavigationBean navig;
+	private PromoToCourseBean navig;
 
 	private String year;
 
@@ -104,11 +104,11 @@ public class AddCourseBean {
 		return promotions;
 	}
 
-	public NavigationBean getNavig() {
+	public PromoToCourseBean getNavig() {
 		return navig;
 	}
 
-	public void setNavig(NavigationBean navig) {
+	public void setNavig(PromoToCourseBean navig) {
 		System.out.println("set !");
 		this.navig = navig;
 	}
