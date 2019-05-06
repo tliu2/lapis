@@ -510,60 +510,81 @@ public class InitialDataCreation {
 		List<EvaluationScore> evaluationScoreList1 = new ArrayList<EvaluationScore>(); // team1
 		EvaluationScore evaluationScore11 = new EvaluationScore(evaluation11, 15);
 		evaluationScoreList1.add(evaluationScore11);
+		session.persist(evaluationScore11);
 		EvaluationScore evaluationScore12 = new EvaluationScore(evaluation12, 14);
 		evaluationScoreList1.add(evaluationScore12);
+		session.persist(evaluationScore12);
 		EvaluationScore evaluationScore13 = new EvaluationScore(evaluation13, 17);
 		evaluationScoreList1.add(evaluationScore13);
+		session.persist(evaluationScore13);
 		EvaluationScore evaluationScore14 = new EvaluationScore(evaluation14, 16);
 		evaluationScoreList1.add(evaluationScore14);
+		session.persist(evaluationScore14);
 		EvaluationScore evaluationScore15 = new EvaluationScore(evaluation15, 18);
 		evaluationScoreList1.add(evaluationScore15);
+		session.persist(evaluationScore15);
 
 		List<EvaluationScore> evaluationScoreList2 = new ArrayList<EvaluationScore>(); // team2
 		EvaluationScore evaluationScore21 = new EvaluationScore(evaluation11, 10);
 		evaluationScoreList2.add(evaluationScore21);
+		session.persist(evaluationScore21);
 		EvaluationScore evaluationScore22 = new EvaluationScore(evaluation12, 12);
 		evaluationScoreList2.add(evaluationScore22);
+		session.persist(evaluationScore22);
 		EvaluationScore evaluationScore23 = new EvaluationScore(evaluation13, 18);
 		evaluationScoreList2.add(evaluationScore23);
+		session.persist(evaluationScore23);
 		EvaluationScore evaluationScore24 = new EvaluationScore(evaluation14, 12);
 		evaluationScoreList2.add(evaluationScore24);
+		session.persist(evaluationScore24);
 		EvaluationScore evaluationScore25 = new EvaluationScore(evaluation15, 20);
 		evaluationScoreList2.add(evaluationScore25);
+		session.persist(evaluationScore25);
 
 			// project2
 		List<EvaluationScore> evaluationScoreList3 = new ArrayList<EvaluationScore>(); // team3
 		EvaluationScore evaluationScore31 = new EvaluationScore(evaluation21, 13);
 		evaluationScoreList3.add(evaluationScore31);
+		session.persist(evaluationScore31);
 		EvaluationScore evaluationScore32 = new EvaluationScore(evaluation22, 18);
 		evaluationScoreList3.add(evaluationScore32);
+		session.persist(evaluationScore32);
 		EvaluationScore evaluationScore33 = new EvaluationScore(evaluation23, 12);
 		evaluationScoreList3.add(evaluationScore33);
+		session.persist(evaluationScore33);
 
 			// project3
 		List<EvaluationScore> evaluationScoreList4 = new ArrayList<EvaluationScore>(); // team4
 		EvaluationScore evaluationScore41 = new EvaluationScore(evaluation31, 15);
 		evaluationScoreList4.add(evaluationScore41);
+		session.persist(evaluationScore41);
 		EvaluationScore evaluationScore42 = new EvaluationScore(evaluation32, 13);
 		evaluationScoreList4.add(evaluationScore42);
+		session.persist(evaluationScore42);
 
 		List<EvaluationScore> evaluationScoreList5 = new ArrayList<EvaluationScore>(); // team5
 		EvaluationScore evaluationScore51 = new EvaluationScore(evaluation31, 14);
 		evaluationScoreList5.add(evaluationScore51);
+		session.persist(evaluationScore51);
 		EvaluationScore evaluationScore52 = new EvaluationScore(evaluation32, 18);
 		evaluationScoreList5.add(evaluationScore52);
+		session.persist(evaluationScore52);
 
 		List<EvaluationScore> evaluationScoreList6 = new ArrayList<EvaluationScore>(); // team6
 		EvaluationScore evaluationScore61 = new EvaluationScore(evaluation31, 15);
 		evaluationScoreList6.add(evaluationScore61);
+		session.persist(evaluationScore61);
 		EvaluationScore evaluationScore62 = new EvaluationScore(evaluation32, 16);
 		evaluationScoreList6.add(evaluationScore62);
+		session.persist(evaluationScore62);
 
 		List<EvaluationScore> evaluationScoreList7 = new ArrayList<EvaluationScore>(); // team7
 		EvaluationScore evaluationScore71 = new EvaluationScore(evaluation31, 15);
 		evaluationScoreList7.add(evaluationScore71);
+		session.persist(evaluationScore71);
 		EvaluationScore evaluationScore72 = new EvaluationScore(evaluation32, 20);
 		evaluationScoreList7.add(evaluationScore72);
+		session.persist(evaluationScore72);
 
 		// Teams 
 		Team team1 = new Team(project1, studentList1, evaluationScoreList1, 17, studentScoreList1);
