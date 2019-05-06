@@ -565,7 +565,7 @@ public class InitialDataCreation {
 		EvaluationScore evaluationScore72 = new EvaluationScore(evaluation32, 20);
 		evaluationScoreList7.add(evaluationScore72);
 
-		// Teams
+		// Teams 
 		Team team1 = new Team(project1, studentList1, evaluationScoreList1, 17, studentScoreList1);
 		session.persist(team1);
 		Team team2 = new Team(project1, studentList2, evaluationScoreList2, 15, studentScoreList2);
