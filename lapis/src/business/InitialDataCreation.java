@@ -327,7 +327,7 @@ public class InitialDataCreation {
 		toolContentList3.add(toolContent);
 
 		Tool tool1 = new Tool("Logiciel de gestion de versions");
-		session.persist(tool);
+		session.persist(tool1);
 		ToolContent toolContent1 = new ToolContent(tool1, "Git");
 		session.persist(toolContent1);
 		toolContentList1.add(toolContent1);
