@@ -48,4 +48,8 @@ public class Course {
 
 	public Course() {
 	}
+	
+	public String toString() {
+		return name +"-" + promotion.toString();
+	}
 }

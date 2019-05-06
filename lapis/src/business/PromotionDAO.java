@@ -29,5 +29,30 @@ public class PromotionDAO {
 
 		return result;
 	}
+	
+	public List<Promotion> readAllPromo() {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
 
+		Query readQuery = session.createQuery("from Promotion");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
+
+	public int getIdFromPromotionString(String promo) {
+		int result = 0;
+		Session session = DBConnection.getSession();
+		String[] split = promo.split(" ");
+		
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Promotion p where p.diplomaName = :diplomaName and p.level =:level");
+		readQuery.setString("diplomaName", split[0]);
+		readQuery.setString("level", split[1]);
+		List resultQuery = readQuery.list();
+		result = ((Promotion) resultQuery.get(0)).getId();
+		readTransaction.commit();
+		return result;
+	}
 }
