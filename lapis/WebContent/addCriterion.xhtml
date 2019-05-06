@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Add new criterion</title>
+</h:head>
+<h:body>
+	<div align="center">
+		<h1 class="ui-widget-header ui-corner-all">Add student to
+			promotion</h1>
+		<br />
+		<h:form>
+			<p:growl id="growl" life="2000" />
+			
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="criterionName" value="Criterion name" />
+				<p:inputText id="criterionName" value="#{addCriterionBean.name}" />
+				
+				<p:outputLabel for="criterionDescription" value="Criterion's description" />
+				<p:inputText id="criterionDescription" value="#{addCriterionBean.description}" />
+				
+				<p:commandButton value="Create Criterion" id="creation" update="growl"
+					action="#{addCriterionBean.createCriterion}" />
+			</h:panelGrid>
+
+		</h:form>
+
+	</div>
+	<br />
+	<br />
+	<br />
+
+</h:body>
+</html>
