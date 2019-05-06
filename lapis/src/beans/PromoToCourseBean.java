@@ -5,11 +5,11 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name = "navig", eager = true)
 @ApplicationScoped
-public class NavigationBean {
+public class PromoToCourseBean {
 
 	private String year;
 
-	public NavigationBean() {
+	public PromoToCourseBean() {
 	}
 
 	public String getYear() {
