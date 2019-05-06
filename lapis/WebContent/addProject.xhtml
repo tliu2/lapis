@@ -44,15 +44,15 @@
 				</p:selectOneMenu>
 
 				<h:outputText id="displayRange"
-					value="Entre 1 et 10 étudiants par groupes" />
+					value="Between 1 to 10 students per team:" />
 				<p:slider for="min,max" display="displayRange" style="width: 80%"
 					range="true"
-					displayTemplate="Entre {min} et {max} étudiants par groupes"
+					displayTemplate="Between {min} to {max} students per team:"
 					minValue="1" maxValue="10" />
 				<h:inputHidden id="min" value="#{addProjectBean.minEtu}" />
 				<h:inputHidden id="max" value="#{addProjectBean.maxEtu}" />
 				
-				<h:outputText value="Nombre de groupes max" />
+				<h:outputText value="Number maximum of team:" />
 				<p:inputText id="txt1" value='#{addProjectBean.maxTeam}' />
 
 				<p:outputLabel for="project" value="Project subject:" />

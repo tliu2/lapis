@@ -79,7 +79,7 @@ public class AddProjectBean {
 			List<Course> courses = courseDAO.readCourseByPromoId(id);
 			List<String> courseList = new ArrayList<String>();
 			for (Course course : courses) {
-				courseList.add(course.toString());
+				courseList.add(course.getName());
 			}
 			dataPromo.put(promotion.toString(), courseList);
 		}
