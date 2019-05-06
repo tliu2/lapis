@@ -32,11 +32,7 @@ public class InitialDataCreation {
 		schemaExport.create(true, true);
 	}
 
-	public static void InitTestData() {
-
-		createTables();
-		Session session = DBConnection.getSession();
-		Transaction persistTransaction1 = session.beginTransaction();
+	public static void InitTestData(Session session) {
 
 		int START_YEAR = 2000;
 		int END_YEAR = 2003;
@@ -604,9 +600,6 @@ public class InitialDataCreation {
 		Team team7 = new Team(project3, studentList7, evaluationScoreList7, 14, studentScoreList7);
 		session.persist(team7);
 
-		persistTransaction1.commit();
-		session.close();
-
 	}
 
 	public static void PersistUniversityYear(int startYear, int endYear, Session session, List<UniversityYear> years) {
@@ -621,7 +614,7 @@ public class InitialDataCreation {
 		}
 	}
 
-	public static void generateLanguage() {
+	public static void generateLanguage(Session session) {
 		List<Language> languageList = new ArrayList<Language>();
 		
 		Language java = new Language("Java");
@@ -696,13 +689,23 @@ public class InitialDataCreation {
 		Language javaScript = new Language("JavaScript");
 		languageList.add(javaScript);
 		
+		for (Language language : languageList) {
+			session.persist(language);
+		}
 	}
 	
 	public static void main(String[] args) {
 
-		InitTestData();
+		createTables();
+		Session session = DBConnection.getSession();
+		Transaction persistTransaction1 = session.beginTransaction();
 		
-		generateLanguage();
+		InitTestData(session);
+		
+		generateLanguage(session);
+		
+		persistTransaction1.commit();
+		session.close();
 
 		/*
 		 * 
