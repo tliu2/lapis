@@ -202,6 +202,7 @@ public class InitialDataCreation {
 		studentList.add(student30);
 		session.persist(student30);
 		
+		
 		//Criterion
 		for(int i=0; i<15; i++) {
 			Criterion criterion = new Criterion("Critere"+i, "Bien ou pas ? gros.");
