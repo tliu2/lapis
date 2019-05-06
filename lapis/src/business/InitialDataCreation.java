@@ -77,54 +77,130 @@ public class InitialDataCreation {
 		session.persist(course1);
 		session.persist(course2);
 		
-		// Students
-
-			Student student1 = new Student("Oumaima", "MOUTAWADII", "1862498ZJ87Z", "217150361", promos.get(0));
-			studentList.add(student1);
-			session.persist(student1);
-			
-			Student student2 = new Student("Samir", "MIMOUNI", "2862498ZJ87Z", "217150362", promos.get(0));
-			studentList.add(student2);
-			session.persist(student2);
-			
-			Student student3 = new Student("Hicham", "MIMOUNI", "3862498ZJ87Z", "217150363", promos.get(0));
-			studentList.add(student3);
-			session.persist(student3);
-			
-			Student student4 = new Student("Touka", "MEROUANI", "4862498ZJ87Z", "217150364", promos.get(0));
-			studentList.add(student4);
-			session.persist(student4);
-			
-			Student student5 = new Student("Ludovic", "DOMINGUES", "5862498ZJ87Z", "217150365", promos.get(0));
-			studentList.add(student5);
-			session.persist(student5);
-			
-			Student student6 = new Student("Antoine", "LEGUAY", "6862498ZJ87Z", "217150366", promos.get(0));
-			studentList.add(student6);
-			session.persist(student6);
-			
-			Student student7 = new Student("Mathieu", "Voisin", "7862498ZJ87Z", "217150367", promos.get(0));
-			studentList.add(student7);
-			session.persist(student7);
-			
-			Student student8 = new Student("Elisa", "BOUGEROT", "8862498ZJ87Z", "217150368", promos.get(0));
-			studentList.add(student8);
-			session.persist(student8);
-			
-			Student student9 = new Student("Sonia", "LAIB", "9862498ZJ87Z", "217150369", promos.get(0));
-			studentList.add(student9);
-			session.persist(student9);
-			
-			Student student10 = new Student("Nicky", "GAO", "1062498ZJ87Z", "217150310", promos.get(0));
-			studentList.add(student10);
-			session.persist(student10);
-			
 		
-		for(int i = 10; i<30; i++) {
-			Student student = new Student("Prenom"+i, "Nom"+i, i+"62498ZJ87Z", "2161690"+i, promos.get(1));
-			session.persist(student);
-			studentList.add(student);
-		}
+		// Students of 1st promotion
+
+		Student student1 = new Student("Oumaima", "MOUTAWADII", "1862498ZJ87Z", "217150361", promos.get(0));
+		studentList.add(student1);
+		session.persist(student1);
+		
+		Student student2 = new Student("Samir", "MIMOUNI", "2862498ZJ87Z", "217150362", promos.get(0));
+		studentList.add(student2);
+		session.persist(student2);
+		
+		Student student3 = new Student("Hicham", "MIMOUNI", "3862498ZJ87Z", "217150363", promos.get(0));
+		studentList.add(student3);
+		session.persist(student3);
+		
+		Student student4 = new Student("Touka", "MEROUANI", "4862498ZJ87Z", "217150364", promos.get(0));
+		studentList.add(student4);
+		session.persist(student4);
+		
+		Student student5 = new Student("Ludovic", "DOMINGUES", "5862498ZJ87Z", "217150365", promos.get(0));
+		studentList.add(student5);
+		session.persist(student5);
+		
+		Student student6 = new Student("Antoine", "LEGUAY", "6862498ZJ87Z", "217150366", promos.get(0));
+		studentList.add(student6);
+		session.persist(student6);
+		
+		Student student7 = new Student("Mathieu", "Voisin", "7862498ZJ87Z", "217150367", promos.get(0));
+		studentList.add(student7);
+		session.persist(student7);
+		
+		Student student8 = new Student("Elisa", "BOUGEROT", "8862498ZJ87Z", "217150368", promos.get(0));
+		studentList.add(student8);
+		session.persist(student8);
+		
+		Student student9 = new Student("Sonia", "LAIB", "9862498ZJ87Z", "217150369", promos.get(0));
+		studentList.add(student9);
+		session.persist(student9);
+		
+		Student student10 = new Student("Nicky", "GAO", "1062498ZJ87Z", "217150310", promos.get(0));
+		studentList.add(student10);
+		session.persist(student10);
+			
+		//student of 2nd promotion
+		
+		Student student11 = new Student("Leila", "SAMIA", "1162498ZJ87Z", "217150311", promos.get(1));
+		studentList.add(student11);
+		session.persist(student11);
+		
+		Student student12 = new Student("Manal", "FAOUZI", "1262498ZJ87Z", "217150312", promos.get(1));
+		studentList.add(student12);
+		session.persist(student12);
+		
+		Student student13 = new Student("Cindy", "HU", "1362498ZJ87Z", "217150313", promos.get(1));
+		studentList.add(student13);
+		session.persist(student13);
+		
+		Student student14 = new Student("Cecile", "SOUSCE", "1462498ZJ87Z", "217150314", promos.get(1));
+		studentList.add(student14);
+		session.persist(student14);
+		
+		Student student15 = new Student("Monis", "BEN NAJIM", "1562498ZJ87Z", "217150315", promos.get(1));
+		studentList.add(student15);
+		session.persist(student15);
+		
+		Student student16 = new Student("Bilal", "GERARD", "1662498ZJ87Z", "217150316", promos.get(1));
+		studentList.add(student16);
+		session.persist(student16);
+		
+		Student student17 = new Student("Celine", "NUKOVSKI", "1762498ZJ87Z", "217150317", promos.get(1));
+		studentList.add(student17);
+		session.persist(student17);
+		
+		Student student18 = new Student("Ishan", "ARSMOUK", "1862498ZJ87Z", "217150318", promos.get(1));
+		studentList.add(student18);
+		session.persist(student18);
+		
+		Student student19 = new Student("Ishak", "AYAD", "1962498ZJ87Z", "217150319", promos.get(1));
+		studentList.add(student19);
+		session.persist(student19);
+		
+		Student student20 = new Student("Emma", "BELAIR", "2062498ZJ87Z", "217150320", promos.get(1));
+		studentList.add(student20);
+		session.persist(student20);
+		
+		Student student21 = new Student("Kevin", "PAKPAK", "2162498ZJ87Z", "217150321", promos.get(1));
+		studentList.add(student21);
+		session.persist(student21);
+		
+		Student student22 = new Student("Amin", "AMARA", "2262498ZJ87Z", "217150322", promos.get(1));
+		studentList.add(student22);
+		session.persist(student22);
+		
+		Student student23 = new Student("Lucas", "DELLEVALE", "2362498ZJ87Z", "217150323", promos.get(1));
+		studentList.add(student23);
+		session.persist(student23);
+		
+		Student student24 = new Student("Floriant", "BOURLAT", "2462498ZJ87Z", "217150324", promos.get(1));
+		studentList.add(student24);
+		session.persist(student24);
+		
+		Student student25 = new Student("Haddis", "RUGA", "2562498ZJ87Z", "217150325", promos.get(1));
+		studentList.add(student25);
+		session.persist(student25);
+		
+		Student student26 = new Student("Sabrina", "LOPES", "2662498ZJ87Z", "217150326", promos.get(1));
+		studentList.add(student26);
+		session.persist(student26);
+		
+		Student student27 = new Student("Valentine", "SARRAZIN", "2762498ZJ87Z", "217150327", promos.get(1));
+		studentList.add(student27);
+		session.persist(student27);
+		
+		Student student28 = new Student("Amir", "MERAKCHI", "2862498ZJ87Z", "217150328", promos.get(1));
+		studentList.add(student28);
+		session.persist(student28);
+		
+		Student student29 = new Student("Claire", "BERANGER", "2962498ZJ87Z", "217150329", promos.get(1));
+		studentList.add(student29);
+		session.persist(student29);
+		
+		Student student30 = new Student("Samira", "ARHAB", "3062498ZJ87Z", "217150330", promos.get(1));
+		studentList.add(student30);
+		session.persist(student30);
 		
 		//Criterion
 		for(int i=0; i<15; i++) {
@@ -178,6 +254,7 @@ public class InitialDataCreation {
 		
 		ProjectInfo projectInfo3 = new ProjectInfo(project3, "Tianxiao Liu", true, domainList, languageList, toolContentList, "Detailed Description");
 		session.persist(projectInfo3);
+		
 		
 		//Student
 		
