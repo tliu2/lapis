@@ -67,6 +67,7 @@ public class SelectProjectBean {
 	public SelectProjectBean() {
 
 	}
+	
 
 	@PostConstruct
 	public void init() {
