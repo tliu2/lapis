@@ -41,7 +41,7 @@ public class AddProjectBean {
 	private String description;
 	private int minEtu = -1;
 	private int maxEtu = -1;
-	private int maxTeam = 10;
+	private int maxTeam = 0;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	// private StudentDAO studentDAO = new StudentDAO();
@@ -240,7 +240,7 @@ public class AddProjectBean {
 	public void createProject() {
 		FacesMessage msg;
 		if (promo != null && year != null && course != null && !subject.equals("") && maxEtu != -1 && minEtu != -1
-				&& maxTeam != -1) {
+				&& maxTeam > 0) {
 
 			Course courseObject = null;
 			int id = promoDAO.getIdFromPromotionString(promo);

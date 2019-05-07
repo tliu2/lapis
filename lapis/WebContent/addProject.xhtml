@@ -51,9 +51,9 @@
 					minValue="1" maxValue="10" />
 				<h:inputHidden id="min" value="#{addProjectBean.minEtu}" />
 				<h:inputHidden id="max" value="#{addProjectBean.maxEtu}" />
-				
-				<h:outputText value="Number maximum of team:" />
-				<p:inputText id="txt1" value='#{addProjectBean.maxTeam}' />
+
+				<h:outputLabel for="basic" value="Number maximum of team:" />
+				<p:spinner id="basic" value="#{addProjectBean.maxTeam}" />
 
 				<p:outputLabel for="project" value="Project subject:" />
 				<p:inputText id="project" value="#{addProjectBean.subject}" />
