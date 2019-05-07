@@ -90,7 +90,7 @@ public class LinkCriteriaToProjectBean {
 			List<Project> projects = projectDAO.readProjectByCourseId(id);
 			List<String> projectList = new ArrayList<String>();
 			for (Project project : projects) {
-				projectList.add(project.getSubject());
+				projectList.add(project.getId() + "-" + project.getSubject());
 			}
 			dataProject.put(course.getName(), projectList);
 		}
