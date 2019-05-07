@@ -6,27 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
-
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.TransferEvent;
-import org.primefaces.event.UnselectEvent;
-import org.primefaces.model.DualListModel;
-import org.springframework.ui.context.Theme;
-
 import business.CourseDAO;
 import business.CriteriaToProjectDAO;
 import business.ProjectDAO;
 import business.PromotionDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
-import persistence.Criterion;
 import persistence.Evaluation;
 import persistence.Project;
 import persistence.Promotion;

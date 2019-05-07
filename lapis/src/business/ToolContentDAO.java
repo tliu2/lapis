@@ -6,8 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import persistence.Course;
-import persistence.Promotion;
 import persistence.Tool;
 import persistence.ToolContent;
 

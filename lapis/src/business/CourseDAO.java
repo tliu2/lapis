@@ -8,7 +8,6 @@ import org.hibernate.Transaction;
 
 import persistence.Course;
 import persistence.Promotion;
-import persistence.UniversityYear;
 
 public class CourseDAO {
 	public void createCourse(Promotion promotion, String name) {

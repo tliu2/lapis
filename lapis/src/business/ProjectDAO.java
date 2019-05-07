@@ -9,8 +9,6 @@ import org.hibernate.Transaction;
 import persistence.Course;
 import persistence.Evaluation;
 import persistence.Project;
-import persistence.Promotion;
-import persistence.Student;
 
 public class ProjectDAO {
 

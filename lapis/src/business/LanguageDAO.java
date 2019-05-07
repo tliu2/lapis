@@ -6,12 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import persistence.Course;
-import persistence.Evaluation;
 import persistence.Language;
-import persistence.Project;
-import persistence.Promotion;
-import persistence.Student;
 
 public class LanguageDAO {
 	

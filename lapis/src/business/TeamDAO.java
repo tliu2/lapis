@@ -5,8 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import persistence.Course;
-import persistence.Evaluation;
 import persistence.EvaluationScore;
 import persistence.Project;
 import persistence.Student;

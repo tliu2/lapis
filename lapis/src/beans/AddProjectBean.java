@@ -14,11 +14,9 @@ import javax.faces.context.FacesContext;
 import business.CourseDAO;
 import business.ProjectDAO;
 import business.PromotionDAO;
-import business.StudentDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
 import persistence.Evaluation;
-import persistence.Project;
 import persistence.Promotion;
 import persistence.UniversityYear;
 

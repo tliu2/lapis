@@ -10,8 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
@@ -21,19 +19,14 @@ import business.DomainDAO;
 import business.LanguageDAO;
 import business.ProjectDAO;
 import business.PromotionDAO;
-import business.StudentDAO;
 import business.ToolDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
 import persistence.Domain;
-import persistence.Evaluation;
 import persistence.Language;
 import persistence.Project;
 import persistence.Promotion;
-import persistence.Tool;
-import persistence.ToolContent;
 import persistence.UniversityYear;
-import sun.security.provider.certpath.ldap.LDAPCertStore;
 
 @ManagedBean
 @ViewScoped

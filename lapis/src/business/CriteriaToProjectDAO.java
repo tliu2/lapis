@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import persistence.Criterion;
-import persistence.UniversityYear;
 
 public class CriteriaToProjectDAO {
 	
