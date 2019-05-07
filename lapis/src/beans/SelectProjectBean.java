@@ -8,8 +8,17 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DualListModel;
+import org.springframework.ui.context.Theme;
 
 import business.CourseDAO;
 import business.CriteriaToProjectDAO;
@@ -17,6 +26,7 @@ import business.ProjectDAO;
 import business.PromotionDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
+import persistence.Criterion;
 import persistence.Evaluation;
 import persistence.Project;
 import persistence.Promotion;
@@ -24,7 +34,7 @@ import persistence.UniversityYear;
 
 @ManagedBean
 @ViewScoped
-public class LinkCriteriaToProjectBean {
+public class SelectProjectBean {
 
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
 	private Map<String, List<String>> dataPromo = new HashMap<String, List<String>>();
@@ -45,12 +55,16 @@ public class LinkCriteriaToProjectBean {
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	// private StudentDAO studentDAO = new StudentDAO();
+	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
 
-	public LinkCriteriaToProjectBean() {
+	@ManagedProperty(value = "#{projectToCriteria}")
+	private ProjectToCriteriaBean projectToCriteria;
+
+	public SelectProjectBean() {
 
 	}
 
@@ -83,7 +97,7 @@ public class LinkCriteriaToProjectBean {
 			}
 			dataPromo.put(promotion.toString(), courseList);
 		}
-		
+
 		List<Course> allCourses = courseDAO.readAllCourse();
 		for (Course course : allCourses) {
 			int id = course.getId();
@@ -94,6 +108,12 @@ public class LinkCriteriaToProjectBean {
 			}
 			dataProject.put(course.getName(), projectList);
 		}
+
+	}
+
+	public String toLinkCriteriaToProject() {
+		projectToCriteria.setProject(project);
+		return "linkCriteriaToProject";
 	}
 
 	public Map<String, List<String>> getDataPromo() {
@@ -231,7 +251,7 @@ public class LinkCriteriaToProjectBean {
 			projects = new ArrayList<String>();
 		}
 	}
-	
+
 	public Map<String, List<String>> getDataProject() {
 		return dataProject;
 	}
@@ -262,6 +282,22 @@ public class LinkCriteriaToProjectBean {
 
 	public void setData(Map<String, List<String>> data) {
 		this.data = data;
+	}
+
+	public CriteriaToProjectDAO getCriteriaToProjectDAO() {
+		return criteriaToProjectDAO;
+	}
+
+	public void setCriteriaToProjectDAO(CriteriaToProjectDAO criteriaToProjectDAO) {
+		this.criteriaToProjectDAO = criteriaToProjectDAO;
+	}
+
+	public ProjectToCriteriaBean getProjectToCriteria() {
+		return projectToCriteria;
+	}
+
+	public void setProjectToCriteria(ProjectToCriteriaBean projectToCriteria) {
+		this.projectToCriteria = projectToCriteria;
 	}
 
 }
