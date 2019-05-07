@@ -29,4 +29,15 @@ public class CourseDAO {
 
 		return result;
 	}
+	
+	public List<Course> readAllCourse() {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+
+		Query readQuery = session.createQuery("from Course");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
 }

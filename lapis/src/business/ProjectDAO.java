@@ -2,6 +2,7 @@ package business;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -22,4 +23,15 @@ public class ProjectDAO {
 
 	}
 
+	public List<Project> readProjectByCourseId(int id) {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Project p where p.course.id = :id");
+		readQuery.setInteger("id", id);
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
+	
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Create Project</title>
+</h:head>
+<h:body>
+	<div align="center">
+		<h1 class="ui-widget-header ui-corner-all">Add new project</h1>
+		<br />
+		<h:form>
+			<p:growl id="growl" life="2000" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="years" value="University Year: " />
+				<p:selectOneMenu id="years" value="#{linkCriteriaToProjectBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{linkCriteriaToProjectBean.onChange}" update="promo" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{linkCriteriaToProjectBean.years}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="promo" value="Promotion: " />
+				<p:selectOneMenu id="promo" value="#{linkCriteriaToProjectBean.promo}"
+					style="width:150px">
+					<p:ajax listener="#{linkCriteriaToProjectBean.onChangeCourse}" update="course" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{linkCriteriaToProjectBean.promotions}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="course" value="Course: " />
+				<p:selectOneMenu id="course" value="#{linkCriteriaToProjectBean.course}"
+					style="width:150px">
+					<p:ajax listener="#{linkCriteriaToProjectBean.onChangeProject}" update="project" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{linkCriteriaToProjectBean.courses}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="project" value="Project: " />
+				<p:selectOneMenu id="project" value="#{linkCriteriaToProjectBean.project}"
+					style="width:150px">
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{linkCriteriaToProjectBean.projects}" />
+				</p:selectOneMenu>
+
+				
+				
+				
+
+
+				<p:commandButton value="Link Criteria to Project" id="creation" update="growl"
+					action="#{linkCriteriaToProjectBean.createProject}" />
+			</h:panelGrid>
+
+		</h:form>
+
+	</div>
+	<br />
+
+</h:body>
+</html>
