@@ -10,17 +10,30 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
+
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 import business.CourseDAO;
+import business.DomainDAO;
+import business.LanguageDAO;
 import business.ProjectDAO;
 import business.PromotionDAO;
 import business.StudentDAO;
+import business.ToolDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
+import persistence.Domain;
 import persistence.Evaluation;
+import persistence.Language;
 import persistence.Project;
 import persistence.Promotion;
+import persistence.Tool;
+import persistence.ToolContent;
 import persistence.UniversityYear;
+import sun.security.provider.certpath.ldap.LDAPCertStore;
 
 @ManagedBean
 @ViewScoped
@@ -35,16 +48,56 @@ public class AddProjectInfoBean {
 	private String course;
 	private String project;
 
+	private String ide;
+	private String vms;
+	private String wps;
+	private String com;
+	private String pms;
+
 	private List<String> years;
 	private List<String> promotions;
 	private List<String> courses;
 	private List<String> projects;
 
-	private String subject;
+	private String tutorName;
 	private String description;
-	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
+	private boolean hof;
+
+	private List<String> languages = new ArrayList<String>();
+	private List<String> domains = new ArrayList<String>();
+	private List<String> tools = new ArrayList<String>();
+	
+	private String[] selectedLanguages;
+	private String[] selectedDomains;
+
+	public String[] getSelectedDomains() {
+		return selectedDomains;
+	}
+
+	public void setSelectedDomains(String[] selectedDomains) {
+		this.selectedDomains = selectedDomains;
+	}
+
+	public String[] getSelectedLanguages() {
+		return selectedLanguages;
+	}
+
+	public void setSelectedLanguages(String[] selectedLanguages) {
+		this.selectedLanguages = selectedLanguages;
+	}
+
+	public String[] getSelectedDomaines() {
+		return selectedDomains;
+	}
+
+	public void setSelectedDomaines(String[] selectedDomaines) {
+		this.selectedDomains = selectedDomaines;
+	}
 
 	// private StudentDAO studentDAO = new StudentDAO();
+	private ToolDAO toolDAO = new ToolDAO();
+	private DomainDAO domainDAO = new DomainDAO();
+	private LanguageDAO languageDAO = new LanguageDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
@@ -83,7 +136,7 @@ public class AddProjectInfoBean {
 			}
 			dataPromo.put(promotion.toString(), courseList);
 		}
-		
+
 		List<Course> allCourses = courseDAO.readAllCourse();
 		for (Course course : allCourses) {
 			int id = course.getId();
@@ -94,6 +147,67 @@ public class AddProjectInfoBean {
 			}
 			dataProject.put(course.getName(), projectList);
 		}
+
+		List<Language> allLanguages = languageDAO.readAllLanguages();
+		languages = new ArrayList<String>();
+		for (Language language : allLanguages) {
+			languages.add(language.getName());
+		}
+
+		List<Domain> allDomains = domainDAO.readAllDomains();
+		domains = new ArrayList<String>();
+		for (Domain domain : allDomains) {
+			domains.add(domain.getName());
+		}
+		
+	}
+
+	public List<String> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(List<String> languages) {
+		this.languages = languages;
+	}
+
+	public List<String> getDomains() {
+		return domains;
+	}
+
+	public void setDomains(List<String> domains) {
+		this.domains = domains;
+	}
+
+	public List<String> getTools() {
+		return tools;
+	}
+
+	public void setTools(List<String> tools) {
+		this.tools = tools;
+	}
+
+	public String getTutorName() {
+		return tutorName;
+	}
+
+	public void setTutorName(String tutorName) {
+		this.tutorName = tutorName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public boolean isHof() {
+		return hof;
+	}
+
+	public void setHof(boolean hof) {
+		this.hof = hof;
 	}
 
 	public Map<String, List<String>> getDataPromo() {
@@ -144,36 +258,12 @@ public class AddProjectInfoBean {
 		this.courses = courses;
 	}
 
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getCourse() {
 		return course;
 	}
 
 	public void setCourse(String course) {
 		this.course = course;
-	}
-
-	public List<Evaluation> getEvaluations() {
-		return evaluations;
-	}
-
-	public void setEvaluations(List<Evaluation> evaluations) {
-		this.evaluations = evaluations;
 	}
 
 	public ProjectDAO getProjectDAO() {
@@ -231,7 +321,7 @@ public class AddProjectInfoBean {
 			projects = new ArrayList<String>();
 		}
 	}
-	
+
 	public Map<String, List<String>> getDataProject() {
 		return dataProject;
 	}
@@ -256,20 +346,14 @@ public class AddProjectInfoBean {
 		this.projects = projects;
 	}
 
-	public void createProject() {
+	public void addProjectInfo() {
 		FacesMessage msg;
-		if (promo != null && year != null && course != null && !subject.equals("")) {
+		if (promo != null && year != null && course != null && project != null) {
+			
 
-			Course courseObject = null;
-			int id = promoDAO.getIdFromPromotionString(promo);
-			List<Course> courses = courseDAO.readCourseByPromoId(id);
-			for (Course cour : courses) {
-				if (cour.toString().equals(course)) {
-					courseObject = cour;
-				}
-			}
+	
 
-			//projectDAO.createProject(subject, description, courseObject, minEtu, maxEtu, maxTeam, evaluations);
+			//projectDAO.createProject(subject, description, courseObject, minEtu, maxEtu,maxTeam, evaluations);
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Project created !", null);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} else {
@@ -277,6 +361,90 @@ public class AddProjectInfoBean {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		}
+	}
+
+	public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Car Edited", "df");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+	
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", "ed");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }	
+     
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+         
+        if(newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+    
+	public String getIde() {
+		return ide;
+	}
+
+	public void setIde(String ide) {
+		this.ide = ide;
+	}
+
+	public String getVms() {
+		return vms;
+	}
+
+	public void setVms(String vms) {
+		this.vms = vms;
+	}
+
+	public String getWps() {
+		return wps;
+	}
+
+	public void setWps(String wps) {
+		this.wps = wps;
+	}
+
+	public String getCom() {
+		return com;
+	}
+
+	public void setCom(String com) {
+		this.com = com;
+	}
+
+	public String getPms() {
+		return pms;
+	}
+
+	public void setPms(String pms) {
+		this.pms = pms;
+	}
+
+	public ToolDAO getToolDAO() {
+		return toolDAO;
+	}
+
+	public void setToolDAO(ToolDAO toolDAO) {
+		this.toolDAO = toolDAO;
+	}
+
+	public DomainDAO getDomainDAO() {
+		return domainDAO;
+	}
+
+	public void setDomainDAO(DomainDAO domainDAO) {
+		this.domainDAO = domainDAO;
+	}
+
+	public LanguageDAO getLanguageDAO() {
+		return languageDAO;
+	}
+
+	public void setLanguageDAO(LanguageDAO languageDAO) {
+		this.languageDAO = languageDAO;
 	}
 
 	public Map<String, List<String>> getData() {
