@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import persistence.Course;
+import persistence.Promotion;
 import persistence.Tool;
 import persistence.ToolContent;
 
@@ -25,6 +26,17 @@ public class ToolContentDAO {
 		Transaction readTransaction = session.beginTransaction();
 
 		Query readQuery = session.createQuery("from ToolContent");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
+	
+	public List<ToolContent> readToolContentByToolId(int id) {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from ToolContent tc where tc.tool.id = :id");
+		readQuery.setInteger("id", id);
 		List result = readQuery.list();
 		readTransaction.commit();
 

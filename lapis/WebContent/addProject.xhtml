@@ -57,6 +57,10 @@
 
 				<p:outputLabel for="project" value="Project subject:" />
 				<p:inputText id="project" value="#{addProjectBean.subject}" />
+				
+				<p:outputLabel for="description" value="Short Description " />
+				<p:inputTextarea id="description" rows="6" cols="33"
+					value="#{addProjectBean.description}" />
 
 				<p:commandButton value="Create project" id="creation" update="growl"
 					action="#{addProjectBean.createProject}" />

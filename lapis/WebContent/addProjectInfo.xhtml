@@ -29,7 +29,8 @@
 				<p:outputLabel for="promo" value="Promotion: " />
 				<p:selectOneMenu id="promo" value="#{addProjectInfoBean.promo}"
 					style="width:150px">
-					<p:ajax listener="#{addProjectInfoBean.onChangeCourse}" update="course" />
+					<p:ajax listener="#{addProjectInfoBean.onChangeCourse}"
+						update="course" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{addProjectInfoBean.promotions}" />
@@ -54,36 +55,65 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="hof" value="Hall of Fame" />
-				<p:inputSwitch id="hof" value="" />
+				<p:inputSwitch id="hof" value="#{addProjectInfoBean.hof}" />
 
 				<p:outputLabel for="description" value="Description: " />
-				<p:inputTextarea id="description" rows="6" cols="33" value="" />
+				<p:inputTextarea id="description" rows="6" cols="33"
+					value="#{addProjectInfoBean.description}" />
 
-				<p:outputLabel for="tutor" value="Tutor: " />
-				<p:inputText id="tutor" value="" />
+				<p:outputLabel for="tutor" value="Tutor name: " />
+				<p:inputText id="tutor" value="#{addProjectInfoBean.tutorName}" />
 
 				<p:outputLabel for="language" value="Languages:" />
-				<p:selectCheckboxMenu id="language" value="#{addProjectInfoBean.year}"
-					label="Languages" multiple="true" filter="true"
-					filterMatchMode="startsWith" panelStyle="width:250px">
-					<f:selectItems value="#{addProjectInfoBean.years}" />
+				<p:selectCheckboxMenu id="language"
+					value="#{addProjectInfoBean.selectedLanguages}" label="Languages"
+					multiple="true" filter="true" filterMatchMode="startsWith"
+					panelStyle="width:250px">
+					<f:selectItems value="#{addProjectInfoBean.languages}" />
 				</p:selectCheckboxMenu>
 
-				<p:outputLabel for="domain" value="Domain: " />
-				<p:selectCheckboxMenu id="domain" value="#{addProjectInfoBean.year}"
-					label="Languages" multiple="true" filter="true"
-					filterMatchMode="startsWith" panelStyle="width:250px">
-					<f:selectItems value="#{addProjectInfoBean.years}" />
-				</p:selectCheckboxMenu>
+				<h:form>
+					<p:growl id="msgs" showDetail="true" />
 
-				<p:outputLabel for="tool" value="Tools:" />
-				<p:selectCheckboxMenu id="tool"
-					value="#{addProjectInfoBean.year}" label="Cars" multiple="true"
-					filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-					<f:selectItems value="#{addProjectInfoBean.years}" />
-				</p:selectCheckboxMenu>
+					<p:dataTable id="languages" var="language"
+						value="#{addProjectInfoBean.languages}" editable="true" editMode="cell"
+						widgetVar="cellCars">
+						<f:facet name="header">Cell Editing with Click and RightClick</f:facet>
 
-				<p:commandButton value="Create project" id="creation" update="growl" />
+						<p:ajax event="cellEdit"
+							listener="#{addProjectInfoBean.onCellEdit}" update=":form:msgs" />
+
+						<p:column headerText="Tool">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="Test" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Tool Content">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="Test1" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="Test2" style="width:96%"
+										label="Year" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+					</p:dataTable>
+
+					<p:contextMenu for="cars2" widgetVar="cMenu">
+						<p:menuitem value="Edit Cell" icon="pi pi-search"
+							onclick="PF('cellCars').showCellEditor();return false;" />
+						<p:menuitem value="Hide Menu" icon="pi pi-times"
+							onclick="PF('cMenu').hide()" />
+					</p:contextMenu>
+				</h:form>
+				<p:commandButton value="Add Informations" id="creation"
+					update="growl" action="#{addProjectInfoBean.addProjectInfo}" />
 			</h:panelGrid>
 
 		</h:form>
