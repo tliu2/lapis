@@ -28,7 +28,7 @@ public class LinkCriteriaToProjectBean {
 
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
 	private Map<String, List<String>> dataPromo = new HashMap<String, List<String>>();
-	private Map<String, List<String>> dataCourse = new HashMap<String, List<String>>();
+	private Map<String, List<String>> dataProject = new HashMap<String, List<String>>();
 
 	private String year;
 	private String promo;
@@ -42,13 +42,9 @@ public class LinkCriteriaToProjectBean {
 
 	private String subject;
 	private String description;
-	private int minEtu = -1;
-	private int maxEtu = -1;
-	private int maxTeam = 10;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	// private StudentDAO studentDAO = new StudentDAO();
-	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
@@ -94,44 +90,10 @@ public class LinkCriteriaToProjectBean {
 			List<Project> projects = projectDAO.readProjectByCourseId(id);
 			List<String> projectList = new ArrayList<String>();
 			for (Project project : projects) {
-				projectList.add(project.getId() + "-" + project.getSubject());
+				projectList.add(project.getSubject());
 			}
-			dataCourse.put(course.getName(), projectList);
-			
+			dataProject.put(course.getName(), projectList);
 		}
-		
-	}
-
-	public Map<String, List<String>> getDataCourse() {
-		return dataCourse;
-	}
-
-	public void setDataCourse(Map<String, List<String>> dataCourse) {
-		this.dataCourse = dataCourse;
-	}
-
-	public String getProject() {
-		return project;
-	}
-
-	public void setProject(String project) {
-		this.project = project;
-	}
-
-	public List<String> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<String> projects) {
-		this.projects = projects;
-	}
-
-	public CriteriaToProjectDAO getCriteriaToProjectDAO() {
-		return criteriaToProjectDAO;
-	}
-
-	public void setCriteriaToProjectDAO(CriteriaToProjectDAO criteriaToProjectDAO) {
-		this.criteriaToProjectDAO = criteriaToProjectDAO;
 	}
 
 	public Map<String, List<String>> getDataPromo() {
@@ -198,30 +160,6 @@ public class LinkCriteriaToProjectBean {
 		this.description = description;
 	}
 
-	public int getMinEtu() {
-		return minEtu;
-	}
-
-	public void setMinEtu(int minEtu) {
-		this.minEtu = minEtu;
-	}
-
-	public int getMaxEtu() {
-		return maxEtu;
-	}
-
-	public void setMaxEtu(int maxEtu) {
-		this.maxEtu = maxEtu;
-	}
-
-	public int getMaxTeam() {
-		return maxTeam;
-	}
-
-	public void setMaxTeam(int maxTeam) {
-		this.maxTeam = maxTeam;
-	}
-
 	public String getCourse() {
 		return course;
 	}
@@ -285,37 +223,37 @@ public class LinkCriteriaToProjectBean {
 			courses = new ArrayList<String>();
 		}
 	}
-	
+
 	public void onChangeProject() {
-		if (project != null && !project.equals("")) {
-			projects = dataCourse.get(project);
+		if (course != null && !course.equals("")) {
+			projects = dataProject.get(course);
 		} else {
 			projects = new ArrayList<String>();
 		}
 	}
+	
+	public Map<String, List<String>> getDataProject() {
+		return dataProject;
+	}
 
-	public void createProject() {
-		FacesMessage msg;
-		if (promo != null && year != null && course != null && !subject.equals("") && maxEtu != -1 && minEtu != -1
-				&& maxTeam != -1) {
+	public void setDataProject(Map<String, List<String>> dataProject) {
+		this.dataProject = dataProject;
+	}
 
-			Course courseObject = null;
-			int id = promoDAO.getIdFromPromotionString(promo);
-			List<Course> courses = courseDAO.readCourseByPromoId(id);
-			for (Course cour : courses) {
-				if (cour.toString().equals(course)) {
-					courseObject = cour;
-				}
-			}
+	public String getProject() {
+		return project;
+	}
 
-			projectDAO.createProject(subject, description, courseObject, minEtu, maxEtu, maxTeam, evaluations);
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Project created !", null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid : missing information !", null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void setProject(String project) {
+		this.project = project;
+	}
 
-		}
+	public List<String> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<String> projects) {
+		this.projects = projects;
 	}
 
 	public Map<String, List<String>> getData() {
