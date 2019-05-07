@@ -10,61 +10,124 @@
 </h:head>
 <h:body>
 	<div align="center">
-		<h1 class="ui-widget-header ui-corner-all">Link Criteria to Project</h1>
+		<h1 class="ui-widget-header ui-corner-all">Link Criteria to
+			Project</h1>
 		<br />
-		<h:form>
-			<p:growl id="growl" life="2000" />
 
-			<h:panelGrid columns="2" cellpadding="5">
+		<h3>Events</h3>
+		<p:tabView>
+			<p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" />
+			<p:ajax event="tabClose" listener="#{tabbedView.onTabClose}" />
 
-				<p:outputLabel for="years" value="University Year: " />
-				<p:selectOneMenu id="years" value="#{linkCriteriaToProjectBean.year}"
-					style="width:150px">
-					<p:ajax listener="#{linkCriteriaToProjectBean.onChange}" update="promo" />
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItems value="#{linkCriteriaToProjectBean.years}" />
-				</p:selectOneMenu>
+			<p:tab title="Choose your criteria">
+			
+			
+				<h:form id="form">
+					<p:growl id="msgs" showDetail="true" />
 
-				<p:outputLabel for="promo" value="Promotion: " />
-				<p:selectOneMenu id="promo" value="#{linkCriteriaToProjectBean.promo}"
-					style="width:150px">
-					<p:ajax listener="#{linkCriteriaToProjectBean.onChangeCourse}" update="course" />
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItems value="#{linkCriteriaToProjectBean.promotions}" />
-				</p:selectOneMenu>
+					<p:dataTable id="cars1" widgetVar="cars1" var="car"
+						value="#{dtAddRowView.cars1}" editable="true"
+						style="margin-bottom:20px">
+						<f:facet name="header">
+            				Row Editing with add functionality
+        				</f:facet>
 
-				<p:outputLabel for="course" value="Course: " />
-				<p:selectOneMenu id="course" value="#{linkCriteriaToProjectBean.course}"
-					style="width:150px">
-					<p:ajax listener="#{linkCriteriaToProjectBean.onChangeProject}" update="project" />
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItems value="#{linkCriteriaToProjectBean.courses}" />
-				</p:selectOneMenu>
+						<p:ajax event="rowEdit" listener="#{dtAddRowView.onRowEdit}"
+							 />
+						<p:ajax event="rowEditCancel"
+							listener="#{dtAddRowView.onRowCancel}" />
+
+						<p:column headerText="Id">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{car.id}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText id="modelInput" value="#{car.id}"
+										style="width:100%" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Year">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{car.year}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{car.year}" style="width:100%"
+										label="Year" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Brand">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{car.brand}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:selectOneMenu value="#{car.brand}" style="width:100%">
+										<f:selectItems value="#{dtEditView.brands}" var="man"
+											itemLabel="#{man}" itemValue="#{man}" />
+									</h:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Color">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{car.color}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:selectOneMenu value="#{car.color}" style="width:100%">
+										<f:selectItems value="#{dtEditView.colors}" var="color"
+											itemLabel="#{color}" itemValue="#{color}" />
+									</h:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="width:32px">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+
+					<div class="ui-g">
+						<div class="ui-g-12">
+							<p:commandButton value="Add new row"
+								styleClass="ui-priority-primary" process="@this"
+								action="#{dtAddRowView.onAddNew()}"
+								oncomplete="PF('cars1').addRow();" />
+						</div>
+					</div>
+
+				</h:form>
 				
-				<p:outputLabel for="project" value="Project: " />
-				<p:selectOneMenu id="project" value="#{linkCriteriaToProjectBean.project}"
-					style="width:150px">
-					<f:selectItem itemLabel="Select One" itemValue=""
-						noSelectionOption="true" />
-					<f:selectItems value="#{linkCriteriaToProjectBean.projects}" />
-				</p:selectOneMenu>
-
 				
 				
-				
-
-
-				<p:commandButton value="Link Criteria to Project" id="creation" update="growl"
-					action="#{linkCriteriaToProjectBean.createProject}" />
-			</h:panelGrid>
-
-		</h:form>
+			</p:tab>
+			<p:tab title="Godfather Part II" closable="false">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+					<h:outputText
+						value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. 
+                In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, 
+                killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows." />
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Godfather Part III" closable="false">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+					<h:outputText
+						value="After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. 
+                    Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate." />
+				</h:panelGrid>
+			</p:tab>
+		</p:tabView>
 
 	</div>
 	<br />
-
 </h:body>
 </html>
