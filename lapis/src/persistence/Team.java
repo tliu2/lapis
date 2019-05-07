@@ -41,6 +41,9 @@ public class Team {
 		this.studentScores = studentScores;
 	}
 
+	public Team(Project project) {
+		this.project = project;
+	}
 	public int getId() {
 		return id;
 	}

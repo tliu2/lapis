@@ -40,4 +40,18 @@ public class CourseDAO {
 
 		return result;
 	}
+	
+	public int getIdFromCourseString(String course) {
+		int result = 0;
+		Session session = DBConnection.getSession();
+		
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Course c where c.name = :name");
+		readQuery.setString("name", course);
+		List resultQuery = readQuery.list();
+		result = ((Course) resultQuery.get(0)).getId();
+		readTransaction.commit();
+		return result;
+	}
+	
 }
