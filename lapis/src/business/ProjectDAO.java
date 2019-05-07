@@ -34,4 +34,18 @@ public class ProjectDAO {
 		return result;
 	}
 	
+	public int getIdFromProjectString(String project) {
+		int result = 0;
+		Session session = DBConnection.getSession();
+		String[] split = project.split("-");
+		
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Project p where p.id = :id");
+		readQuery.setString("id", split[0]);
+		List resultQuery = readQuery.list();
+		result = ((Project) resultQuery.get(0)).getId();
+		readTransaction.commit();
+		return result;
+	}
+	
 }

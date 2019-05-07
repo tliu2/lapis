@@ -87,6 +87,10 @@ public class Project {
 	public void setMaxTeamCount(int maxTeamCount) {
 		this.maxTeamCount = maxTeamCount;
 	}
+	
+	public String toString() {
+		return getId()+"-"+getSubject();
+	}
 	public Project() {
 	}
 	
