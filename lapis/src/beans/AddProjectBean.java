@@ -246,7 +246,7 @@ public class AddProjectBean {
 			int id = promoDAO.getIdFromPromotionString(promo);
 			List<Course> courses = courseDAO.readCourseByPromoId(id);
 			for (Course cour : courses) {
-				if (cour.toString().equals(course)) {
+				if (cour.toString().equals(course +"-"+promo)) {
 					courseObject = cour;
 				}
 			}
