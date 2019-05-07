@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<h:head>
+		<title>Add new language</title>
+	
+		<style type="text/css">
+			.ui-datalist {
+				width: 300px;
+				margin-bottom: 20px;
+			}
+			
+			.ui-datalist-item {
+				padding: 3px;
+			}
+			
+			.paginated .ui-datalist-data {
+				padding-left: 20px;
+			}
+		</style>
+	</h:head>
+	<h:body>
+
+	<div align="center">
+		<h1 class="ui-widget-header ui-corner-all">Create a new Language for projects</h1>
+		<br />
+		<h:form>
+			<p:growl id="growl" life="2000" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+
+				<p:dataList value="#{addLanguageBean.items}" var="language"
+					type="definition">
+					<f:facet name="header">
+			          List of languages
+			       </f:facet>
+			        #{language}
+				</p:dataList>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="languageName" value="Language name" />
+				<p:inputText id="languageName" value="#{addLanguageBean.name}" />
+
+
+
+				<p:commandButton value="Create Language" id="creation" update="growl"
+					action="#{addLanguageBean.createLanguage}" />
+			</h:panelGrid>
+
+		</h:form>
+	</div>
+	<br />
+	<br />
+
+</h:body>
+</html>
