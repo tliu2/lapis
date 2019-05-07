@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Create a project's team</title>
+</h:head>
+<h:body>
+	<div align="center">
+		<h1 class="ui-widget-header ui-corner-all">Add new team</h1>
+		<br />
+		<h:form>
+			<p:growl id="growl" life="2000" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="years" value="University Year: " />
+				<p:selectOneMenu id="years" value="#{addTeamBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{addTeamBean.onChange}" update="promo" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{addTeamBean.years}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="promo" value="Promotion: " />
+				<p:selectOneMenu id="promo" value="#{addTeamBean.promo}"
+					style="width:150px">
+					<p:ajax listener="#{addTeamBean.onChangeCourse}" update="course" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{addTeamBean.promotions}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="course" value="Course: " />
+				<p:selectOneMenu id="course" value="#{addTeamBean.course}"
+					style="width:150px">
+					<p:ajax listener="#{addTeamBean.onChangeProject}" update="project" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{addTeamBean.courses}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="project" value="Project: " />
+				<p:selectOneMenu id="project" value="#{addTeamBean.project}"
+					style="width:150px">
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{addTeamBean.projects}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="number" value="Number of teams to create: " />
+			  	<h:panelGrid columns="1" style="margin-bottom: 10px">
+			        <p:inputText id="number" value="#{addTeamBean.nbTeams}" />
+			        <p:slider for="number" minValue="#{addTeamBean.min}" maxValue="#{addTeamBean.max}"/>
+			    </h:panelGrid>
+
+
+				<p:commandButton value="Create Team" id="creation" update="growl"
+					action="#{addTeamBean.createEmptyTeam}" />
+			</h:panelGrid>
+
+		</h:form>
+
+	</div>
+	<br />
+
+</h:body>
+</html>
