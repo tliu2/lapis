@@ -6,12 +6,12 @@ import javax.persistence.Id;
 
 @Entity
 public class Domain {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
 	private String name;
-	
+
 	public Domain(String name) {
 		this.name = name;
 	}
@@ -35,5 +35,4 @@ public class Domain {
 	public Domain() {
 	}
 
-	
 }
