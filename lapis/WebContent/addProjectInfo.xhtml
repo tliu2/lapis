@@ -10,10 +10,9 @@
 </h:head>
 <h:body>
 	<div align="center">
-		<h1 class="ui-widget-header ui-corner-all">Add new project</h1>
+		<h1 class="ui-widget-header ui-corner-all">Add new project informations</h1>
 		<br />
-		<h:form>
-		
+		<h:form id="form">
 			<p:growl id="growl" life="2000" />
 
 			<h:panelGrid columns="2" cellpadding="5">
@@ -52,9 +51,13 @@
 					style="width:150px">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
+					<p:ajax listener="#{addProjectInfoBean.testUpdate}"
+						update="hof" />
+					<p:ajax listener="#{addProjectInfoBean.testUpdate}"
+						update="description" />
 					<f:selectItems value="#{addProjectInfoBean.projects}" />
 				</p:selectOneMenu>
-
+				
 				<p:outputLabel for="hof" value="Hall of Fame" />
 				<p:inputSwitch id="hof" value="#{addProjectInfoBean.hof}" />
 
@@ -62,8 +65,8 @@
 				<p:inputTextarea id="description" rows="6" cols="33"
 					value="#{addProjectInfoBean.description}" />
 
-				<p:outputLabel for="tutor" value="Tutor name: " />
-				<p:inputText id="tutor" value="#{addProjectInfoBean.tutorName}" />
+				<p:outputLabel for="tutor" value="Supervisor Name: " />
+				<p:inputText id="tutor" value="#{addProjectInfoBean.supervisorName}" />
 
 				<p:outputLabel for="language" value="Languages:" />
 				<p:selectCheckboxMenu id="language"
@@ -73,49 +76,48 @@
 					<f:selectItems value="#{addProjectInfoBean.languages}" />
 				</p:selectCheckboxMenu>
 
-				<h:form>
-					<p:growl id="msgs" showDetail="true" />
-
-					<p:dataTable id="languages" var="language"
-						value="#{addProjectInfoBean.languages}" editable="true" editMode="cell"
-						widgetVar="cellCars">
-						<f:facet name="header">Cell Editing with Click and RightClick</f:facet>
-
-						<p:ajax event="cellEdit"
-							listener="#{addProjectInfoBean.onCellEdit}" update=":form:msgs" />
-
-						<p:column headerText="Tool">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="Test" />
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
-
-						<p:column headerText="Tool Content">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="Test1" />
-								</f:facet>
-								<f:facet name="input">
-									<p:inputText value="Test2" style="width:96%"
-										label="Year" />
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
-
-					</p:dataTable>
-
-					<p:contextMenu for="cars2" widgetVar="cMenu">
-						<p:menuitem value="Edit Cell" icon="pi pi-search"
-							onclick="PF('cellCars').showCellEditor();return false;" />
-						<p:menuitem value="Hide Menu" icon="pi pi-times"
-							onclick="PF('cMenu').hide()" />
-					</p:contextMenu>
-				</h:form>
-				<p:commandButton value="Add Informations" id="creation"
-					update="growl" action="#{addProjectInfoBean.addProjectInfo}" />
+				<p:outputLabel for="domain" value="Domains:" />
+				<p:selectCheckboxMenu id="domain"
+					value="#{addProjectInfoBean.selectedDomains}" label="Domains"
+					multiple="true" filter="true" filterMatchMode="startsWith"
+					panelStyle="width:250px">
+					<f:selectItems value="#{addProjectInfoBean.domains}" />
+				</p:selectCheckboxMenu>
 			</h:panelGrid>
+			<p:dataTable id="tools" var="tool"
+				value="#{addProjectInfoBean.toolContents}" editable="true"
+				style="margin-bottom:20px">
+				<f:facet name="header">Tools informations</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{addProjectInfoBean.onRowEdit}"
+					update=":form:growl" />
+				<p:ajax event="rowEditCancel"
+					listener="#{addProjectInfoBean.onRowCancel}" update=":form:growl" />
+
+				<p:column headerText="Category">
+					<f:facet name="output">
+						<h:outputText value="id" />
+					</f:facet>
+					<h:outputText value="#{tool.tool.category}" />
+				</p:column>
+
+				<p:column headerText="Content">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{tool.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{tool.name}" style="width:100%" label="Year" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="width:35px">
+					<p:rowEditor />
+				</p:column>
+
+			</p:dataTable>
+			<p:commandButton value="Add Informations" id="creation"
+				update="growl" action="#{addProjectInfoBean.addProjectInfo}" />
 
 		</h:form>
 
