@@ -32,6 +32,7 @@ import persistence.Domain;
 import persistence.Evaluation;
 import persistence.Language;
 import persistence.Project;
+import persistence.ProjectInfo;
 import persistence.Promotion;
 import persistence.Tool;
 import persistence.ToolContent;
@@ -70,11 +71,14 @@ public class AddProjectInfoBean {
 
 	private List<ToolContent> toolContents = new ArrayList<ToolContent>();
 	private List<Language> selectLanguages = new ArrayList<Language>();
-	private List<Domain> selectDomain = new ArrayList<Domain>();
+	private List<Domain> selectDomains = new ArrayList<Domain>();
 
 	private String[] selectedLanguages;
 	private String[] selectedDomains;
 	private Project selectProject;
+	
+	private String[] latestLanguages = new String[15];
+	private String[] latestDomains = new String[15];
 
 	// private StudentDAO studentDAO = new StudentDAO();
 	private ProjectInfoDAO projectInfoDAO = new ProjectInfoDAO();
@@ -163,24 +167,70 @@ public class AddProjectInfoBean {
 			
 			for(String domain : selectedDomains) {
 				Domain dom = domainDAO.readDomainByName(domain).get(0);
-				selectDomain.add(dom);
+				selectDomains.add(dom);
 			}
 			
+			if(!projectInfoExist()) {
+				projectInfoDAO.createProjectInfo(selectProject, supervisorName, hof, selectDomains,selectLanguages, toolContents, description);
+				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informations added !", null);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+			else {
+				int courseID = courseDAO.getIdFromCourseString(course);
+				List<Project> projects = projectDAO.readProjectByCourseId(courseID);
+				for(Project p : projects) {
+					if(p.getSubject().equals(project)) {
+						selectProject = p;
+					}
+				}
+				int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
+				projectInfoDAO.updateInfo(projectID, supervisorName, hof, selectDomains, selectLanguages, toolContents, description);
+				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Project update !", null);
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+			
+
+		} else {
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid : missing information !", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+
+		}
+	}
+	
+	public void updateFields() {
+		if(projectInfoExist()) {
 			int courseID = courseDAO.getIdFromCourseString(course);
 			List<Project> projects = projectDAO.readProjectByCourseId(courseID);
 			for(Project p : projects) {
 				if(p.getSubject().equals(project)) {
 					selectProject = p;
 				}
+			}		
+			int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
+			List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID);
+			ProjectInfo projectInfo = projectInfos.get(0);
+			ide = projectInfo.getToolContents().get(0).getName();
+			vms = projectInfo.getToolContents().get(1).getName();
+			wps = projectInfo.getToolContents().get(2).getName();
+			//com = projectInfo.getToolContents().get(3).getName();
+			//pms = projectInfo.getToolContents().get(4).getName();
+			hof = projectInfo.isHof();
+			description = projectInfo.getDetailedDescription();
+			supervisorName = projectInfo.getSupervisorName();
+			/*if(projectInfo.getLanguages().size() > 0) {
+				for(int index = 0; index < projectInfo.getLanguages().size(); index ++) {
+					System.out.println("size : "+projectInfo.getLanguages().size() + "- - index : " + index);
+					latestLanguages[index] = projectInfo.getLanguages().get(index).getName();
+				}
+				selectedLanguages = latestLanguages;
 			}
-			projectInfoDAO.createProjectInfo(selectProject, supervisorName, hof, selectDomain,selectLanguages, toolContents, description);
-			
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informations added !", null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		} else {
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid : missing information !", null);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-
+			if(projectInfo.getDomaines().size() > 0) {
+				for(int index = 0; index < projectInfo.getDomaines().size(); index ++) {
+					latestDomains[index] = projectInfo.getDomaines().get(index).getName();
+				}
+				selectedDomains = latestDomains;
+			}*/
+			toolContents = projectInfo.getToolContents();
 		}
 	}
 
@@ -217,6 +267,24 @@ public class AddProjectInfoBean {
 			projects = new ArrayList<String>();
 		}
 	}
+	
+	public boolean projectInfoExist() {
+		
+		int courseID = courseDAO.getIdFromCourseString(course);
+		List<Project> projects = projectDAO.readProjectByCourseId(courseID);
+		for(Project p : projects) {
+			if(p.getSubject().equals(project)) {
+				selectProject = p;
+			}
+		}
+		
+		int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
+		List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID);
+		if(projectInfos.size() > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	public List<Language> getSelectLanguages() {
 		return selectLanguages;
@@ -227,11 +295,11 @@ public class AddProjectInfoBean {
 	}
 
 	public List<Domain> getSelectDomain() {
-		return selectDomain;
+		return selectDomains;
 	}
 
 	public void setSelectDomain(List<Domain> selectDomain) {
-		this.selectDomain = selectDomain;
+		this.selectDomains = selectDomain;
 	}
 
 	public Project getSelectProject() {

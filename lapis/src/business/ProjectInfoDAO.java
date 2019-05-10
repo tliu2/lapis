@@ -23,7 +23,32 @@ public class ProjectInfoDAO {
 		System.out.println(project.toString());
 		session.persist(projectInfo);
 		readTransaction.commit();
-
 	}
 	
+	public List<ProjectInfo> getProjectInfoByProjectID(int projectID) {
+		Session session = DBConnection.getSession();
+		
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from ProjectInfo pi where pi.project.id = :id");
+		readQuery.setInteger("id", projectID);
+		List result = readQuery.list();
+		readTransaction.commit();
+		return result;
+	}
+	
+	public void updateInfo(int projectID, String supervisorName, boolean isHof, List<Domain> domaines, List<Language> languages, List<ToolContent> toolContents, String detailedDescription) {
+		Session session = DBConnection.getSession();	
+		Transaction updateTransaction = session.beginTransaction();
+		Query updateQuery = session.createQuery("update ProjectInfo pi set pi.detailedDescription = :detailedDescription, pi.supervisorName =:supervisorName, pi.isHof =:isHof where pi.project.id =:id");
+		updateQuery.setInteger("id", projectID);
+		updateQuery.setString("supervisorName", supervisorName);
+		updateQuery.setBoolean("isHof", isHof);
+		//updateQuery.setParameterList("domaines", domaines);
+		//updateQuery.setParameterList("languages", languages);
+		//updateQuery.setParameterList("toolContents",toolContents);
+		updateQuery.setString("detailedDescription",detailedDescription);
+		updateQuery.executeUpdate();
+		updateTransaction.commit();
+		
+	}
 }

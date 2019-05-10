@@ -10,7 +10,8 @@
 </h:head>
 <h:body>
 	<div align="center">
-		<h1 class="ui-widget-header ui-corner-all">Add new project informations</h1>
+		<h1 class="ui-widget-header ui-corner-all">Add new project
+			informations</h1>
 		<br />
 		<h:form id="form">
 			<p:growl id="growl" life="2000" />
@@ -51,13 +52,20 @@
 					style="width:150px">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<p:ajax listener="#{addProjectInfoBean.testUpdate}"
-						update="hof" />
-					<p:ajax listener="#{addProjectInfoBean.testUpdate}"
+					<p:ajax listener="#{addProjectInfoBean.updateFields}" update="hof" />
+					<p:ajax listener="#{addProjectInfoBean.updateFields}"
 						update="description" />
+					<p:ajax listener="#{addProjectInfoBean.updateFields}"
+						update="tutor" />
+					<p:ajax listener="#{addProjectInfoBean.updateFields}"
+						update="language" />
+					<p:ajax listener="#{addProjectInfoBean.updateFields}"
+						update="domain" />
+					<p:ajax listener="#{addProjectInfoBean.updateFields}"
+						update="tools" />
 					<f:selectItems value="#{addProjectInfoBean.projects}" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel for="hof" value="Hall of Fame" />
 				<p:inputSwitch id="hof" value="#{addProjectInfoBean.hof}" />
 
