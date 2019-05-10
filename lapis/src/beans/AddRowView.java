@@ -92,5 +92,4 @@ public class AddRowView implements Serializable {
 		FacesMessage msg = new FacesMessage("New Criterion added");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-
 }
