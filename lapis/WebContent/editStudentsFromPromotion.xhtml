@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Edit Students</title>
+</h:head>
+<h:body>
+	<div align="center">
+		<h1 class="ui-widget-header ui-corner-all">Edit Students from a promotion</h1>
+		<br />
+		<h:form id="form">
+			<p:growl id="growl" life="2000" />
+
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="years" value="University Year: " />
+				<p:selectOneMenu id="years" value="#{editStudentsFromPromotionBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{editStudentsFromPromotionBean.onChange}" update="promo" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{editStudentsFromPromotionBean.years}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="promo" value="Promotion: " />
+				<p:selectOneMenu id="promo" value="#{editStudentsFromPromotionBean.promo}"
+					style="width:150px">
+					<p:ajax listener="#{editStudentsFromPromotionBean.onChangeStudent}" update="students" />
+
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{editStudentsFromPromotionBean.promotions}" />
+				</p:selectOneMenu>
+			
+					
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" cellpadding="5">
+			
+				<p:dataTable id="students" var="student"
+					value="#{editStudentsFromPromotionBean.students}" editable="true"
+					style="margin-bottom:20px">
+					<f:facet name="header">Student description</f:facet>
+	
+					<p:ajax event="rowEdit" 
+						listener="#{editStudentsFromPromotionBean.onRowEdit}" update=":form:growl" />
+					<p:ajax event="rowEditCancel"
+						listener="#{editStudentsFromPromotionBean.onRowCancel}" update=":form:growl" />
+	
+					<p:column headerText="Last Name">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{student.lastName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{student.lastName}" style="width:100%" label="last" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+	
+					<p:column headerText="First Name">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{student.firstName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{student.firstName}" style="width:100%" label="fisrt" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="INE">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="student.ine" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{student.firstName}" style="width:100%" label="fisrt" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="UCP number">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="student.ucpNumber" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{student.firstName}" style="width:100%" label="fisrt" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column style="width:35px">
+						<p:rowEditor />
+					</p:column>
+	
+				</p:dataTable>
+			</h:panelGrid>	
+		</h:form>
+
+	</div>
+	<br />
+
+</h:body>
+</html>
