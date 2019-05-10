@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>Add new course</title>
+</h:head>
+
+<h:body>
+	<style type="text/css">
+.ui-row-editor .ui-row-editor-pencil {
+	margin-left: 8px;
+}
+
+.ui-editable-column .ui-cell-editor-input {
+	overflow: hidden;
+}
+
+.ui-editable-column .ui-cell-editor-input * {
+	box-sizing: border-box;
+}
+</style>
+
+
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:treeTable value="#{ttBasicView.root}" editable="true"
+			var="treeData" style="margin-bottom:20px">
+			<f:facet name="header">
+            Row Editing
+        </f:facet>
+
+			<p:ajax event="rowEdit" listener="#{ttEditView.onRowEdit}"
+				update=":form:msgs" />
+			<p:ajax event="rowEditCancel"
+				listener="#{ttEditView.onRowCancel}" update=":form:msgs" />
+
+			<p:column headerText="Evaluation">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{treeData.name}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{treeData.name}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Score">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{treeData.score}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{treeData.score}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Description">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{treeData.description}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{treeData.description}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+		</p:treeTable>
+	</h:form>
+</h:body>
+</html>

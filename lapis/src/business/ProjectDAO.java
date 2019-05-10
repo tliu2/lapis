@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import persistence.Course;
 import persistence.Evaluation;
 import persistence.Project;
+import persistence.Promotion;
 
 public class ProjectDAO {
 
@@ -26,6 +27,17 @@ public class ProjectDAO {
 		Transaction readTransaction = session.beginTransaction();
 		Query readQuery = session.createQuery("from Project p where p.course.id = :id");
 		readQuery.setInteger("id", id);
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
+	
+	public List<Project> readAllProject() {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+
+		Query readQuery = session.createQuery("from Project");
 		List result = readQuery.list();
 		readTransaction.commit();
 

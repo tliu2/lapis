@@ -46,6 +46,8 @@ public class TeamDAO {
 		return result;
 	}
 	
+
+	
 	
 	public List<Team> readTeamById(int id) {
 		Session session = DBConnection.getSession();
@@ -57,5 +59,7 @@ public class TeamDAO {
 		
 		return result;
 	}
+	
+	
 	
 }
