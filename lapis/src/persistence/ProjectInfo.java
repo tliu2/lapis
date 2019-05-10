@@ -3,6 +3,7 @@ package persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class ProjectInfo {
 	@GeneratedValue
 	private int id;
 	
-	@OneToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Project.class)
+	@OneToOne(cascade= CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY, targetEntity = Project.class)
 	private Project project;
 	private String supervisorName;
 	private boolean isHof;
@@ -28,7 +29,7 @@ public class ProjectInfo {
 	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Language.class)
 	private List<Language> languages = new ArrayList<Language>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, targetEntity = ToolContent.class)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ToolContent.class)
 	private List<ToolContent> toolContents = new ArrayList<ToolContent>();
 	private String detailedDescription;
 	
