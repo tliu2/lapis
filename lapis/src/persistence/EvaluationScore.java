@@ -16,10 +16,15 @@ public class EvaluationScore {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Evaluation.class)
 	private Evaluation evaluation;
 	private int score;
+	private String description;
 	
-	public EvaluationScore(Evaluation evaluation, int score) {
+	public EvaluationScore(Evaluation evaluation, int score, String description) {
 		this.evaluation = evaluation;
 		this.score = score;
+		this.description = description;
+	}
+	
+	public EvaluationScore() {
 	}
 
 	public int getId() {
@@ -46,8 +51,12 @@ public class EvaluationScore {
 		this.score = score;
 	}
 
-	public EvaluationScore() {
+	public String getDescription() {
+		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 }
