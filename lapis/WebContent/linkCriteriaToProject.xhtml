@@ -13,109 +13,63 @@
 		<h1 class="ui-widget-header ui-corner-all">Link Criteria to
 			Project</h1>
 		<br />
-		<p:tabView>
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
 
-			<p:tab title="Choose your criteria">
-
-
-				<h:form id="form">
-					<p:growl id="msgs" showDetail="true" />
-
-					<p:dataTable id="cars1" widgetVar="cars1" var="car"
-						value="#{dtAddRowView.cars1}" editable="true"
-						style="margin-bottom:20px">
-						<f:facet name="header">
+			<p:dataTable id="cars1" widgetVar="cars1" var="car"
+				value="#{dtAddRowView.cars1}" editable="true"
+				style="margin-bottom:20px">
+				<f:facet name="header">
             				Row Editing with add functionality
         				</f:facet>
 
-						<p:ajax event="rowEdit" listener="#{dtAddRowView.onRowEdit}" />
-						<p:ajax event="rowEditCancel"
-							listener="#{dtAddRowView.onRowCancel}" />
+				<p:ajax event="rowEdit" listener="#{dtAddRowView.onRowEdit}" />
+				<p:ajax event="rowEditCancel" listener="#{dtAddRowView.onRowCancel}" />
 
-						<p:column headerText="Name">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{car.name}" />
-								</f:facet>
-								<f:facet name="input">
-									<h:selectOneMenu value="#{car.name}" style="width:100%">
-										<f:selectItems value="#{dtAddRowView.carsName}" var="man"
-											itemLabel="#{man}" itemValue="#{man}" />
-									</h:selectOneMenu>
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
+				<p:column headerText="Name">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{car.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{car.name}" style="width:100%">
+								<f:selectItems value="#{dtAddRowView.carsName}" var="man"
+									itemLabel="#{man}" itemValue="#{man}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-						<p:column headerText="Percentage">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText value="#{dtAddRowView.firstPercentage}" />
-								</f:facet>
-								<f:facet name="input">
-									<h:selectOneMenu value="#{dtAddRowView.percentages}"
-										style="width:100%">
-										<f:selectItems value="#{dtAddRowView.percentages}" var="man"
-											itemLabel="#{man}" itemValue="#{man}" />
-									</h:selectOneMenu>
-								</f:facet>
-							</p:cellEditor>
-						</p:column>
+				<p:column headerText="Percentage">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{dtAddRowView.firstPercentage}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{dtAddRowView.percentages}"
+								style="width:100%">
+								<f:selectItems value="#{dtAddRowView.percentages}" var="man"
+									itemLabel="#{man}" itemValue="#{man}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-						<p:column style="width:32px">
-							<p:rowEditor />
-						</p:column>
-					</p:dataTable>
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
 
-					<div class="ui-g">
-						<div class="ui-g-12">
-							<p:commandButton value="Add new row"
-								styleClass="ui-priority-primary" process="@this"
-								action="#{dtAddRowView.onAddNew()}"
-								oncomplete="PF('cars1').addRow();" />
-						</div>
-					</div>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<p:commandButton value="Add new row"
+						styleClass="ui-priority-primary" process="@this"
+						action="#{dtAddRowView.onAddNew()}"
+						oncomplete="PF('cars1').addRow();" />
+				</div>
+			</div>
 
-					<div class="ui-g">
-						<div class="ui-g-12">
-							<p:commandButton value="Remove last row"
-								styleClass="ui-priority-primary" process="@this"
-								action="#{dtAddRowView.onRemoveNew()}"
-								oncomplete="PF('cars1').removeRow();" />
-						</div>
-					</div>
-
-				</h:form>
-
-
-
-			</p:tab>
-			<p:tab title="Add new criterion" closable="false">
-
-				<h:form>
-					<p:growl id="growl" life="2000" />
-
-					<h:panelGrid columns="2" cellpadding="5">
-
-						<p:outputLabel for="criterionName" value="Criterion name" />
-						<p:inputText id="criterionName" value="#{addCriterionBean.name}" />
-
-
-						<p:outputLabel for="criterionName" value="Criterion's description" />
-						<p:inputTextarea rows="5" value="#{addCriterionBean.description}"
-							cols="30" counter="display" maxlength="100"
-							counterTemplate="{0} characters remaining." autoResize="false" />
-						<br />
-						<h:outputText id="display" />
-
-						<p:commandButton value="Create Criterion" id="creation"
-							update="growl" action="#{addCriterionBean.createCriterion}" />
-					</h:panelGrid>
-
-				</h:form>
-
-			</p:tab>
-		</p:tabView>
-
+		</h:form>
 	</div>
 	<br />
 </h:body>

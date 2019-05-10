@@ -58,7 +58,7 @@ public class AddRowView implements Serializable {
 	public void setService(LinkCriteriaToProjectDAO service) {
 		this.service = service;
 	}
-	
+
 	public int getFirstPercentage() {
 		return firstPercentage;
 	}
@@ -90,14 +90,6 @@ public class AddRowView implements Serializable {
 		Criterion car2Add = service.readAllCriterion().get(0);
 		cars1.add(car2Add);
 		FacesMessage msg = new FacesMessage("New Criterion added");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-	
-	public void onRemoveNew() {
-		// Remove one new car to the table
-		int last = cars1.size();
-		cars1.remove(last-1);
-		FacesMessage msg = new FacesMessage("Last Criterion removed");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
