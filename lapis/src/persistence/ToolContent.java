@@ -1,9 +1,11 @@
 package persistence;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -13,7 +15,7 @@ public class ToolContent {
 	@GeneratedValue
 	private int id;
 	
-	@OneToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Tool.class)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY, targetEntity = Tool.class)
 	private Tool tool;
 	private String name;
 	
