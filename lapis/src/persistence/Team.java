@@ -17,6 +17,7 @@ public class Team {
 	@Id
 	@GeneratedValue
 	private int id;
+	private String name;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Project.class)
 	private Project project;
@@ -33,12 +34,16 @@ public class Team {
 	private List<StudentScore> studentScores = new ArrayList<StudentScore>();
 
 	public Team(Project project, List<Student> students, List<EvaluationScore> scores, double finalScore,
-			List<StudentScore> studentScores) {
+			List<StudentScore> studentScores, String name) {
 		this.project = project;
 		this.students = students;
 		this.scores = scores;
 		this.finalScore = finalScore;
 		this.studentScores = studentScores;
+		this.name = name;
+	}
+	
+	public Team() {
 	}
 
 	public Team(Project project) {
@@ -92,8 +97,15 @@ public class Team {
 		this.studentScores = studentScores;
 	}
 
-	public Team() {
+	public String getName() {
+		return name;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 	
 
 }

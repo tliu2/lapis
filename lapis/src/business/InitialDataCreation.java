@@ -281,7 +281,7 @@ public class InitialDataCreation {
 		session.persist(domain1);
 		Domain domain2 = new Domain("Economie");
 		session.persist(domain2);
-		Domain domain3 = new Domain("Jeu de soci�t�");
+		Domain domain3 = new Domain("Jeu de societe");
 		session.persist(domain3);
 
 		domainList1 = new ArrayList<Domain>();
@@ -583,21 +583,24 @@ public class InitialDataCreation {
 		session.persist(evaluationScore72);
 
 		// Teams  
-		Team team1 = new Team(project1, studentList1, evaluationScoreList1, 17, studentScoreList1);
+		
+		Team team1 = new Team(project1, studentList1, evaluationScoreList1, 17, studentScoreList1,"");
+		String teamname;
+		
 		session.persist(team1);
-		Team team2 = new Team(project1, studentList2, evaluationScoreList2, 15, studentScoreList2);
+		Team team2 = new Team(project1, studentList2, evaluationScoreList2, 15, studentScoreList2,"FunGroup");
 		session.persist(team2);
 
-		Team team3 = new Team(project2, studentList3, evaluationScoreList3, 12, studentScoreList3);
+		Team team3 = new Team(project2, studentList3, evaluationScoreList3, 12, studentScoreList3,"");
 		session.persist(team3);
 
-		Team team4 = new Team(project3, studentList4, evaluationScoreList4, 10, studentScoreList4);
+		Team team4 = new Team(project3, studentList4, evaluationScoreList4, 10, studentScoreList4,"BestGroup");
 		session.persist(team4);
-		Team team5 = new Team(project3, studentList5, evaluationScoreList5, 16, studentScoreList5);
+		Team team5 = new Team(project3, studentList5, evaluationScoreList5, 16, studentScoreList5, "");
 		session.persist(team5);
-		Team team6 = new Team(project3, studentList6, evaluationScoreList6, 19, studentScoreList6);
+		Team team6 = new Team(project3, studentList6, evaluationScoreList6, 19, studentScoreList6, "");
 		session.persist(team6);
-		Team team7 = new Team(project3, studentList7, evaluationScoreList7, 14, studentScoreList7);
+		Team team7 = new Team(project3, studentList7, evaluationScoreList7, 14, studentScoreList7, "");
 		session.persist(team7);
 
 	}
@@ -612,16 +615,16 @@ public class InitialDataCreation {
 		for (UniversityYear universityYear : years) {
 			session.persist(universityYear);
 		}
-	}	
-	
+	}
+
 	public static void main(String[] args) {
 
 		createTables();
 		Session session = DBConnection.getSession();
 		Transaction persistTransaction1 = session.beginTransaction();
-		
+
 		InitTestData(session);
-		
+
 		persistTransaction1.commit();
 		session.close();
 
