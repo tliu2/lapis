@@ -18,7 +18,7 @@ public class ProjectInfo {
 	@GeneratedValue
 	private int id;
 	
-	@OneToOne(cascade= CascadeType.REFRESH, optional = false, fetch = FetchType.LAZY, targetEntity = Project.class)
+	@OneToOne(optional = false, fetch = FetchType.LAZY, targetEntity = Project.class)
 	private Project project;
 	private String supervisorName;
 	private boolean isHof;
