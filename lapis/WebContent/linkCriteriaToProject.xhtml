@@ -68,6 +68,10 @@
 						oncomplete="PF('cars1').addRow();" />
 				</div>
 			</div>
+			
+			<p:growl id="growl" life="2000" />
+			<p:commandButton value="Warning ! Don't release the null pointer exception !" id="creation" update="growl"
+					action="#{dtAddRowView.createEvaluation}" />
 
 		</h:form>
 	</div>

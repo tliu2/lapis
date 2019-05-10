@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 
+import business.EvaluationDAO;
 import business.LinkCriteriaToProjectDAO;
 import persistence.Criterion;
 
@@ -23,6 +24,8 @@ public class AddRowView implements Serializable {
 	private List<String> carsName;
 	private List<Integer> percentages;
 	private int firstPercentage;
+	
+	private EvaluationDAO evaluationDAO;
 
 	@ManagedProperty("#{criteriaService}")
 	private LinkCriteriaToProjectDAO service;
@@ -91,5 +94,13 @@ public class AddRowView implements Serializable {
 		cars1.add(car2Add);
 		FacesMessage msg = new FacesMessage("New Criterion added");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
+	public void createEvaluation() {
+		FacesMessage msg;
+		evaluationDAO.createEvaluation(cars1, percentages);
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+
 	}
 }
