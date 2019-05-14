@@ -641,5 +641,4 @@ public class AddProjectInfoBean {
 	public void setNewDomain(String newDomain) {
 		this.newDomain = newDomain;
 	}
-
 }
