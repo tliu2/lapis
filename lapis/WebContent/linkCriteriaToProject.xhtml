@@ -17,14 +17,14 @@
 			<p:growl id="msgs" showDetail="true" />
 
 			<p:dataTable id="cars1" widgetVar="cars1" var="car"
-				value="#{dtAddRowView.cars1}" editable="true"
+				value="#{critTab.cars1}" editable="true"
 				style="margin-bottom:20px">
 				<f:facet name="header">
             				Row Editing with add functionality
         				</f:facet>
 
-				<p:ajax event="rowEdit" listener="#{dtAddRowView.onRowEdit}" />
-				<p:ajax event="rowEditCancel" listener="#{dtAddRowView.onRowCancel}" />
+				<p:ajax event="rowEdit" listener="#{critTab.onRowEdit}" />
+				<p:ajax event="rowEditCancel" listener="#{critTab.onRowCancel}" />
 
 				<p:column headerText="Name">
 					<p:cellEditor>
@@ -33,7 +33,7 @@
 						</f:facet>
 						<f:facet name="input">
 							<h:selectOneMenu value="#{car.name}" style="width:100%">
-								<f:selectItems value="#{dtAddRowView.carsName}" var="man"
+								<f:selectItems value="#{critTab.carsName}" var="man"
 									itemLabel="#{man}" itemValue="#{man}" />
 							</h:selectOneMenu>
 						</f:facet>
@@ -43,12 +43,12 @@
 				<p:column headerText="Percentage">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{dtAddRowView.firstPercentage}" />
+							<h:outputText value="#{critTab.firstPercentage}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu value="#{dtAddRowView.percentages}"
+							<h:selectOneMenu value="#{critTab.percentages}"
 								style="width:100%">
-								<f:selectItems value="#{dtAddRowView.percentages}" var="man"
+								<f:selectItems value="#{critTab.percentages}" var="man"
 									itemLabel="#{man}" itemValue="#{man}" />
 							</h:selectOneMenu>
 						</f:facet>
@@ -64,14 +64,14 @@
 				<div class="ui-g-12">
 					<p:commandButton value="Add new row"
 						styleClass="ui-priority-primary" process="@this"
-						action="#{dtAddRowView.onAddNew()}"
+						action="#{critTab.onAddNew()}"
 						oncomplete="PF('cars1').addRow();" />
 				</div>
 			</div>
 			
 			<p:growl id="growl" life="2000" />
 			<p:commandButton value="Warning ! Don't release the null pointer exception !" id="creation" update="growl"
-					action="#{dtAddRowView.createEvaluation}" />
+					action="#{critTab.createEvaluation}" />
 
 		</h:form>
 	</div>
