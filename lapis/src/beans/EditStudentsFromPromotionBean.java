@@ -16,7 +16,6 @@ import business.*;
 import persistence.*;
 
 
-
 @ManagedBean
 @ViewScoped
 public class EditStudentsFromPromotionBean {
@@ -24,14 +23,14 @@ public class EditStudentsFromPromotionBean {
 
 
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
-	private Map<String, List<String>> dataPromo = new HashMap<String, List<String>>();
+	private Map<String, List<Student>> dataPromo = new HashMap<String, List<Student>>();
 
 	private String year;
 	private String promo;
 
 	private List<String> years;
 	private List<String> promotions;
-	private List<String> students;
+	private List<Student> students;
 
 	private PromotionDAO promoDAO = new PromotionDAO();
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
@@ -67,7 +66,7 @@ public class EditStudentsFromPromotionBean {
 			for (Student student : students) {
 				studentList.add(student.getFirstname()+ " " + student.getLastname());
 			}
-			dataPromo.put(promotion.toString(), studentList);
+			dataPromo.put(promotion.toString(), students);
 		}
 
 	}
@@ -94,15 +93,15 @@ public class EditStudentsFromPromotionBean {
 		if (year != null && !year.equals("") && promo != null && !promo.equals("")) {
 			students = dataPromo.get(promo);
 		} else {
-			students = new ArrayList<String>();
+			students = new ArrayList<Student>();
 		}
 	}
 
-	public Map<String, List<String>> getDataPromo() {
+	public Map<String, List<Student>> getDataPromo() {
 		return dataPromo;
 	}
 
-	public void setDataPromo(Map<String, List<String>> dataPromo) {
+	public void setDataPromo(Map<String, List<Student>> dataPromo) {
 		this.dataPromo = dataPromo;
 	}
 
@@ -138,11 +137,11 @@ public class EditStudentsFromPromotionBean {
 		this.promotions = promotions;
 	}
 
-	public List<String> getCourses() {
+	public List<Student> getCourses() {
 		return students;
 	}
 
-	public void setCourses(List<String> courses) {
+	public void setCourses(List<Student> courses) {
 		this.students = courses;
 	}
 
@@ -170,11 +169,11 @@ public class EditStudentsFromPromotionBean {
 		this.data = data;
 	}
 
-	public List<String> getStudents() {
+	public List<Student> getStudents() {
 		return students;
 	}
 
-	public void setStudents(List<String> students) {
+	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
 

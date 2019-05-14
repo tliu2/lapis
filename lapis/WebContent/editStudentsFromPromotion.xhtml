@@ -41,9 +41,9 @@
 			
 			<h:panelGrid columns="2" cellpadding="5">
 			
-				<p:dataTable id="students" var="student"
-					value="#{editStudentsFromPromotionBean.students}" editable="true"
-					style="margin-bottom:20px">
+				<p:dataTable id="students" value="#{editStudentsFromPromotionBean.students}" 
+					var="student" editable="true" style="margin-bottom:20px">
+					
 					<f:facet name="header">Student description</f:facet>
 	
 					<p:ajax event="rowEdit" 
@@ -51,13 +51,13 @@
 					<p:ajax event="rowEditCancel"
 						listener="#{editStudentsFromPromotionBean.onRowCancel}" update=":form:growl" />
 	
-					<p:column headerText="Last Name">
+					<p:column headerText="LastName">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{student.lastName}" />
+								<h:outputText value="#{student.lastname}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{student.lastName}" style="width:100%" label="last" />
+								<p:inputText value="#{student.lastname}" style="width:100%" label="last" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
@@ -65,10 +65,10 @@
 					<p:column headerText="First Name">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{student.firstName}" />
+								<h:outputText value="#{student.firstname}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{student.firstName}" style="width:100%" label="fisrt" />
+								<p:inputText value="#{student.firstname}" style="width:100%" label="fisrt" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
@@ -76,10 +76,10 @@
 					<p:column headerText="INE">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="student.ine" />
+								<h:outputText value="#{student.ucpNumber}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{student.firstName}" style="width:100%" label="fisrt" />
+								<p:inputText value="#{student.ine}" style="width:100%" label="ine" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
@@ -87,10 +87,10 @@
 					<p:column headerText="UCP number">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="student.ucpNumber" />
+								<h:outputText value="#{student.ucpNumber}" />
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{student.firstName}" style="width:100%" label="fisrt" />
+								<p:inputText value="#{student.ucpNumber}" style="width:100%" label="ucpNumber" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
