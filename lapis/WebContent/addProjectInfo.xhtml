@@ -80,15 +80,21 @@
 
 			</h:panelGrid>
 
-			<h3 style="margin-top: 0">Add Languages</h3>
+			<h3 style="margin-top: 0">Select Languages</h3>
 			<p:pickList id="language" value="#{addProjectInfoBean.languagesDual}"
 				var="languagesDual" itemLabel="#{languagesDual}"
 				itemValue="#{languagesDual}" />
 
-			<h3 style="margin-top: 0">Add Domain</h3>
+			<h3 style="margin-top: 0">Select Domain</h3>
 			<p:pickList id="domain" value="#{addProjectInfoBean.domainsDual}"
 				var="domainsDual" itemLabel="#{domainsDual}"
 				itemValue="#{domainsDual}" />
+
+			<p:inputText id="addDomain" value="#{addProjectInfoBean.newDomain}" />
+			<p:commandButton value="Add Domain" id="addDomainButton"
+				action="#{addProjectInfoBean.addDomain}" update="domain">
+			</p:commandButton>
+
 
 			<p:dataTable id="tools" var="tool"
 				value="#{addProjectInfoBean.toolContents}" editable="true"

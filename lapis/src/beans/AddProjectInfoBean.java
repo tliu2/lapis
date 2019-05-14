@@ -77,6 +77,15 @@ public class AddProjectInfoBean {
 
 	private String supervisorName;
 	private String description;
+	private String newDomain;
+	public String getNewDomain() {
+		return newDomain;
+	}
+
+	public void setNewDomain(String newDomain) {
+		this.newDomain = newDomain;
+	}
+
 	private boolean hof = false;
 
 	private List<ToolContent> toolContents = new ArrayList<ToolContent>();
@@ -85,7 +94,6 @@ public class AddProjectInfoBean {
 
 	private Project selectProject;
 
-	// private StudentDAO studentDAO = new StudentDAO();
 	private ProjectInfoDAO projectInfoDAO = new ProjectInfoDAO();
 	private ToolDAO toolDAO = new ToolDAO();
 	private DomainDAO domainDAO = new DomainDAO();
@@ -307,6 +315,17 @@ public class AddProjectInfoBean {
 			return true;
 		}
 		return false;
+	}
+	
+	public void addDomain() {
+		Domain domain = new Domain(newDomain);
+		domainDAO.createDomain(domain);
+		domains.add(domain.getName());
+		domainsDual = new DualListModel<String>(domains, selectedDomains);
+	}
+	
+	public void refreshDomainList() {
+		domainsDual = new DualListModel<String>(domains, selectedDomains);
 	}
 
 	

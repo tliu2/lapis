@@ -18,6 +18,13 @@ public class DomainDAO {
 		session.persist(domain);
 		readTransaction.commit();
 	}
+	
+	public void createDomain(Domain domain) {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		session.persist(domain);
+		readTransaction.commit();
+	}
 
 	public List<Domain> readAllDomains() {
 		Session session = DBConnection.getSession();
