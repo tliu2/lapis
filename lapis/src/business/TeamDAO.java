@@ -47,8 +47,6 @@ public class TeamDAO {
 	}
 	
 
-	
-	
 	public List<Team> readTeamById(int id) {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();

@@ -30,7 +30,7 @@
 	<h:form id="form">
 		<p:growl id="msgs" showDetail="true" />
 
-		<p:treeTable value="#{ttBasicView.root}" editable="true"
+		<p:treeTable value="#{ttEditView.root}" editable="true"
 			var="treeData" style="margin-bottom:20px">
 			<f:facet name="header">
             Row Editing
@@ -42,6 +42,43 @@
 				listener="#{ttEditView.onRowCancel}" update=":form:msgs" />
 
 			<p:column headerText="Evaluation">
+						<h:outputText value="#{treeData.name}" />
+			</p:column>
+			<p:column headerText="Score">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{treeData.score}" />
+					</f:facet>
+					<f:facet name="input">
+					<h:selectOneMenu value="#{treeData.score}"   style="width:100%">
+							<f:selectItems value="#{treeData.scoreList}" var="score" itemLabel="#{score}" itemValue="#{score}"  />
+						</h:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Description">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{treeData.description}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{treeData.description}" style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+		</p:treeTable>
+		
+		<p:treeTable value="#{ttEditView.root2}" editable="true" editMode="cell" var="treeData">
+        <f:facet name="header">
+            Cell Editing
+        </f:facet>
+         
+        <p:ajax event="cellEdit" listener="#{ttEditView.onCellEdit}" update=":form:msgs" />
+ 
+        <p:column headerText="Evaluation">
 				<p:cellEditor>
 					<f:facet name="output">
 						<h:outputText value="#{treeData.name}" />
@@ -57,7 +94,9 @@
 						<h:outputText value="#{treeData.score}" />
 					</f:facet>
 					<f:facet name="input">
-						<p:inputText value="#{treeData.score}" style="width:100%" />
+					<h:selectOneMenu value="#{treeData.score}"   style="width:100%">
+							<f:selectItems value="#{treeData.scoreList}" var="score" itemLabel="#{score}" itemValue="#{score}"  />
+						</h:selectOneMenu>
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
