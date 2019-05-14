@@ -1,5 +1,8 @@
 package persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,22 +12,32 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class StudentScore {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Student.class)
 	private Student student;
 	private double finalScore;
-	
-	public StudentScore(Student student, double finalScore) {
+	private List<EvaluationScore> scores = new ArrayList<EvaluationScore>();
+
+	public StudentScore(Student student, double finalScore, List<EvaluationScore> scores) {
 		this.student = student;
+		this.scores = scores;
 		this.finalScore = finalScore;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public List<EvaluationScore> getScores() {
+		return scores;
+	}
+
+	public void setScores(List<EvaluationScore> scores) {
+		this.scores = scores;
 	}
 
 	public void setId(int id) {
@@ -50,5 +63,4 @@ public class StudentScore {
 	public StudentScore() {
 	}
 
-	
 }

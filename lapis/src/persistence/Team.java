@@ -13,42 +13,43 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Team {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
 	private String name;
-	
+
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, targetEntity = Project.class)
 	private Project project;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Student.class)
 	private List<Student> students = new ArrayList<Student>();
-	
-	@OneToMany(fetch = FetchType.LAZY, targetEntity = EvaluationScore.class)
-	private List<EvaluationScore> scores = new ArrayList<EvaluationScore>();
-	
+
+//	@OneToMany(fetch = FetchType.LAZY, targetEntity = EvaluationScore.class)
+//	private List<EvaluationScore> scores = new ArrayList<EvaluationScore>();
+
 	private double finalScore;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = StudentScore.class)
 	private List<StudentScore> studentScores = new ArrayList<StudentScore>();
 
-	public Team(Project project, List<Student> students, List<EvaluationScore> scores, double finalScore,
+	public Team(Project project, List<Student> students, double finalScore,
 			List<StudentScore> studentScores, String name) {
 		this.project = project;
 		this.students = students;
-		this.scores = scores;
+		// this.scores = scores;
 		this.finalScore = finalScore;
 		this.studentScores = studentScores;
 		this.name = name;
 	}
-	
+
 	public Team() {
 	}
 
 	public Team(Project project) {
 		this.project = project;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -73,13 +74,13 @@ public class Team {
 		this.students = students;
 	}
 
-	public List<EvaluationScore> getScores() {
-		return scores;
-	}
-
-	public void setScores(List<EvaluationScore> scores) {
-		this.scores = scores;
-	}
+//	public List<EvaluationScore> getScores() {
+//		return scores;
+//	}
+//
+//	public void setScores(List<EvaluationScore> scores) {
+//		this.scores = scores;
+//	}
 
 	public double getFinalScore() {
 		return finalScore;
@@ -104,8 +105,5 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
-	
 
 }
