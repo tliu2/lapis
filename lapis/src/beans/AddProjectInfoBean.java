@@ -78,13 +78,6 @@ public class AddProjectInfoBean {
 	private String supervisorName;
 	private String description;
 	private String newDomain;
-	public String getNewDomain() {
-		return newDomain;
-	}
-
-	public void setNewDomain(String newDomain) {
-		this.newDomain = newDomain;
-	}
 
 	private boolean hof = false;
 
@@ -639,6 +632,14 @@ public class AddProjectInfoBean {
 
 	public void setData(Map<String, List<String>> data) {
 		this.data = data;
+	}
+	
+	public String getNewDomain() {
+		return newDomain;
+	}
+
+	public void setNewDomain(String newDomain) {
+		this.newDomain = newDomain;
 	}
 
 }
