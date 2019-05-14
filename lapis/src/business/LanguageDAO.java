@@ -18,6 +18,13 @@ public class LanguageDAO {
 		session.persist(language);
 		readTransaction.commit();
 	}
+	
+	public void createLanguage(Language language) {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		session.persist(language);
+		readTransaction.commit();
+	}
 
 	public List<Language> readAllLanguages() {
 		Session session = DBConnection.getSession();

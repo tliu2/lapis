@@ -78,6 +78,7 @@ public class AddProjectInfoBean {
 	private String supervisorName;
 	private String description;
 	private String newDomain;
+	private String newLanguage;
 
 	private boolean hof = false;
 
@@ -317,11 +318,21 @@ public class AddProjectInfoBean {
 		domainsDual = new DualListModel<String>(domains, selectedDomains);
 	}
 	
-	public void refreshDomainList() {
-		domainsDual = new DualListModel<String>(domains, selectedDomains);
+	public void addLanguage() {
+		Language language = new Language(newLanguage);
+		languageDAO.createLanguage(language);
+		languages.add(language.getName());
+		languagesDual = new DualListModel<String>(languages, selectedLanguages);
+	}
+	
+	public String getNewLanguage() {
+		return newLanguage;
 	}
 
-	
+	public void setNewLanguage(String newLanguage) {
+		this.newLanguage = newLanguage;
+	}
+
 	public DualListModel<String> getDomainsDual() {
 		return domainsDual;
 	}

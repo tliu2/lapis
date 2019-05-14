@@ -85,6 +85,11 @@
 				var="languagesDual" itemLabel="#{languagesDual}"
 				itemValue="#{languagesDual}" />
 
+			<p:inputText id="addLanguage" value="#{addProjectInfoBean.newLanguage}" />
+			<p:commandButton value="Add Language" id="addLanguageButton"
+				action="#{addProjectInfoBean.addLanguage}" update="language">
+			</p:commandButton>
+
 			<h3 style="margin-top: 0">Select Domain</h3>
 			<p:pickList id="domain" value="#{addProjectInfoBean.domainsDual}"
 				var="domainsDual" itemLabel="#{domainsDual}"
