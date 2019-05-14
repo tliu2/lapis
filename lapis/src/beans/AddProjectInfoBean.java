@@ -13,12 +13,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
+import org.hibernate.Session;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DualListModel;
 
 import com.sun.org.apache.bcel.internal.generic.ALOAD;
 
 import business.CourseDAO;
+import business.DBConnection;
 import business.DomainDAO;
 import business.LanguageDAO;
 import business.ProjectDAO;
@@ -61,8 +64,15 @@ public class AddProjectInfoBean {
 	private List<String> promotions;
 	private List<String> courses;
 	private List<String> projects;
+
 	private List<String> languages = new ArrayList<String>();
+	private List<String> selectedLanguages = new ArrayList<String>();
+	private DualListModel<String> languagesDual;
+
 	private List<String> domains = new ArrayList<String>();
+	private List<String> selectedDomains = new ArrayList<String>();
+	private DualListModel<String> domainsDual;
+
 	private List<String> tools = new ArrayList<String>();
 
 	private String supervisorName;
@@ -73,12 +83,7 @@ public class AddProjectInfoBean {
 	private List<Language> selectLanguages = new ArrayList<Language>();
 	private List<Domain> selectDomains = new ArrayList<Domain>();
 
-	private String[] selectedLanguages;
-	private String[] selectedDomains;
 	private Project selectProject;
-	
-	private String[] latestLanguages = new String[15];
-	private String[] latestDomains = new String[15];
 
 	// private StudentDAO studentDAO = new StudentDAO();
 	private ProjectInfoDAO projectInfoDAO = new ProjectInfoDAO();
@@ -89,6 +94,8 @@ public class AddProjectInfoBean {
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
+
+	private Session session = DBConnection.getSession();
 
 	public AddProjectInfoBean() {
 
@@ -139,12 +146,14 @@ public class AddProjectInfoBean {
 		for (Language language : allLanguages) {
 			languages.add(language.getName());
 		}
+		languagesDual = new DualListModel<String>(languages, selectedLanguages);
 
 		List<Domain> allDomains = domainDAO.readAllDomains();
 		domains = new ArrayList<String>();
 		for (Domain domain : allDomains) {
 			domains.add(domain.getName());
 		}
+		domainsDual = new DualListModel<String>(domains, selectedDomains);
 
 		List<Tool> allTools = toolDAO.readAllTools();
 		for (Tool tool : allTools) {
@@ -157,38 +166,43 @@ public class AddProjectInfoBean {
 	public void addProjectInfo() {
 		FacesMessage msg;
 		if (promo != null && year != null && course != null && project != null && supervisorName != null
-				&& !supervisorName.equals("") && description != null
-						&& !description.equals("")) {
-
-			for(String language : selectedLanguages) {
+				&& !supervisorName.equals("") && description != null && !description.equals("")) {
+			
+			for (String language : languagesDual.getTarget()) {
 				Language lang = languageDAO.readLanguageByName(language).get(0);
 				selectLanguages.add(lang);
 			}
-			
-			for(String domain : selectedDomains) {
+
+			for (String domain : domainsDual.getTarget()) {
 				Domain dom = domainDAO.readDomainByName(domain).get(0);
 				selectDomains.add(dom);
 			}
-			
-			if(!projectInfoExist()) {
-				projectInfoDAO.createProjectInfo(selectProject, supervisorName, hof, selectDomains,selectLanguages, toolContents, description);
+
+			if (!projectInfoExist()) {
+				projectInfoDAO.createProjectInfo(selectProject, supervisorName, hof, selectDomains, selectLanguages,
+						toolContents, description, session);
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informations added !", null);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
-			else {
+			} else {
 				int courseID = courseDAO.getIdFromCourseString(course);
 				List<Project> projects = projectDAO.readProjectByCourseId(courseID);
-				for(Project p : projects) {
-					if(p.getSubject().equals(project)) {
+				for (Project p : projects) {
+					if (p.getSubject().equals(project)) {
 						selectProject = p;
 					}
 				}
 				int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
-				projectInfoDAO.updateInfo(projectID, supervisorName, hof, selectDomains, selectLanguages, toolContents, description);
+				ProjectInfo projectInfo = projectInfoDAO.getProjectInfoByProjectID(projectID, session).get(0);
+				projectInfo.setDomaines(selectDomains);
+				projectInfo.setHof(hof);
+				projectInfo.setLanguages(selectLanguages);
+				projectInfo.setSupervisorName(supervisorName);
+				projectInfo.setDetailedDescription(description);
+				projectInfo.setToolContents(toolContents);
+				projectInfoDAO.updateInfo(projectInfo, session);
 				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Project update !", null);
 				FacesContext.getCurrentInstance().addMessage(null, msg);
 			}
-			
 
 		} else {
 			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid : missing information !", null);
@@ -196,41 +210,50 @@ public class AddProjectInfoBean {
 
 		}
 	}
-	
+
 	public void updateFields() {
-		if(projectInfoExist()) {
-			int courseID = courseDAO.getIdFromCourseString(course);
-			List<Project> projects = projectDAO.readProjectByCourseId(courseID);
-			for(Project p : projects) {
-				if(p.getSubject().equals(project)) {
-					selectProject = p;
+		if (projectInfoExist()) {
+			if (projects != null && !projects.equals("")) {
+
+				int courseID = courseDAO.getIdFromCourseString(course);
+				List<Project> projects = projectDAO.readProjectByCourseId(courseID);
+				for (Project p : projects) {
+					if (p.getSubject().equals(project)) {
+						selectProject = p;
+					}
 				}
-			}		
-			int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
-			List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID);
-			ProjectInfo projectInfo = projectInfos.get(0);
-			ide = projectInfo.getToolContents().get(0).getName();
-			vms = projectInfo.getToolContents().get(1).getName();
-			wps = projectInfo.getToolContents().get(2).getName();
-			//com = projectInfo.getToolContents().get(3).getName();
-			//pms = projectInfo.getToolContents().get(4).getName();
-			hof = projectInfo.isHof();
-			description = projectInfo.getDetailedDescription();
-			supervisorName = projectInfo.getSupervisorName();
-			/*if(projectInfo.getLanguages().size() > 0) {
-				for(int index = 0; index < projectInfo.getLanguages().size(); index ++) {
-					System.out.println("size : "+projectInfo.getLanguages().size() + "- - index : " + index);
-					latestLanguages[index] = projectInfo.getLanguages().get(index).getName();
+				int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
+				List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID, session);
+				ProjectInfo projectInfo = projectInfos.get(0);
+				ide = projectInfo.getToolContents().get(0).getName();
+				vms = projectInfo.getToolContents().get(1).getName();
+				wps = projectInfo.getToolContents().get(2).getName();
+				// com = projectInfo.getToolContents().get(3).getName();
+				// pms = projectInfo.getToolContents().get(4).getName();
+				hof = projectInfo.isHof();
+				description = projectInfo.getDetailedDescription();
+				supervisorName = projectInfo.getSupervisorName();
+				
+				selectedLanguages.clear();
+				for (int index = 0; index < projectInfo.getLanguages().size(); index++) {
+					selectedLanguages.add(projectInfo.getLanguages().get(index).getName());
+					if (languages.contains(selectedLanguages.get(index))) {
+						languages.remove(selectedLanguages.get(index));
+					}
 				}
-				selectedLanguages = latestLanguages;
+				languagesDual = new DualListModel<String>(languages, selectedLanguages);
+				
+				selectedDomains.clear();
+				for (int index = 0; index < projectInfo.getDomaines().size(); index++) {
+					selectedDomains.add(projectInfo.getDomaines().get(index).getName());
+					if (domains.contains(selectedDomains.get(index))) {
+						domains.remove(selectedDomains.get(index));
+					}
+				}
+				domainsDual = new DualListModel<String>(domains, selectedDomains);
+				
+				toolContents = projectInfo.getToolContents();
 			}
-			if(projectInfo.getDomaines().size() > 0) {
-				for(int index = 0; index < projectInfo.getDomaines().size(); index ++) {
-					latestDomains[index] = projectInfo.getDomaines().get(index).getName();
-				}
-				selectedDomains = latestDomains;
-			}*/
-			toolContents = projectInfo.getToolContents();
 		}
 	}
 
@@ -267,23 +290,64 @@ public class AddProjectInfoBean {
 			projects = new ArrayList<String>();
 		}
 	}
-	
+
 	public boolean projectInfoExist() {
-		
+
 		int courseID = courseDAO.getIdFromCourseString(course);
 		List<Project> projects = projectDAO.readProjectByCourseId(courseID);
-		for(Project p : projects) {
-			if(p.getSubject().equals(project)) {
+		for (Project p : projects) {
+			if (p.getSubject().equals(project)) {
 				selectProject = p;
 			}
 		}
-		
+
 		int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
-		List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID);
-		if(projectInfos.size() > 0) {
+		List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID, session);
+		if (projectInfos.size() > 0) {
 			return true;
 		}
 		return false;
+	}
+
+	
+	public DualListModel<String> getDomainsDual() {
+		return domainsDual;
+	}
+
+	public void setDomainsDual(DualListModel<String> domainsDual) {
+		this.domainsDual = domainsDual;
+	}
+	
+	public List<String> getSelectedDomains() {
+		return selectedDomains;
+	}
+
+	public void setSelectedDomains(List<String> selectedDomains) {
+		this.selectedDomains = selectedDomains;
+	}
+
+	public List<Domain> getSelectDomains() {
+		return selectDomains;
+	}
+
+	public void setSelectDomains(List<Domain> selectDomains) {
+		this.selectDomains = selectDomains;
+	}
+
+	public List<String> getSelectedLanguages() {
+		return selectedLanguages;
+	}
+
+	public void setSelectedLanguages(List<String> selectedLanguages) {
+		this.selectedLanguages = selectedLanguages;
+	}
+
+	public DualListModel<String> getLanguagesDual() {
+		return languagesDual;
+	}
+
+	public void setLanguagesDual(DualListModel<String> languagesDual) {
+		this.languagesDual = languagesDual;
 	}
 
 	public List<Language> getSelectLanguages() {
@@ -556,31 +620,6 @@ public class AddProjectInfoBean {
 
 	public void setData(Map<String, List<String>> data) {
 		this.data = data;
-	}
-	
-
-	public String[] getSelectedDomains() {
-		return selectedDomains;
-	}
-
-	public void setSelectedDomains(String[] selectedDomains) {
-		this.selectedDomains = selectedDomains;
-	}
-
-	public String[] getSelectedLanguages() {
-		return selectedLanguages;
-	}
-
-	public void setSelectedLanguages(String[] selectedLanguages) {
-		this.selectedLanguages = selectedLanguages;
-	}
-
-	public String[] getSelectedDomaines() {
-		return selectedDomains;
-	}
-
-	public void setSelectedDomaines(String[] selectedDomaines) {
-		this.selectedDomains = selectedDomaines;
 	}
 
 }

@@ -32,6 +32,8 @@
 					style="width:150px">
 					<p:ajax listener="#{addProjectInfoBean.onChangeCourse}"
 						update="course" />
+					<p:ajax listener="#{addProjectInfoBean.onChangeCourse}"
+						update="project" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{addProjectInfoBean.promotions}" />
@@ -76,22 +78,18 @@
 				<p:outputLabel for="tutor" value="Supervisor Name: " />
 				<p:inputText id="tutor" value="#{addProjectInfoBean.supervisorName}" />
 
-				<p:outputLabel for="language" value="Languages:" />
-				<p:selectCheckboxMenu id="language"
-					value="#{addProjectInfoBean.selectedLanguages}" label="Languages"
-					multiple="true" filter="true" filterMatchMode="startsWith"
-					panelStyle="width:250px">
-					<f:selectItems value="#{addProjectInfoBean.languages}" />
-				</p:selectCheckboxMenu>
-
-				<p:outputLabel for="domain" value="Domains:" />
-				<p:selectCheckboxMenu id="domain"
-					value="#{addProjectInfoBean.selectedDomains}" label="Domains"
-					multiple="true" filter="true" filterMatchMode="startsWith"
-					panelStyle="width:250px">
-					<f:selectItems value="#{addProjectInfoBean.domains}" />
-				</p:selectCheckboxMenu>
 			</h:panelGrid>
+
+			<h3 style="margin-top: 0">Add Languages</h3>
+			<p:pickList id="language" value="#{addProjectInfoBean.languagesDual}"
+				var="languagesDual" itemLabel="#{languagesDual}"
+				itemValue="#{languagesDual}" />
+
+			<h3 style="margin-top: 0">Add Domain</h3>
+			<p:pickList id="domain" value="#{addProjectInfoBean.domainsDual}"
+				var="domainsDual" itemLabel="#{domainsDual}"
+				itemValue="#{domainsDual}" />
+
 			<p:dataTable id="tools" var="tool"
 				value="#{addProjectInfoBean.toolContents}" editable="true"
 				style="margin-bottom:20px">
