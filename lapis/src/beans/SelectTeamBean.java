@@ -116,9 +116,9 @@ public class SelectTeamBean {
 					if (i == 0)
 						teamName = students.get(i).getLastname();
 					else
-						teamName = teamName+"-" + students.get(i).getLastname();
+						teamName = teamName + "-" + students.get(i).getLastname();
 				}
-				teamList.add(team.getName() + "(" + teamName + ") #"+team.getId());
+				teamList.add(team.getName() + "(" + teamName + ") #" + team.getId());
 			}
 			dataTeam.put(project.getSubject(), teamList);
 		}
@@ -127,7 +127,7 @@ public class SelectTeamBean {
 
 	public String toTeamToEvaluationBean() {
 		String split[] = team.split("#");
-		
+
 		teamToEvaluationBean.setTeamID(split[1]);
 		return "showTeamEvaluation";
 	}
@@ -190,7 +190,6 @@ public class SelectTeamBean {
 	public void setYear(String year) {
 		this.year = year;
 	}
-	
 
 	public String getPromo() {
 		return promo;
