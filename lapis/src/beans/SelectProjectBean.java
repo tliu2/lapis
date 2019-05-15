@@ -100,9 +100,9 @@ public class SelectProjectBean {
 
 	}
 
-	public String toLinkCriteriaToProject() {
+	public String toLinkEvaluationToProject() {
 		projectToCriteria.setProject(project);
-		return "linkCriteriaToProject";
+		return "linkEvaluationToProject";
 	}
 
 	public Map<String, List<String>> getDataPromo() {

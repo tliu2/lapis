@@ -19,7 +19,7 @@ import persistence.UniversityYear;
 
 @ManagedBean(name = "criteriaService")
 @ApplicationScoped
-public class LinkCriteriaToProjectDAO {
+public class LinkEvaluationToProjectDAO {
 
 	public List<Criterion> readAllCriterion() {
 		Session session = DBConnection.getSession();

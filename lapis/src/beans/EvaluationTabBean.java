@@ -11,17 +11,20 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
+import business.DBConnection;
 import business.EvaluationDAO;
-import business.LinkCriteriaToProjectDAO;
+import business.LinkEvaluationToProjectDAO;
 import persistence.Criterion;
 import persistence.Evaluation;
 
-@ManagedBean(name = "critTab")
+@ManagedBean(name = "evalTab")
 @ViewScoped
-public class CriterionTabBean implements Serializable {
+public class EvaluationTabBean implements Serializable {
 
 	private List<Criterion> criteriaList;
 	private List<String> criteriaName;
@@ -32,9 +35,9 @@ public class CriterionTabBean implements Serializable {
 	
 	private EvaluationDAO evaluationDAO = new EvaluationDAO();
 
-	private LinkCriteriaToProjectDAO service = new LinkCriteriaToProjectDAO();
+	private LinkEvaluationToProjectDAO service = new LinkEvaluationToProjectDAO();
 	
-	public CriterionTabBean(){
+	public EvaluationTabBean(){
 		
 	}
 
@@ -91,7 +94,7 @@ public class CriterionTabBean implements Serializable {
 		this.percentages = percentages;
 	}
 
-	public LinkCriteriaToProjectDAO getService() {
+	public LinkEvaluationToProjectDAO getService() {
 		return service;
 	}
 
@@ -99,7 +102,7 @@ public class CriterionTabBean implements Serializable {
 		this.criteriaList = criteriaList;
 	}
 
-	public void setService(LinkCriteriaToProjectDAO service) {
+	public void setService(LinkEvaluationToProjectDAO service) {
 		this.service = service;
 	}
 	
@@ -122,6 +125,13 @@ public class CriterionTabBean implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Car Edited");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+		
+		/*
+		 * Evaluation eval = ((Evaluation)event.getObject()); Session session =
+		 * DBConnection.getSession(); Transaction readTransaction =
+		 * session.beginTransaction(); session.persist(eval); readTransaction.commit();
+		 */
+		
 	}
 
 	public void onRowCancel(RowEditEvent event) {
