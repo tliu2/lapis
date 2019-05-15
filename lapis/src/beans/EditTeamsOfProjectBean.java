@@ -107,7 +107,7 @@ public class EditTeamsOfProjectBean {
 				projectList.add(project.getId() + "-" + project.getSubject());
 			}
 			dataProject.put(course.getName(), projectList);
-		} 
+		}  
 
 		List<Project> allProjects = projectDAO.readAllProject();
 		for (Project project : allProjects) {
