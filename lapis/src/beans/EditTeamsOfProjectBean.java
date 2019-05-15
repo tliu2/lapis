@@ -36,6 +36,7 @@ public class EditTeamsOfProjectBean {
 	private Map<String, List<String>> dataPromo = new HashMap<String, List<String>>();
 	private Map<String, List<String>> dataProject = new HashMap<String, List<String>>();
 	private Map<String, List<String>> dataTeam = new HashMap<String, List<String>>();
+	private Map<String, List<Student>> dataStudent = new HashMap<String, List<Student>>();
 
 	private String year;
 	private String promo;
@@ -48,22 +49,21 @@ public class EditTeamsOfProjectBean {
 	private List<String> courses;
 	private List<String> projects;
 	private List<String> teams;
-
+	private  List<Student> students;
+	
 	private String subject;
 	private String description;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
-	// private StudentDAO studentDAO = new StudentDAO();
 	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
 	private TeamDAO teamDAO = new TeamDAO();
+	private StudentDAO studentDAO = new StudentDAO();
 
-	@ManagedProperty(value = "#{navigTeamtoEvaluation}")
-	private TeamToEvaluationBean teamToEvaluationBean;
-
+	
 	public EditTeamsOfProjectBean() {
 		
 		}
@@ -107,7 +107,7 @@ public class EditTeamsOfProjectBean {
 				projectList.add(project.getId() + "-" + project.getSubject());
 			}
 			dataProject.put(course.getName(), projectList);
-		}  
+		}
 
 		List<Project> allProjects = projectDAO.readAllProject();
 		for (Project project : allProjects) {
@@ -115,27 +115,15 @@ public class EditTeamsOfProjectBean {
 			List<Team> teams = teamDAO.readTeamByProjectId(id);
 			List<String> teamList = new ArrayList<String>();
 			for (Team team : teams) {
-				String teamName = "";
-				List<Student> students = team.getStudents();
-				for (int i = 0; i < students.size(); i++) {
-					if (i == 0)
-						teamName = students.get(i).getLastname();
-					else
-						teamName = teamName + "-" + students.get(i).getLastname();
-				}
-				teamList.add(team.getName() + "(" + teamName + ") #" + team.getId());
+				teamList.add("#" + team.getId()+ " " +team.getName());
 			}
 			dataTeam.put(project.getSubject(), teamList);
 		}
-
-	}
-
-	public String toTeamToEvaluationBean() {
-		String split[] = team.split("#");
-
-		teamToEvaluationBean.setTeamID(split[1]);
-		return "showTeamEvaluation";
-	
+		
+		List<Team> allTeams = teamDAO.readAllTeam();
+		for (Team team : allTeams) {		
+			dataStudent.put("#" + team.getId()+ " " +team.getName(),team.getStudents());
+		}
 	}
 
 	public void onChange() {
@@ -163,14 +151,55 @@ public class EditTeamsOfProjectBean {
 	}
 
 	public void onChangeTeam() {
-		System.out.println(project);
 		if (project != null && !project.equals("")) {
 			String[] split = project.split("-");
 			teams = dataTeam.get(split[1]);
 		} else {
 			teams = new ArrayList<String>();
 		}
+	}
+	
+	public void onChangeStudent() {
+		if (team != null && !team.equals("")) {
+			students = dataStudent.get(team);
+		} else {
+			students = new ArrayList<Student>();
+		}
+	}
 
+	public void onRowEdit(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Student Edited");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edit Cancelled");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	
+	public Map<String, List<Student>> getDataStudent() {
+		return dataStudent;
+	}
+
+	public void setDataStudent(Map<String, List<Student>> dataStudent) {
+		this.dataStudent = dataStudent;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public StudentDAO getStudentDAO() {
+		return studentDAO;
+	}
+
+	public void setStudentDAO(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
 	}
 
 	public Map<String, List<String>> getData() {
@@ -355,14 +384,6 @@ public class EditTeamsOfProjectBean {
 
 	public void setTeamDAO(TeamDAO teamDAO) {
 		this.teamDAO = teamDAO;
-	}
-
-	public TeamToEvaluationBean getTeamToEvaluationBean() {
-		return teamToEvaluationBean;
-	}
-
-	public void setTeamToEvaluationBean(TeamToEvaluationBean teamToEvaluationBean) {
-		this.teamToEvaluationBean = teamToEvaluationBean;
 	}
 	
 
