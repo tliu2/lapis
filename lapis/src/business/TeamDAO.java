@@ -58,6 +58,14 @@ public class TeamDAO {
 		return result;
 	}
 	
-	
+	public void updateFinalScore(Double finalScore, int teamID) {
+		Session session = DBConnection.getSession();
+		Transaction updateTransaction = session.beginTransaction();
+		Query updateQuery = session.createQuery("update Team t set t.finalScore = :finalScore where t.id=:teamID");
+		updateQuery.setDouble("finalScore", finalScore);
+		updateQuery.setInteger("teamID", teamID);
+		updateQuery.executeUpdate();
+		updateTransaction.commit();
+	}
 	
 }
