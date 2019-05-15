@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>Create Project</title>
+	<title>Add project Information</title>
 </h:head>
 <h:body>
 	<div align="center">
@@ -85,7 +85,8 @@
 				var="languagesDual" itemLabel="#{languagesDual}"
 				itemValue="#{languagesDual}" />
 
-			<p:inputText id="addLanguage" value="#{addProjectInfoBean.newLanguage}" />
+			<p:inputText id="addLanguage"
+				value="#{addProjectInfoBean.newLanguage}" />
 			<p:commandButton value="Add Language" id="addLanguageButton"
 				action="#{addProjectInfoBean.addLanguage}" update="language">
 			</p:commandButton>
