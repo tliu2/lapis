@@ -13,11 +13,11 @@ import persistence.StudentScore;
 import persistence.Team;
 
 public class TeamDAO {
-	public void createTeam(Project project, List<Student> students, List<EvaluationScore> scores, double finalScore,
+	public void createTeam(Project project, List<Student> students, double finalScore,
 			List<StudentScore> studentScores, String name) {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
-		Team team = new Team(project, students, scores, finalScore, studentScores, name);
+		Team team = new Team(project, students, finalScore, studentScores, name);
 		session.persist(team);
 		readTransaction.commit();
 
