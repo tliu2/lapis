@@ -33,7 +33,7 @@ public class EvaluationTreeDAO {
 					new TreeData(evaluationScores.get(i).getEvaluation().getCriterion().getName(),"","",evaluationScores.get(i).getId()), root);
 	
 			for (StudentScore studentScore : studentScoresList) {
-				TreeNode studentLeaf = new DefaultTreeNode( new TreeData(studentScore.getStudent().getFirstname()+" "+studentScore.getStudent().getLastname(), Double.toString(studentScore.getScores().get(0).getScore()),"",studentScore.getStudent().getId()), evaluationRoot);
+				TreeNode studentLeaf = new DefaultTreeNode( new TreeData(studentScore.getStudent().getFirstname()+" "+studentScore.getStudent().getLastname(), Double.toString(studentScore.getScores().get(i).getScore()),"",studentScore.getStudent().getId()), evaluationRoot);
 
 			}
 		}

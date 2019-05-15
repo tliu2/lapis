@@ -47,8 +47,7 @@ public class SelectTeamBean {
 	private String subject;
 	private String description;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
-
-	// private StudentDAO studentDAO = new StudentDAO();
+	
 	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
