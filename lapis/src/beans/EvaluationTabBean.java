@@ -179,7 +179,7 @@ public class EvaluationTabBean implements Serializable {
 
 	public void persistEvaluation() {
 		FacesMessage msg;
-		evaluationDAO.persistEvaluation(stateSaveEvaList);
+		evaluationDAO.persistEvaluation(evaList);
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
