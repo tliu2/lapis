@@ -30,10 +30,13 @@ public class CriterionTabBean implements Serializable {
 	private int visiblePercentage;
 	private List<Evaluation> evaList;
 	
-	private EvaluationDAO evaluationDAO;
+	private EvaluationDAO evaluationDAO = new EvaluationDAO();
 
-	@ManagedProperty("#{criteriaService}")
-	private LinkCriteriaToProjectDAO service;
+	private LinkCriteriaToProjectDAO service = new LinkCriteriaToProjectDAO();
+	
+	public CriterionTabBean(){
+		
+	}
 
 	@PostConstruct
 	public void init() {
@@ -99,6 +102,22 @@ public class CriterionTabBean implements Serializable {
 	public void setService(LinkCriteriaToProjectDAO service) {
 		this.service = service;
 	}
+	
+	public String getVisibleText() {
+		return visibleText;
+	}
+
+	public void setVisibleText(String visibleText) {
+		this.visibleText = visibleText;
+	}
+
+	public int getVisiblePercentage() {
+		return visiblePercentage;
+	}
+
+	public void setVisiblePercentage(int visiblePercentage) {
+		this.visiblePercentage = visiblePercentage;
+	}
 
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Car Edited");
@@ -134,21 +153,5 @@ public class CriterionTabBean implements Serializable {
 		evaluationDAO.persistEvaluation(evaList);
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public String getVisibleText() {
-		return visibleText;
-	}
-
-	public void setVisibleText(String visibleText) {
-		this.visibleText = visibleText;
-	}
-
-	public int getVisiblePercentage() {
-		return visiblePercentage;
-	}
-
-	public void setVisiblePercentage(int visiblePercentage) {
-		this.visiblePercentage = visiblePercentage;
 	}
 }
