@@ -97,7 +97,7 @@ public class EditTeamsOfProjectBean {
 			}
 			dataPromo.put(promotion.toString(), courseList);
 		}
-
+ 
 		List<Course> allCourses = courseDAO.readAllCourse();
 		for (Course course : allCourses) {
 			int id = course.getId();
