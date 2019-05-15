@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class StudentScore {
@@ -20,6 +21,8 @@ public class StudentScore {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Student.class)
 	private Student student;
 	private double finalScore;
+	
+	@OneToMany(fetch = FetchType.LAZY, targetEntity = EvaluationScore.class)
 	private List<EvaluationScore> scores = new ArrayList<EvaluationScore>();
 
 	public StudentScore(Student student, double finalScore, List<EvaluationScore> scores) {
