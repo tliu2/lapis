@@ -29,16 +29,17 @@ public class EvaluationTabBean implements Serializable {
 	private List<Criterion> criteriaList;
 	private List<String> criteriaName;
 	private List<Integer> percentages;
-	private String visibleText;
+	private Criterion visibleText;
 	private int visiblePercentage;
 	private List<Evaluation> evaList;
-	
+	private List<Evaluation> stateSaveEvaList;
+
 	private EvaluationDAO evaluationDAO = new EvaluationDAO();
 
 	private LinkEvaluationToProjectDAO service = new LinkEvaluationToProjectDAO();
-	
-	public EvaluationTabBean(){
-		
+
+	public EvaluationTabBean() {
+
 	}
 
 	@PostConstruct
@@ -47,6 +48,7 @@ public class EvaluationTabBean implements Serializable {
 		criteriaList = service.readAllCriterion();
 		criteriaName = service.readAllCriterionName(criteriaList);
 		percentages = service.makePercentageList();
+		stateSaveEvaList = new ArrayList<Evaluation>();
 	}
 
 	public List<Evaluation> getEvaList() {
@@ -56,7 +58,6 @@ public class EvaluationTabBean implements Serializable {
 	public void setEvaList(List<Evaluation> evaList) {
 		this.evaList = evaList;
 	}
-
 
 	public List<Criterion> getCriteriaList() {
 		return criteriaList;
@@ -105,12 +106,12 @@ public class EvaluationTabBean implements Serializable {
 	public void setService(LinkEvaluationToProjectDAO service) {
 		this.service = service;
 	}
-	
-	public String getVisibleText() {
+
+	public Criterion getVisibleText() {
 		return visibleText;
 	}
 
-	public void setVisibleText(String visibleText) {
+	public void setVisibleText(Criterion visibleText) {
 		this.visibleText = visibleText;
 	}
 
@@ -121,17 +122,26 @@ public class EvaluationTabBean implements Serializable {
 	public void setVisiblePercentage(int visiblePercentage) {
 		this.visiblePercentage = visiblePercentage;
 	}
+	
+	public List<Evaluation> getStateSaveEvaList() {
+		return stateSaveEvaList;
+	}
+
+	public void setStateSaveEvaList(List<Evaluation> stateSaveEvaList) {
+		this.stateSaveEvaList = stateSaveEvaList;
+	}
 
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Car Edited");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		
+
 		/*
-		 * Evaluation eval = ((Evaluation)event.getObject()); Session session =
-		 * DBConnection.getSession(); Transaction readTransaction =
-		 * session.beginTransaction(); session.persist(eval); readTransaction.commit();
+		 * Evaluation eval = ((Evaluation) event.getObject());
+		 * System.out.println(eval.getCriterion().getName());
+		 * System.out.println(eval.getPercentage()); stateSaveEvaList.add(eval);
 		 */
 		
+
 	}
 
 	public void onRowCancel(RowEditEvent event) {
@@ -152,15 +162,24 @@ public class EvaluationTabBean implements Serializable {
 
 	public void onAddNew() {
 		// Add one new car to the table
-		Criterion car2Add = service.readAllCriterion().get(0);
-		criteriaList.add(car2Add);
+		Criterion crit = new Criterion("","");
+		Evaluation eval2Add = new Evaluation(crit,0);
+		evaList.add(eval2Add);
 		FacesMessage msg = new FacesMessage("New Evaluation added");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
+	public void printEvaList() {
+		for (int i=0; i<evaList.size();i++) {
+			System.out.println("--------");
+			System.out.println(evaList.get(i).getCriterion().getName());
+			System.out.println(evaList.get(i).getPercentage());
+		}
 	}
 
 	public void persistEvaluation() {
 		FacesMessage msg;
-		evaluationDAO.persistEvaluation(evaList);
+		evaluationDAO.persistEvaluation(stateSaveEvaList);
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
