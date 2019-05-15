@@ -16,8 +16,8 @@
 		<h:form id="form">
 			<p:growl id="msgs" showDetail="true" />
 
-			<p:dataTable id="cars1" widgetVar="cars1" var="car"
-				value="#{critTab.cars1}" editable="true"
+			<p:dataTable id="evaluation1" widgetVar="evaluation1" var="evaluation"
+				value="#{critTab.evaList}" editable="true"
 				style="margin-bottom:20px">
 				<f:facet name="header">
             				Row Editing with add functionality
@@ -29,12 +29,12 @@
 				<p:column headerText="Name">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{car.name}" />
+							<h:outputText value="#{evaList.criterion}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu value="#{car.name}" style="width:100%">
-								<f:selectItems value="#{critTab.carsName}" var="man"
-									itemLabel="#{man}" itemValue="#{man}" />
+							<h:selectOneMenu value="#{evaList.criterion}" style="width:100%">
+								<f:selectItems value="#{critTab.criteriaName}" var="criterion"
+									itemLabel="#{criterion}" itemValue="#{criterion}" />
 							</h:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
@@ -43,13 +43,13 @@
 				<p:column headerText="Percentage">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{critTab.firstPercentage}" />
+							<h:outputText value="#{evaList.percentage}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu value="#{critTab.percentages}"
+							<h:selectOneMenu value="#{evaList.percentage}"
 								style="width:100%">
-								<f:selectItems value="#{critTab.percentages}" var="man"
-									itemLabel="#{man}" itemValue="#{man}" />
+								<f:selectItems value="#{critTab.percentages}" var="percentage"
+									itemLabel="#{percentage}" itemValue="#{percentage}" />
 							</h:selectOneMenu>
 						</f:facet>
 					</p:cellEditor>
@@ -65,7 +65,7 @@
 					<p:commandButton value="Add new row"
 						styleClass="ui-priority-primary" process="@this"
 						action="#{critTab.onAddNew()}"
-						oncomplete="PF('cars1').addRow();" />
+						oncomplete="PF('evaluation1').addRow();" />
 				</div>
 			</div>
 			

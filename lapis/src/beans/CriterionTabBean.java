@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,16 +17,18 @@ import org.primefaces.event.RowEditEvent;
 import business.EvaluationDAO;
 import business.LinkCriteriaToProjectDAO;
 import persistence.Criterion;
+import persistence.Evaluation;
 
 @ManagedBean(name = "critTab")
 @ViewScoped
 public class CriterionTabBean implements Serializable {
 
-	private List<Criterion> cars1;
-	private List<Criterion> cars2;
-	private List<String> carsName;
+	private List<Criterion> criteriaList;
+	private List<String> criteriaName;
 	private List<Integer> percentages;
-	private int firstPercentage;
+	private String visibleText;
+	private int visiblePercentage;
+	private List<Evaluation> evaList = new ArrayList<Evaluation>();
 	
 	private EvaluationDAO evaluationDAO;
 
@@ -34,23 +37,43 @@ public class CriterionTabBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		cars1 = service.readAllCriterion();
-		cars2 = service.readAllCriterion();
-		carsName = service.readAllCriterionName(cars1);
+		for (int i = 0; i<3; i++) {
+			Criterion crit = new Criterion();
+			Evaluation eval = new Evaluation(crit,0);
+			evaList.add(eval);
+		}
+		criteriaList = service.readAllCriterion();
+		criteriaName = service.readAllCriterionName(criteriaList);
 		percentages = service.makePercentageList();
-		firstPercentage = percentages.get(0);
 	}
 
-	public List<Criterion> getCars1() {
-		return cars1;
+	public List<Evaluation> getEvaList() {
+		return evaList;
 	}
 
-	public List<Criterion> getCars2() {
-		return cars2;
+	public void setEvaList(List<Evaluation> evaList) {
+		this.evaList = evaList;
 	}
 
-	public void setCars2(List<Criterion> cars2) {
-		this.cars2 = cars2;
+
+	public List<Criterion> getCriteriaList() {
+		return criteriaList;
+	}
+
+	public void setCriteriaList(List<Criterion> criteriaList) {
+		this.criteriaList = criteriaList;
+	}
+
+	public List<String> getCriteriaName() {
+		return criteriaName;
+	}
+
+	public void setCriteriaName(List<String> criteriaName) {
+		this.criteriaName = criteriaName;
+	}
+
+	public List<Criterion> getcriteriaList() {
+		return criteriaList;
 	}
 
 	public EvaluationDAO getEvaluationDAO() {
@@ -60,7 +83,7 @@ public class CriterionTabBean implements Serializable {
 	public void setEvaluationDAO(EvaluationDAO evaluationDAO) {
 		this.evaluationDAO = evaluationDAO;
 	}
-	
+
 	public List<Integer> getPercentages() {
 		return percentages;
 	}
@@ -73,28 +96,12 @@ public class CriterionTabBean implements Serializable {
 		return service;
 	}
 
-	public void setCars1(List<Criterion> cars1) {
-		this.cars1 = cars1;
+	public void setcriteriaList(List<Criterion> criteriaList) {
+		this.criteriaList = criteriaList;
 	}
 
 	public void setService(LinkCriteriaToProjectDAO service) {
 		this.service = service;
-	}
-
-	public int getFirstPercentage() {
-		return firstPercentage;
-	}
-
-	public void setFirstPercentage(int firstPercentage) {
-		this.firstPercentage = firstPercentage;
-	}
-
-	public List<String> getCarsName() {
-		return carsName;
-	}
-
-	public void setCarsName(List<String> carsName) {
-		this.carsName = carsName;
 	}
 
 	public void onRowEdit(RowEditEvent event) {
@@ -106,7 +113,7 @@ public class CriterionTabBean implements Serializable {
 		FacesMessage msg = new FacesMessage("Edit Cancelled");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-	
+
 	public void onCellEdit(CellEditEvent event) {
 		Object oldValue = event.getOldValue();
 		Object newValue = event.getNewValue();
@@ -121,23 +128,35 @@ public class CriterionTabBean implements Serializable {
 	public void onAddNew() {
 		// Add one new car to the table
 		Criterion car2Add = service.readAllCriterion().get(0);
-		cars1.add(car2Add);
-		FacesMessage msg = new FacesMessage("New Criterion added");
+		criteriaList.add(car2Add);
+		FacesMessage msg = new FacesMessage("New Evaluation added");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-	
+
 	public void createEvaluation() {
-		FacesMessage msg;
-		if (cars1 == null) {
-			System.out.println("Cars1 est null");
-		}else {
-			if (percentages == null) {
-				System.out.println("Liste de pourcentages est null");
-			}else {
-				evaluationDAO.createEvaluation(cars1, percentages);
-				msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-			}
+		for (int i = 0; i<criteriaList.size() ; i++) {
+			Evaluation evaluation = new Evaluation(criteriaList.get(i),percentages.get(i));
+			evaList.add(evaluation);
 		}
+		FacesMessage msg;
+		evaluationDAO.persitEvaluation(evaList);
+		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String getVisibleText() {
+		return visibleText;
+	}
+
+	public void setVisibleText(String visibleText) {
+		this.visibleText = visibleText;
+	}
+
+	public int getVisiblePercentage() {
+		return visiblePercentage;
+	}
+
+	public void setVisiblePercentage(int visiblePercentage) {
+		this.visiblePercentage = visiblePercentage;
 	}
 }
