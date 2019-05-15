@@ -28,6 +28,7 @@ import business.ProjectDAO;
 import business.ProjectInfoDAO;
 import business.PromotionDAO;
 import business.StudentDAO;
+import business.ToolContentDAO;
 import business.ToolDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
@@ -53,12 +54,6 @@ public class AddProjectInfoBean {
 	private String promo;
 	private String course;
 	private String project;
-
-	private String ide;
-	private String vms;
-	private String wps;
-	private String com;
-	private String pms;
 
 	private List<String> years;
 	private List<String> promotions;
@@ -90,6 +85,7 @@ public class AddProjectInfoBean {
 
 	private ProjectInfoDAO projectInfoDAO = new ProjectInfoDAO();
 	private ToolDAO toolDAO = new ToolDAO();
+	private ToolContentDAO toolContentDAO = new ToolContentDAO();
 	private DomainDAO domainDAO = new DomainDAO();
 	private LanguageDAO languageDAO = new LanguageDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
@@ -169,7 +165,7 @@ public class AddProjectInfoBean {
 		FacesMessage msg;
 		if (promo != null && year != null && course != null && project != null && supervisorName != null
 				&& !supervisorName.equals("") && description != null && !description.equals("")) {
-			
+
 			for (String language : languagesDual.getTarget()) {
 				Language lang = languageDAO.readLanguageByName(language).get(0);
 				selectLanguages.add(lang);
@@ -227,15 +223,10 @@ public class AddProjectInfoBean {
 				int projectID = projectDAO.getIdFromProjectString(selectProject.toString());
 				List<ProjectInfo> projectInfos = projectInfoDAO.getProjectInfoByProjectID(projectID, session);
 				ProjectInfo projectInfo = projectInfos.get(0);
-				ide = projectInfo.getToolContents().get(0).getName();
-				vms = projectInfo.getToolContents().get(1).getName();
-				wps = projectInfo.getToolContents().get(2).getName();
-				// com = projectInfo.getToolContents().get(3).getName();
-				// pms = projectInfo.getToolContents().get(4).getName();
 				hof = projectInfo.isHof();
 				description = projectInfo.getDetailedDescription();
 				supervisorName = projectInfo.getSupervisorName();
-				
+
 				selectedLanguages.clear();
 				for (int index = 0; index < projectInfo.getLanguages().size(); index++) {
 					selectedLanguages.add(projectInfo.getLanguages().get(index).getName());
@@ -244,7 +235,7 @@ public class AddProjectInfoBean {
 					}
 				}
 				languagesDual = new DualListModel<String>(languages, selectedLanguages);
-				
+
 				selectedDomains.clear();
 				for (int index = 0; index < projectInfo.getDomaines().size(); index++) {
 					selectedDomains.add(projectInfo.getDomaines().get(index).getName());
@@ -253,8 +244,25 @@ public class AddProjectInfoBean {
 					}
 				}
 				domainsDual = new DualListModel<String>(domains, selectedDomains);
-				
+
 				toolContents = projectInfo.getToolContents();
+				System.out.println("---------------------------------------------------------------------------"+projectInfo.getToolContents().size());
+				List<Tool> allTools = toolDAO.readAllTools();
+				boolean isInside;
+				for (Tool toolC : allTools) {
+					isInside = false;
+					System.out.println("----------- name = " +toolC.getCategory());
+					for (int index = 0; index < toolContents.size(); index++) {
+						System.out.println("inside :" + toolContents.get(index).getTool().getCategory());
+						if (toolC.getCategory().equals(toolContents.get(index).getTool().getCategory())) {
+							isInside = true;
+						}
+					}
+					if(!isInside) {
+						ToolContent newToolC = new ToolContent(toolC, "");
+						toolContents.add(newToolC);
+					}
+				}
 			}
 		}
 	}
@@ -310,21 +318,21 @@ public class AddProjectInfoBean {
 		}
 		return false;
 	}
-	
+
 	public void addDomain() {
 		Domain domain = new Domain(newDomain);
 		domainDAO.createDomain(domain);
 		domains.add(domain.getName());
 		domainsDual = new DualListModel<String>(domains, selectedDomains);
 	}
-	
+
 	public void addLanguage() {
 		Language language = new Language(newLanguage);
 		languageDAO.createLanguage(language);
 		languages.add(language.getName());
 		languagesDual = new DualListModel<String>(languages, selectedLanguages);
 	}
-	
+
 	public String getNewLanguage() {
 		return newLanguage;
 	}
@@ -340,7 +348,7 @@ public class AddProjectInfoBean {
 	public void setDomainsDual(DualListModel<String> domainsDual) {
 		this.domainsDual = domainsDual;
 	}
-	
+
 	public List<String> getSelectedDomains() {
 		return selectedDomains;
 	}
@@ -573,46 +581,6 @@ public class AddProjectInfoBean {
 		this.projects = projects;
 	}
 
-	public String getIde() {
-		return ide;
-	}
-
-	public void setIde(String ide) {
-		this.ide = ide;
-	}
-
-	public String getVms() {
-		return vms;
-	}
-
-	public void setVms(String vms) {
-		this.vms = vms;
-	}
-
-	public String getWps() {
-		return wps;
-	}
-
-	public void setWps(String wps) {
-		this.wps = wps;
-	}
-
-	public String getCom() {
-		return com;
-	}
-
-	public void setCom(String com) {
-		this.com = com;
-	}
-
-	public String getPms() {
-		return pms;
-	}
-
-	public void setPms(String pms) {
-		this.pms = pms;
-	}
-
 	public ToolDAO getToolDAO() {
 		return toolDAO;
 	}
@@ -644,7 +612,7 @@ public class AddProjectInfoBean {
 	public void setData(Map<String, List<String>> data) {
 		this.data = data;
 	}
-	
+
 	public String getNewDomain() {
 		return newDomain;
 	}
