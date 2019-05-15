@@ -9,6 +9,8 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
 import persistence.EvaluationScore;
+import persistence.Student;
+import persistence.StudentScore;
 import persistence.Team;
 import persistence.TreeData;
 
@@ -23,16 +25,17 @@ public class EvaluationTreeDAO {
 
 		TreeNode root = new DefaultTreeNode(new TreeData("", "", "", -1), null);
 
-		List<EvaluationScore> evaluationScoreList = team.getScores();
-		for (EvaluationScore evaluationScore : evaluationScoreList) {
+		List<StudentScore> studentScoresList = team.getStudentScores();
+		List<EvaluationScore> evaluationScores = studentScoresList.get(0).getScores();
+		
+		for(int i=0; i<evaluationScores.size(); i++) {
 			TreeNode evaluationRoot = new DefaultTreeNode(
-					new TreeData(evaluationScore.getEvaluation().getCriterion().getName(),
-							Integer.toString(evaluationScore.getScore()), evaluationScore.getDescription(),
-							evaluationScore.getId()),
-					root);
-//      	for(Student student : team.getStudents()) {
-//      		TreeNode studentLeaf = new DefaultTreeNode(student.getFirstname()+" "+student.getLastname(), evaluationRoot);
-//      	}
+					new TreeData(evaluationScores.get(i).getEvaluation().getCriterion().getName(),"","",evaluationScores.get(i).getId()), root);
+	
+			for (StudentScore studentScore : studentScoresList) {
+				TreeNode studentLeaf = new DefaultTreeNode( new TreeData(studentScore.getStudent().getFirstname()+" "+studentScore.getStudent().getLastname(), Double.toString(studentScore.getScores().get(0).getScore()),"",studentScore.getStudent().getId()), evaluationRoot);
+
+			}
 		}
 
 //    	TreeNode root = new DefaultTreeNode("Root", null);
