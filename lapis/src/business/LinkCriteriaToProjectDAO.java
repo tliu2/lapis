@@ -47,5 +47,15 @@ public class LinkCriteriaToProjectDAO {
 		}
 		return result;
 	}
+	
+	public List<Evaluation> initEvaluationList() {
+		List<Evaluation> evaList = new ArrayList<Evaluation>();
+		for (int i = 0; i<4; i++) {
+			Criterion crit = new Criterion();
+			Evaluation eval = new Evaluation(crit,0);
+			evaList.add(eval);
+		}
+		return evaList;
+	}
 
 }

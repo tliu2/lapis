@@ -28,7 +28,7 @@ public class CriterionTabBean implements Serializable {
 	private List<Integer> percentages;
 	private String visibleText;
 	private int visiblePercentage;
-	private List<Evaluation> evaList = new ArrayList<Evaluation>();
+	private List<Evaluation> evaList;
 	
 	private EvaluationDAO evaluationDAO;
 
@@ -37,11 +37,7 @@ public class CriterionTabBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		for (int i = 0; i<3; i++) {
-			Criterion crit = new Criterion();
-			Evaluation eval = new Evaluation(crit,0);
-			evaList.add(eval);
-		}
+		evaList = service.initEvaluationList();
 		criteriaList = service.readAllCriterion();
 		criteriaName = service.readAllCriterionName(criteriaList);
 		percentages = service.makePercentageList();
@@ -133,13 +129,9 @@ public class CriterionTabBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public void createEvaluation() {
-		for (int i = 0; i<criteriaList.size() ; i++) {
-			Evaluation evaluation = new Evaluation(criteriaList.get(i),percentages.get(i));
-			evaList.add(evaluation);
-		}
+	public void persistEvaluation() {
 		FacesMessage msg;
-		evaluationDAO.persitEvaluation(evaList);
+		evaluationDAO.persistEvaluation(evaList);
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}

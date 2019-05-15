@@ -21,7 +21,7 @@ public class EvaluationDAO {
 		readTransaction.commit();
 	}
 	
-	public void persitEvaluation(List<Evaluation> evaluationList) {
+	public void persistEvaluation(List<Evaluation> evaluationList) {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
 		for (Evaluation evaluation : evaluationList) {
