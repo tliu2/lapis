@@ -27,27 +27,22 @@ public class EvaluationTreeDAO {
 
 		List<StudentScore> studentScoresList = team.getStudentScores();
 		List<EvaluationScore> evaluationScores = studentScoresList.get(0).getScores();
-		
-		for(int i=0; i<evaluationScores.size(); i++) {
+
+		for (int i = 0; i < evaluationScores.size(); i++) {
 			TreeNode evaluationRoot = new DefaultTreeNode(
-					new TreeData(evaluationScores.get(i).getEvaluation().getCriterion().getName(),"","",evaluationScores.get(i).getId()), root);
-	
+					new TreeData(evaluationScores.get(i).getEvaluation().getCriterion().getName(), "", "",
+							evaluationScores.get(i).getId()),
+					root);
+
 			for (StudentScore studentScore : studentScoresList) {
-				TreeNode studentLeaf = new DefaultTreeNode( new TreeData(studentScore.getStudent().getFirstname()+" "+studentScore.getStudent().getLastname(), Double.toString(studentScore.getScores().get(i).getScore()),"",studentScore.getStudent().getId()), evaluationRoot);
+				TreeNode studentLeaf = new DefaultTreeNode(new TreeData(
+						studentScore.getStudent().getFirstname() + " " + studentScore.getStudent().getLastname(),
+						Double.toString(studentScore.getScores().get(i).getScore()), "",
+						studentScore.getStudent().getId()), evaluationRoot);
 
 			}
 		}
 
-//    	TreeNode root = new DefaultTreeNode("Root", null);
-//    	
-//        List <Evaluation> evaluationList = team.getProject().getEvaluation();
-//        for(Evaluation evaluation: evaluationList) {
-//        	TreeNode evaluationRoot = new DefaultTreeNode(evaluation.getCriterion().getName(), root);
-//        	for(Student student : team.getStudents()) {
-//        		TreeNode studentLeaf = new DefaultTreeNode(student.getFirstname()+" "+student.getLastname(), evaluationRoot);
-//        	}
-//        }
-//         
 		return root;
 	}
 
