@@ -21,6 +21,7 @@ import business.EvaluationDAO;
 import business.LinkEvaluationToProjectDAO;
 import persistence.Criterion;
 import persistence.Evaluation;
+import persistence.Project;
 
 @ManagedBean(name = "evalTab")
 @ViewScoped
@@ -33,10 +34,16 @@ public class EvaluationTabBean implements Serializable {
 	private int visiblePercentage;
 	private List<Evaluation> evaList;
 	private List<Evaluation> stateSaveEvaList;
+	private String projectName;
 
 	private EvaluationDAO evaluationDAO = new EvaluationDAO();
 
 	private LinkEvaluationToProjectDAO service = new LinkEvaluationToProjectDAO();
+	
+	private Session session = DBConnection.getSession();
+	
+	@ManagedProperty("#{projectToCriteria}")
+	private ProjectToCriteriaBean projectToCriteria;
 
 	public EvaluationTabBean() {
 
@@ -122,7 +129,7 @@ public class EvaluationTabBean implements Serializable {
 	public void setVisiblePercentage(int visiblePercentage) {
 		this.visiblePercentage = visiblePercentage;
 	}
-	
+
 	public List<Evaluation> getStateSaveEvaList() {
 		return stateSaveEvaList;
 	}
@@ -131,16 +138,35 @@ public class EvaluationTabBean implements Serializable {
 		this.stateSaveEvaList = stateSaveEvaList;
 	}
 
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public ProjectToCriteriaBean getProjectToCriteria() {
+		return projectToCriteria;
+	}
+
+	public void setProjectToCriteria(ProjectToCriteriaBean projectToCriteria) {
+		this.projectToCriteria = projectToCriteria;
+	}
+
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Car Edited");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		/*
-		 * Evaluation eval = ((Evaluation) event.getObject());
-		 * System.out.println(eval.getCriterion().getName());
-		 * System.out.println(eval.getPercentage()); stateSaveEvaList.add(eval);
-		 */
+		Evaluation eval = ((Evaluation) event.getObject());
+		System.out.println(eval.getCriterion().getName());
+		System.out.println(eval.getPercentage());
+		stateSaveEvaList.add(eval);
 		
+		projectName = projectToCriteria.getProject();
+		Project selectedProject = service.getProjectFromProjectString(projectName);
+		selectedProject.setEvaluation(evaList);
+		service.updateInfo(selectedProject, session);
 
 	}
 
@@ -162,15 +188,15 @@ public class EvaluationTabBean implements Serializable {
 
 	public void onAddNew() {
 		// Add one new car to the table
-		Criterion crit = new Criterion("Select Criterion",""); 
-		Evaluation eval2Add = new Evaluation(crit,0);
+		Criterion crit = new Criterion("Select Criterion", "");
+		Evaluation eval2Add = new Evaluation(crit, 0);
 		evaList.add(eval2Add);
 		FacesMessage msg = new FacesMessage("New Evaluation added");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-	
+
 	public void printEvaList() {
-		for (int i=0; i<evaList.size();i++) {
+		for (int i = 0; i < evaList.size(); i++) {
 			System.out.println("--------");
 			System.out.println(evaList.get(i).getCriterion().getName());
 			System.out.println(evaList.get(i).getPercentage());

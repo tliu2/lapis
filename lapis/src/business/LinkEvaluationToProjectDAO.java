@@ -15,6 +15,8 @@ import org.hibernate.Transaction;
 import persistence.Course;
 import persistence.Criterion;
 import persistence.Evaluation;
+import persistence.Project;
+import persistence.ProjectInfo;
 import persistence.UniversityYear;
 
 @ManagedBean(name = "criteriaService")
@@ -58,4 +60,23 @@ public class LinkEvaluationToProjectDAO {
 		return evaList;
 	}
 
+	public Project getProjectFromProjectString(String projectName) {
+		Project result;
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Project p where p.subject = :subject");
+		readQuery.setString("subject", projectName);
+		List resultQuery = readQuery.list();
+		result = (Project) resultQuery.get(0);
+		readTransaction.commit();
+		return result;
+	}
+	
+	public void updateInfo(Project project, Session session) {
+		Transaction updateTransaction = session.beginTransaction();
+		session.update(project);
+		session.flush();
+		updateTransaction.commit();
+		session.close();
+	}
 }
