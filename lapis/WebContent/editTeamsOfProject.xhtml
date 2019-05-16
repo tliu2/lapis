@@ -12,62 +12,105 @@
 	<div align="center">
 		<h1 class="ui-widget-header ui-corner-all">Select Team</h1>
 		<br />
-		<h:form>
-			<p:growl id="growl" life="2000" />
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" />
 
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="years" value="University Year: " />
 				<p:selectOneMenu id="years"
-					value="#{editTeamOfProjectBean.year}" style="width:150px">
-					<p:ajax listener="#{editTeamOfProjectBean.onChange}"
+					value="#{editTeamsOfProjectBean.year}" style="width:150px">
+					<p:ajax listener="#{editTeamsOfProjectBean.onChange}"
 						update="promo" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItems value="#{editTeamOfProjectBean.years}" />
+					<f:selectItems value="#{editTeamsOfProjectBean.years}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="promo" value="Promotion: " />
 				<p:selectOneMenu id="promo"
-					value="#{editTeamOfProjectBean.promo}" style="width:150px">
-					<p:ajax listener="#{editTeamOfProjectBean.onChangeCourse}"
+					value="#{editTeamsOfProjectBean.promo}" style="width:150px">
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeCourse}"
 						update="course" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItems value="#{editTeamOfProjectBean.promotions}" />
+					<f:selectItems value="#{editTeamsOfProjectBean.promotions}" />
 				</p:selectOneMenu>
  
 				<p:outputLabel for="course" value="Course: " />
 				<p:selectOneMenu id="course"
-					value="#{editTeamOfProjectBean.course}" style="width:150px">
-					<p:ajax listener="#{editTeamOfProjectBean.onChangeProject}"
+					value="#{editTeamsOfProjectBean.course}" style="width:150px">
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeProject}"
 						update="project" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItems value="#{editTeamOfProjectBean.courses}" />
+					<f:selectItems value="#{editTeamsOfProjectBean.courses}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="project" value="Project: " />
 				<p:selectOneMenu id="project"
-					value="#{editTeamOfProjectBean.project}" style="width:150px">
-					<p:ajax listener="#{editTeamOfProjectBean.onChangeTeam}" 
+					value="#{editTeamsOfProjectBean.project}" style="width:150px">
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeTeam}" 
 						update="team" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItems value="#{editTeamOfProjectBean.projects}" />
+					<f:selectItems value="#{editTeamsOfProjectBean.projects}" />
 				</p:selectOneMenu>
 				
 				<p:outputLabel for="team" value="Team: " />
 				<p:selectOneMenu id="team"
-					value="#{editTeamOfProjectBean.team}" style="width:150px">
+					value="#{editTeamsOfProjectBean.team}" style="width:150px">
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeStudent}" 
+						update="students" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
-					<f:selectItems value="#{editTeamOfProjectBean.teams}" />
+					<f:selectItems value="#{editTeamsOfProjectBean.teams}" />
 				</p:selectOneMenu>
 				
-				<p:commandButton value="Submit" id="creation" />
+			</h:panelGrid>		
+			
+			<h:panelGrid columns="2" cellpadding="5">
+			
+				<p:dataTable id="students" value="#{editTeamsOfProjectBean.students}" 
+					var="student" editable="true" style="margin-bottom:20px">				
+					
+					<f:facet name="header">Student description</f:facet>
 
-			</h:panelGrid>
+					<p:ajax event="rowEdit" 
+						listener="#{editTeamsOfProjectBean.onRowEdit}" update=":form:growl" />
+					<p:ajax event="rowEditCancel"
+						listener="#{editTeamsOfProjectBean.onRowCancel}" update=":form:growl" />
+					
+					<p:column headerText="Last Name">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{student.lastname}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{student.lastname}" style="width:100%" label="last" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+	
+					<p:column headerText="First Name">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{student.firstname}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{student.firstname}" style="width:100%" label="fisrt" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+										
+					<p:column style="width:35px">
+						<p:rowEditor />
+					</p:column>
+	
+				</p:dataTable>
+			</h:panelGrid>	
+			
+			
 		</h:form>
 	</div>
 	<br />

@@ -68,4 +68,15 @@ public class TeamDAO {
 		updateTransaction.commit();
 	}
 	
+	public List<Team> readAllTeam() {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+
+		Query readQuery = session.createQuery("from Team");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
+	
 }
