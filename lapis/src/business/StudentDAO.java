@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import persistence.Course;
 import persistence.Promotion;
 import persistence.Student;
+import persistence.Team;
 
 public class StudentDAO {
 
@@ -19,6 +20,17 @@ public class StudentDAO {
 		session.persist(student);
 		readTransaction.commit();
 
+	}
+	
+	public List<Student> readAllStudent() {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+
+		Query readQuery = session.createQuery("from Student");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
 	}
 	
 	public List<Student> readStudentByPromoId(int id) {

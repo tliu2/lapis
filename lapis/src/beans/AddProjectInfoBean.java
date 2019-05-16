@@ -336,6 +336,8 @@ public class AddProjectInfoBean {
 	public String getNewLanguage() {
 		return newLanguage;
 	}
+	
+	
 
 	public void setNewLanguage(String newLanguage) {
 		this.newLanguage = newLanguage;
