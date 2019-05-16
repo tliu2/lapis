@@ -80,4 +80,17 @@ public class LinkEvaluationToProjectDAO {
 		updateTransaction.commit();
 		session.close();
 	}
+	
+	public Criterion getCriterionByName(String name) {
+		Criterion result;
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Criterion c where c.name = :name");
+		readQuery.setString("name", name);
+		List resultQuery = readQuery.list();
+		result = (Criterion) resultQuery.get(0);
+		readTransaction.commit();
+
+		return result;
+	}
 }

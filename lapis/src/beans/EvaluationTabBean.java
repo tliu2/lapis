@@ -162,6 +162,11 @@ public class EvaluationTabBean implements Serializable {
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Edit Cancelled");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+		
+		Evaluation eva = (Evaluation) event.getObject();
+		String criterionName = eva.getCriterion().getName();
+		Criterion criterion = service.getCriterionByName(criterionName);
+		eva.setCriterion(criterion);
 	}
 
 	public void onCellEdit(CellEditEvent event) {
@@ -182,14 +187,6 @@ public class EvaluationTabBean implements Serializable {
 		evaList.add(eval2Add);
 		FacesMessage msg = new FacesMessage("New Evaluation added");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void printEvaList() {
-		for (int i = 0; i < evaList.size(); i++) {
-			System.out.println("--------");
-			System.out.println(evaList.get(i).getCriterion().getName());
-			System.out.println(evaList.get(i).getPercentage());
-		}
 	}
 
 	public void persistEvaluation() {
