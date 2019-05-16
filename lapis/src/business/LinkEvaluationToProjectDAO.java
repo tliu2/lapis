@@ -77,6 +77,22 @@ public class LinkEvaluationToProjectDAO {
 		return result;
 	}
 	
+	public List<Integer> getEvaluationIDsFromEvaluationList(List<Evaluation> evaList) {
+		List<Integer> iDList = new ArrayList<Integer>();
+		for (Evaluation eval : evaList) {
+			iDList.add(eval.getId());
+		}
+		return iDList;
+	}
+	
+	public void updateEval(Evaluation eval, Session session) {
+		Transaction updateTransaction = session.beginTransaction();
+		session.update(eval);
+		session.flush();
+		updateTransaction.commit();
+		session.close();
+	}
+	
 	public void updateInfo(Project project, Session session) {
 		Transaction updateTransaction = session.beginTransaction();
 		session.update(project);

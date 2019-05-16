@@ -194,11 +194,21 @@ public class EvaluationTabBean implements Serializable {
 	public void persistEvaluation() {
 		FacesMessage msg;
 		
-		evaluationDAO.persistEvaluation(evaList);
+		//evaluationDAO.persistEvaluation(evaList);
+		List<Integer> idList = service.getEvaluationIDsFromEvaluationList(evaList);
+		
+		for (Evaluation eval : evaList) {
+			if (idList.contains(eval.getId())) {	
+				service.updateEval(eval, session);
+			}else {
+				evaluationDAO.persistOneEvaluation(eval);
+			}
+		}
 		
 		projectName = projectToCriteria.getProject();
 		Project selectedProject = service.getProjectFromProjectString(projectName);
 		selectedProject.setEvaluation(evaList);
+
 		service.updateInfo(selectedProject, session);
 		
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
