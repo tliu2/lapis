@@ -14,6 +14,7 @@ public class EvaluationDAO {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
 		for (Evaluation evaluation : evaluationList) {
+			System.out.println(evaluation.getPercentage() + " "+ evaluation.getCriterion().getId());
 			session.persist(evaluation);
 		}
 		readTransaction.commit();

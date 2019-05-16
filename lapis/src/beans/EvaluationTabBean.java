@@ -157,16 +157,16 @@ public class EvaluationTabBean implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Car Edited");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+		Evaluation eva = (Evaluation) event.getObject();
+		String criterionName = eva.getCriterion().getName();
+		Criterion criterion = service.getCriterionByName(criterionName);
+		eva.setCriterion(criterion);
 	}
 
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Edit Cancelled");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-		
-		Evaluation eva = (Evaluation) event.getObject();
-		String criterionName = eva.getCriterion().getName();
-		Criterion criterion = service.getCriterionByName(criterionName);
-		eva.setCriterion(criterion);
+	
 	}
 
 	public void onCellEdit(CellEditEvent event) {
