@@ -162,7 +162,7 @@ public class EvaluationTabBean implements Serializable {
 
 	public void onAddNew() {
 		// Add one new car to the table
-		Criterion crit = new Criterion("Select Criterion","");
+		Criterion crit = new Criterion("Select Criterion",""); 
 		Evaluation eval2Add = new Evaluation(crit,0);
 		evaList.add(eval2Add);
 		FacesMessage msg = new FacesMessage("New Evaluation added");
