@@ -52,9 +52,9 @@ public class EvaluationTabBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		projectName = projectToCriteria.getProject();
-		Project selectedProject = service.getProjectFromProjectString(projectName);
+		Project selectedProject = service.getProjectFromProjectString(projectName, session);
 		evaList = service.initEvaluationList(selectedProject);
-		criteriaList = service.readAllCriterion();
+		criteriaList = service.readAllCriterion(session);
 		criteriaName = service.readAllCriterionName(criteriaList);
 		percentages = service.makePercentageList();
 		stateSaveEvaList = new ArrayList<Evaluation>();
@@ -198,15 +198,16 @@ public class EvaluationTabBean implements Serializable {
 		List<Integer> idList = service.getEvaluationIDsFromEvaluationList(evaList);
 		
 		for (Evaluation eval : evaList) {
+			System.out.println(eval.getId());
 			if (idList.contains(eval.getId())) {	
 				service.updateEval(eval, session);
 			}else {
-				evaluationDAO.persistOneEvaluation(eval);
+				evaluationDAO.persistOneEvaluation(eval, session);
 			}
 		}
 		
 		projectName = projectToCriteria.getProject();
-		Project selectedProject = service.getProjectFromProjectString(projectName);
+		Project selectedProject = service.getProjectFromProjectString(projectName, session);
 		selectedProject.setEvaluation(evaList);
 
 		service.updateInfo(selectedProject, session);

@@ -23,8 +23,7 @@ import persistence.UniversityYear;
 @ApplicationScoped
 public class LinkEvaluationToProjectDAO {
 
-	public List<Criterion> readAllCriterion() {
-		Session session = DBConnection.getSession();
+	public List<Criterion> readAllCriterion(Session session) {
 		Transaction readTransaction = session.beginTransaction();
 
 		Query readQuery = session.createQuery("from Criterion");
@@ -64,9 +63,8 @@ public class LinkEvaluationToProjectDAO {
 		}
 	}
 
-	public Project getProjectFromProjectString(String projectName) {
+	public Project getProjectFromProjectString(String projectName, Session session) {
 		Project result;
-		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
 		String[] split = projectName.split("-");
 		Query readQuery = session.createQuery("from Project p where p.subject = :subject");
@@ -90,7 +88,6 @@ public class LinkEvaluationToProjectDAO {
 		session.update(eval);
 		session.flush();
 		updateTransaction.commit();
-		session.close();
 	}
 	
 	public void updateInfo(Project project, Session session) {
@@ -98,7 +95,6 @@ public class LinkEvaluationToProjectDAO {
 		session.update(project);
 		session.flush();
 		updateTransaction.commit();
-		session.close();
 	}
 	
 	public Criterion getCriterionByName(String name) {

@@ -19,8 +19,7 @@ public class EvaluationDAO {
 		readTransaction.commit();
 	}
 	
-	public void persistOneEvaluation(Evaluation evaluation) {
-		Session session = DBConnection.getSession();
+	public void persistOneEvaluation(Evaluation evaluation, Session session) {
 		Transaction readTransaction = session.beginTransaction();		
 		session.persist(evaluation);
 		readTransaction.commit();
