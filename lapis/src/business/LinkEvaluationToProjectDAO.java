@@ -51,7 +51,7 @@ public class LinkEvaluationToProjectDAO {
 	public List<Evaluation> initEvaluationList() {
 		List<Evaluation> evaList = new ArrayList<Evaluation>();
 		for (int i = 0; i<1; i++) {
-			Criterion crit = new Criterion("","");
+			Criterion crit = new Criterion("Select Criterion","");
 			Evaluation eval = new Evaluation(crit,0);
 			evaList.add(eval);
 		}
