@@ -157,17 +157,6 @@ public class EvaluationTabBean implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Car Edited");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
-
-		Evaluation eval = ((Evaluation) event.getObject());
-		System.out.println(eval.getCriterion().getName());
-		System.out.println(eval.getPercentage());
-		stateSaveEvaList.add(eval);
-		
-		projectName = projectToCriteria.getProject();
-		Project selectedProject = service.getProjectFromProjectString(projectName);
-		selectedProject.setEvaluation(evaList);
-		service.updateInfo(selectedProject, session);
-
 	}
 
 	public void onRowCancel(RowEditEvent event) {
@@ -205,7 +194,14 @@ public class EvaluationTabBean implements Serializable {
 
 	public void persistEvaluation() {
 		FacesMessage msg;
+		
 		evaluationDAO.persistEvaluation(evaList);
+		
+		projectName = projectToCriteria.getProject();
+		Project selectedProject = service.getProjectFromProjectString(projectName);
+		selectedProject.setEvaluation(evaList);
+		service.updateInfo(selectedProject, session);
+		
 		msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Evaluation Created !", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}

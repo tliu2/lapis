@@ -64,8 +64,9 @@ public class LinkEvaluationToProjectDAO {
 		Project result;
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
+		String[] split = projectName.split("-");
 		Query readQuery = session.createQuery("from Project p where p.subject = :subject");
-		readQuery.setString("subject", projectName);
+		readQuery.setString("subject", split[1]);
 		List resultQuery = readQuery.list();
 		result = (Project) resultQuery.get(0);
 		readTransaction.commit();
