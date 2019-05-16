@@ -51,7 +51,9 @@ public class EvaluationTabBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		evaList = service.initEvaluationList();
+		projectName = projectToCriteria.getProject();
+		Project selectedProject = service.getProjectFromProjectString(projectName);
+		evaList = service.initEvaluationList(selectedProject);
 		criteriaList = service.readAllCriterion();
 		criteriaName = service.readAllCriterionName(criteriaList);
 		percentages = service.makePercentageList();

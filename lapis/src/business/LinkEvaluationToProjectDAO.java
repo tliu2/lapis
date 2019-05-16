@@ -50,14 +50,18 @@ public class LinkEvaluationToProjectDAO {
 		return result;
 	}
 	
-	public List<Evaluation> initEvaluationList() {
+	public List<Evaluation> initEvaluationList(Project selectedProject) {
 		List<Evaluation> evaList = new ArrayList<Evaluation>();
 		for (int i = 0; i<1; i++) {
 			Criterion crit = new Criterion("Select Criterion",""); 
 			Evaluation eval = new Evaluation(crit,0);
 			evaList.add(eval);
 		}
-		return evaList;
+		if(selectedProject.getEvaluation().isEmpty()) {
+			return evaList;
+		}else {
+			return selectedProject.getEvaluation();
+		}
 	}
 
 	public Project getProjectFromProjectString(String projectName) {
