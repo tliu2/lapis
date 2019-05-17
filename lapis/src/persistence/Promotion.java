@@ -17,6 +17,7 @@ public class Promotion {
 	private UniversityYear year;
 	private String diplomaName;
 	private int level;
+	
 
 	public Promotion() {
 

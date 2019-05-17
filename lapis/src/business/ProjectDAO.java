@@ -58,4 +58,15 @@ public class ProjectDAO {
 		return result;
 	}
 	
+	///////////////////////////////////// WITH SESSION
+	
+	public List<Project> readAllProject(Session session) {
+		Transaction readTransaction = session.beginTransaction();
+
+		Query readQuery = session.createQuery("from Project");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
 }
