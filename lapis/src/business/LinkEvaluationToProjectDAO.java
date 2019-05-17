@@ -86,7 +86,7 @@ public class LinkEvaluationToProjectDAO {
 	public void updateEval(Evaluation eval, Session session) {
 		Transaction updateTransaction = session.beginTransaction();
 		session.update(eval);
-		session.flush();
+		session.flush(); 
 		updateTransaction.commit();
 	}
 	

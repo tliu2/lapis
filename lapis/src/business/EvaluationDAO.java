@@ -14,7 +14,7 @@ public class EvaluationDAO {
 		Session session = DBConnection.getSession();
 		Transaction readTransaction = session.beginTransaction();
 		for (Evaluation evaluation : evaluationList) {
-			session.persist(evaluation);
+			session.persist(evaluation); 
 		}
 		readTransaction.commit();
 	}

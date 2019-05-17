@@ -26,7 +26,7 @@ public class ProjectInfo {
 	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Domain.class)
 	private List<Domain> domaines = new ArrayList<Domain>();
 	
-	@ManyToMany(cascade= CascadeType.REFRESH, fetch = FetchType.LAZY, targetEntity = Language.class)
+	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Language.class)
 	private List<Language> languages = new ArrayList<Language>();
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = ToolContent.class)
