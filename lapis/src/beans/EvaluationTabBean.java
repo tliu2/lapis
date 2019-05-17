@@ -200,7 +200,6 @@ public class EvaluationTabBean implements Serializable {
 		for (Evaluation eval : evaList) {
 			System.out.println(eval.getId());
 			if (idList.contains(eval.getId()) && eval.getId() != 0) {
-				System.out.println("Nique --------------------------------------------");
 				service.updateEval(eval, session);
 			}else {
 				evaluationDAO.persistOneEvaluation(eval, session);
