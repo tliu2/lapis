@@ -58,7 +58,7 @@ public class TeamDAO {
 		return result;
 	}
 	
-	public void updateTeamMembers(Team team, List<Student> studentList, int teamID) {
+	public void updateTeamMembers(Team team) {
 		Session session = DBConnection.getSession();
 		Transaction updateTransaction = session.beginTransaction();
 		session.update(team);
