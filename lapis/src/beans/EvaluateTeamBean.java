@@ -10,10 +10,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.Session;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.TreeNode;
 
+import business.DBConnection;
 import business.EvaluationScoreDAO;
 import business.EvaluationTreeDAO;
 import business.TeamDAO;
@@ -25,9 +27,10 @@ import persistence.TreeData;
 public class EvaluateTeamBean implements Serializable {
 
 	private TreeNode root;
-	private TreeNode root2;
 	private Team team;
 
+	private Session session = DBConnection.getSession();
+	
 	@ManagedProperty("#{evaluationTreeDAO}")
 	private EvaluationTreeDAO service;
 
@@ -39,11 +42,10 @@ public class EvaluateTeamBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		List<Team> teams = teamDAO.readTeamById(Integer.valueOf(navig.getTeamID()));
+		List<Team> teams = teamDAO.readTeamById(Integer.valueOf(navig.getTeamID()), session);
 		team = teams.get(0);
-		System.out.println("team id : " + team.getId());
-		root = service.createTeamTreeData(team.getId());
-		root2 = service.createTeamTreeData(team.getId());
+		System.out.println("team id : \n" + team.getId());
+		root = service.createTeamTreeData(team.getId(), session);
 	}
 
 	public TreeNode getRoot() {
@@ -106,13 +108,7 @@ public class EvaluateTeamBean implements Serializable {
 		this.root = root;
 	}
 
-	public TreeNode getRoot2() {
-		return root2;
-	}
-
-	public void setRoot2(TreeNode root2) {
-		this.root2 = root2;
-	}
+	
 
 	public TeamToEvaluationBean getNavig() {
 		return navig;

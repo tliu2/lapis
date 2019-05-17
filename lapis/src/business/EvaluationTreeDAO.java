@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import org.hibernate.Session;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -18,9 +19,9 @@ import persistence.TreeData;
 @ApplicationScoped
 public class EvaluationTreeDAO {
 
-	public TreeNode createTeamTreeData(int id) {
+	public TreeNode createTeamTreeData(int id, Session session) {
 		TeamDAO teamDAO = new TeamDAO();
-		List<Team> teams = teamDAO.readTeamById(id);
+		List<Team> teams = teamDAO.readTeamById(id, session);
 		Team team = teams.get(0);
 
 		TreeNode root = new DefaultTreeNode(new TreeData("", "", "", -1), null);

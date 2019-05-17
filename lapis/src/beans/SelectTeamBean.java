@@ -9,8 +9,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
+import org.hibernate.Session;
+
 import business.CourseDAO;
 import business.CriteriaToProjectDAO;
+import business.DBConnection;
 import business.ProjectDAO;
 import business.PromotionDAO;
 import business.TeamDAO;
@@ -47,6 +51,8 @@ public class SelectTeamBean {
 	private String subject;
 	private String description;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
+	
+	private Session session = DBConnection.getSession();
 	
 	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
@@ -106,7 +112,7 @@ public class SelectTeamBean {
 		List<Project> allProjects = projectDAO.readAllProject();
 		for (Project project : allProjects) {
 			int id = project.getId();
-			List<Team> teams = teamDAO.readTeamByProjectId(id);
+			List<Team> teams = teamDAO.readTeamByProjectId(id, session);
 			List<String> teamList = new ArrayList<String>();
 			for (Team team : teams) {
 				String teamName = "";
