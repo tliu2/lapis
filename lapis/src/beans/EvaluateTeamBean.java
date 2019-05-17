@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
@@ -23,7 +24,7 @@ import persistence.Team;
 import persistence.TreeData;
 
 @ManagedBean(name = "ttEditView")
-@ApplicationScoped
+@ViewScoped
 public class EvaluateTeamBean implements Serializable {
 
 	private TreeNode root;
@@ -112,6 +113,30 @@ public class EvaluateTeamBean implements Serializable {
 
 	public TeamToEvaluationBean getNavig() {
 		return navig;
+	}
+	
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public EvaluationScoreDAO getEvaluationScoreDAO() {
+		return evaluationScoreDAO;
+	}
+
+	public void setEvaluationScoreDAO(EvaluationScoreDAO evaluationScoreDAO) {
+		this.evaluationScoreDAO = evaluationScoreDAO;
 	}
 
 	public void setNavig(TeamToEvaluationBean navig) {

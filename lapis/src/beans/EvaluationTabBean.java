@@ -123,6 +123,16 @@ public class EvaluationTabBean implements Serializable {
 	public void setVisibleText(Criterion visibleText) {
 		this.visibleText = visibleText;
 	}
+	
+	
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
 
 	public int getVisiblePercentage() {
 		return visiblePercentage;

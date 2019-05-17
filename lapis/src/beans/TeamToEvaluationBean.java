@@ -1,5 +1,6 @@
 package beans;
 
+import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
