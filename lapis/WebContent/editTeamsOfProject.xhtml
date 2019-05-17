@@ -31,7 +31,9 @@
 				<p:selectOneMenu id="promo"
 					value="#{editTeamsOfProjectBean.promo}" style="width:150px">
 					<p:ajax listener="#{editTeamsOfProjectBean.onChangeCourse}"
-						update="course" />
+						update="course"/>
+							<p:ajax listener="#{editTeamsOfProjectBean.onChangeCourse}"
+						update="pickList"/>
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{editTeamsOfProjectBean.promotions}" />
@@ -60,8 +62,8 @@
 				<p:outputLabel for="team" value="Team: " />
 				<p:selectOneMenu id="team"
 					value="#{editTeamsOfProjectBean.team}" style="width:150px">
-					<p:ajax listener="#{editTeamsOfProjectBean.onChangeStudent}" 
-						update="students" />
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeStudent}" />
+					<p:ajax listener="#{editTeamsOfProjectBean.updateFields}" update="pickList" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{editTeamsOfProjectBean.teams}" />
@@ -69,48 +71,16 @@
 				
 			</h:panelGrid>		
 			
-			<h:panelGrid columns="2" cellpadding="5">
 			
-				<p:dataTable id="students" value="#{editTeamsOfProjectBean.students}" 
-					var="student" editable="true" style="margin-bottom:20px">				
-					
-					<f:facet name="header">Student description</f:facet>
-
-					<p:ajax event="rowEdit" 
-						listener="#{editTeamsOfProjectBean.onRowEdit}" update=":form:growl" />
-					<p:ajax event="rowEditCancel"
-						listener="#{editTeamsOfProjectBean.onRowCancel}" update=":form:growl" />
-					
-					<p:column headerText="Last Name">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{student.lastname}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{student.lastname}" style="width:100%" label="last" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-	
-					<p:column headerText="First Name">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{student.firstname}" />
-							</f:facet>
-							<f:facet name="input">
-								<p:inputText value="#{student.firstname}" style="width:100%" label="fisrt" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-										
-					<p:column style="width:35px">
-						<p:rowEditor />
-					</p:column>
-	
-				</p:dataTable>
-			</h:panelGrid>	
+	<p:growl id="msg" showDetail="true" escape="false" />
+     
+    <h3 style="margin-top: 0">Basic PickList</h3>
+    <p:pickList id="pickList" value="#{editTeamsOfProjectBean.studentListModel}" var="studentListModel" itemLabel="#{studentListModel}" itemValue="#{studentListModel}" />
 			
-			
+			<p:commandButton value="updateTeam" id="addDomainButton"
+				action="#{editTeamsOfProjectBean.updateTeamDataBase}" >
+			</p:commandButton>
+    
 		</h:form>
 	</div>
 	<br />

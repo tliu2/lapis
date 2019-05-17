@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import org.primefaces.event.RowEditEvent;
+
+import org.hibernate.Session;
+import org.primefaces.model.DualListModel;
 
 import business.CourseDAO;
 import business.CriteriaToProjectDAO;
+import business.DBConnection;
 import business.ProjectDAO;
 import business.PromotionDAO;
 import business.StudentDAO;
@@ -31,7 +31,7 @@ import persistence.UniversityYear;
 @ManagedBean
 @ViewScoped
 public class EditTeamsOfProjectBean {
-	
+
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
 	private Map<String, List<String>> dataPromo = new HashMap<String, List<String>>();
 	private Map<String, List<String>> dataProject = new HashMap<String, List<String>>();
@@ -49,8 +49,14 @@ public class EditTeamsOfProjectBean {
 	private List<String> courses;
 	private List<String> projects;
 	private List<String> teams;
-	private  List<Student> students;
-	
+	private List<Student> students;
+
+	private Session session = DBConnection.getSession();
+
+	private DualListModel<String> studentListModel;
+	List<String> studentsSource = new ArrayList<String>();
+	List<String> studentsTarget = new ArrayList<String>();
+
 	private String subject;
 	private String description;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
@@ -63,14 +69,12 @@ public class EditTeamsOfProjectBean {
 	private TeamDAO teamDAO = new TeamDAO();
 	private StudentDAO studentDAO = new StudentDAO();
 
-	
 	public EditTeamsOfProjectBean() {
-		
-		}
+
+	}
 
 	@PostConstruct
 	public void init() {
-
 		List<UniversityYear> allYears = yearDAO.readAllUniversityYears();
 		years = new ArrayList<String>();
 		for (UniversityYear universityYear : allYears) {
@@ -97,7 +101,7 @@ public class EditTeamsOfProjectBean {
 			}
 			dataPromo.put(promotion.toString(), courseList);
 		}
- 
+
 		List<Course> allCourses = courseDAO.readAllCourse();
 		for (Course course : allCourses) {
 			int id = course.getId();
@@ -112,18 +116,84 @@ public class EditTeamsOfProjectBean {
 		List<Project> allProjects = projectDAO.readAllProject();
 		for (Project project : allProjects) {
 			int id = project.getId();
-			List<Team> teams = teamDAO.readTeamByProjectId(id);
+			List<Team> teams = teamDAO.readTeamByProjectId(id, session);
 			List<String> teamList = new ArrayList<String>();
 			for (Team team : teams) {
-				teamList.add("#" + team.getId()+ " " +team.getName());
+				String teamName = "";
+				List<Student> students = team.getStudents();
+				for (int i = 0; i < students.size(); i++) {
+					if (i == 0)
+						teamName = students.get(i).getLastname();
+					else
+						teamName = teamName + "-" + students.get(i).getLastname();
+				}
+				teamList.add(team.getName() + "(" + teamName + ") #" + team.getId());
 			}
 			dataTeam.put(project.getSubject(), teamList);
 		}
-		
-		List<Team> allTeams = teamDAO.readAllTeam();
-		for (Team team : allTeams) {		
-			dataStudent.put("#" + team.getId()+ " " +team.getName(),team.getStudents());
+
+		List<Team> allTeams = teamDAO.readAllTeam(session);
+		for (Team team : allTeams) {
+			dataStudent.put(team.getName() + "(" + team.getName() + ") #" + team.getId(), team.getStudents());
 		}
+
+		List<Student> allStudents = studentDAO.readAllStudent();
+		studentsSource = new ArrayList<String>();
+		for (Student student : allStudents) {
+			studentsSource.add(student.getFirstname() + " " + student.getLastname() + " #" + student.getId());
+		}
+		studentListModel = new DualListModel<String>(studentsSource, studentsTarget);
+	}
+
+	public void updateFields() {
+		List<Student> promotionStudents = studentDAO.readStudentByPromoId(promoDAO.getIdFromPromotionString(promo));
+		studentsSource = new ArrayList<String>();
+		for (Student student : promotionStudents) {
+			studentsSource.add(student.getFirstname() + " " + student.getLastname() + " #" + student.getId());
+		}
+		studentListModel = new DualListModel<String>(studentsSource, studentsTarget);
+
+		String[] split = team.split("#");
+		List<Team> teamList = teamDAO.readTeamById(Integer.parseInt(split[1]), session);
+		Team currentTeam = teamList.get(0);
+
+		studentsTarget.clear();
+		for (int index = 0; index < currentTeam.getStudents().size(); index++) {
+			studentsTarget.add(currentTeam.getStudents().get(index).getFirstname() + " "
+					+ currentTeam.getStudents().get(index).getLastname() + " #"
+					+ currentTeam.getStudents().get(index).getId());
+			if (studentsSource.contains(currentTeam.getStudents().get(index).getFirstname() + " "
+					+ currentTeam.getStudents().get(index).getLastname() + " #"
+					+ currentTeam.getStudents().get(index).getId())) {
+				studentsSource.remove(currentTeam.getStudents().get(index).getFirstname() + " "
+						+ currentTeam.getStudents().get(index).getLastname() + " #"
+						+ currentTeam.getStudents().get(index).getId());
+			}
+		}
+		studentListModel = new DualListModel<String>(studentsSource, studentsTarget);
+	}
+
+	public void updateTeamDataBase() {
+
+		String[] split = team.split("#");
+		List<Team> teamList = teamDAO.readTeamById(Integer.parseInt(split[1]), session);
+
+		Team currentTeam = teamList.get(0);
+		System.out.println(currentTeam.getId());
+
+		List<Student> studentList = new ArrayList<Student>();
+
+		for (String string : studentListModel.getTarget()) {
+			String[] splitStudent = string.split("#");
+
+			Student student = studentDAO.readStudentById(Integer.parseInt(splitStudent[1])).get(0);
+			System.out.println(student.getFirstname() + " " + student.getLastname());
+			studentList.add(student);
+		}
+
+		currentTeam.setStudents(studentList);
+
+		teamDAO.updateTeamMembers(currentTeam, session);
 	}
 
 	public void onChange() {
@@ -137,6 +207,14 @@ public class EditTeamsOfProjectBean {
 	public void onChangeCourse() {
 		if (promo != null && !promo.equals("")) {
 			courses = dataPromo.get(promo);
+			List<Student> studentsNewList = studentDAO.readStudentByPromoId(promoDAO.getIdFromPromotionString(promo));
+			studentsSource.clear();
+			for (Student student : studentsNewList) {
+				studentsSource.add(student.getFirstname() + " " + student.getLastname() + " #" + student.getId());
+			}
+
+			studentListModel = new DualListModel<String>(studentsSource, studentsTarget);
+
 		} else {
 			courses = new ArrayList<String>();
 		}
@@ -154,11 +232,12 @@ public class EditTeamsOfProjectBean {
 		if (project != null && !project.equals("")) {
 			String[] split = project.split("-");
 			teams = dataTeam.get(split[1]);
+
 		} else {
 			teams = new ArrayList<String>();
 		}
 	}
-	
+
 	public void onChangeStudent() {
 		if (team != null && !team.equals("")) {
 			students = dataStudent.get(team);
@@ -167,23 +246,36 @@ public class EditTeamsOfProjectBean {
 		}
 	}
 
-	public void onRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Student Edited");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public void onRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Edit Cancelled");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	
 	public Map<String, List<Student>> getDataStudent() {
 		return dataStudent;
 	}
 
 	public void setDataStudent(Map<String, List<Student>> dataStudent) {
 		this.dataStudent = dataStudent;
+	}
+
+	public DualListModel<String> getStudentListModel() {
+		return studentListModel;
+	}
+
+	public void setStudentListModel(DualListModel<String> studentListModel) {
+		this.studentListModel = studentListModel;
+	}
+
+	public List<String> getStudentsSource() {
+		return studentsSource;
+	}
+
+	public void setStudentsSource(List<String> studentsSource) {
+		this.studentsSource = studentsSource;
+	}
+
+	public List<String> getStudentsTarget() {
+		return studentsTarget;
+	}
+
+	public void setStudentsTarget(List<String> studentsTarget) {
+		this.studentsTarget = studentsTarget;
 	}
 
 	public List<Student> getStudents() {
@@ -382,9 +474,16 @@ public class EditTeamsOfProjectBean {
 		return teamDAO;
 	}
 
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
 	public void setTeamDAO(TeamDAO teamDAO) {
 		this.teamDAO = teamDAO;
 	}
-	
 
 }
