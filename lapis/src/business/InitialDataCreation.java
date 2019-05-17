@@ -35,7 +35,7 @@ public class InitialDataCreation {
 	public static void InitTestData(Session session) {
 
 		int START_YEAR = 2000;
-		int END_YEAR = 2003;
+		int END_YEAR = 2003; 
 
 		List<UniversityYear> years = new ArrayList<UniversityYear>();
 		List<Promotion> promos = new ArrayList<Promotion>();
