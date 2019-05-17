@@ -10,7 +10,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import org.hibernate.Session;
 import org.primefaces.event.RowEditEvent;
+
+import com.mysql.jdbc.RowDataCursor;
 
 import business.*;
 import persistence.*;
@@ -27,14 +32,19 @@ public class EditStudentsFromPromotionBean {
 
 	private String year;
 	private String promo;
+	private String student;
 
 	private List<String> years;
 	private List<String> promotions;
 	private List<Student> students;
+	
+	private String studentSelected ;
 
 	private PromotionDAO promoDAO = new PromotionDAO();
 	private UniversityYearDAO yearDAO = new UniversityYearDAO();
 	private StudentDAO studentDAO = new StudentDAO();
+	
+	private Session session = DBConnection.getSession();
 
 	
 	public EditStudentsFromPromotionBean() {
@@ -71,8 +81,17 @@ public class EditStudentsFromPromotionBean {
 
 	}
 	
+	public void updateFields() {
+		
+		for (Student s : students) {
+			studentDAO.updateStudent(s, session) ;
+		}
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Student(s) updated !", null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
 	public void onRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Tool Edited");
+		FacesMessage msg = new FacesMessage("Student Edited");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
@@ -95,6 +114,30 @@ public class EditStudentsFromPromotionBean {
 		} else {
 			students = new ArrayList<Student>();
 		}
+	}
+
+	public String getStudent() {
+		return student;
+	}
+
+	public void setStudent(String student) {
+		this.student = student;
+	}
+
+	public String getStudentSelected() {
+		return studentSelected;
+	}
+
+	public void setStudentSelected(String studentSelected) {
+		this.studentSelected = studentSelected;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
 	}
 
 	public Map<String, List<Student>> getDataPromo() {

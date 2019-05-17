@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import persistence.Course;
+import persistence.ProjectInfo;
 import persistence.Promotion;
 import persistence.Student;
 import persistence.Team;
@@ -55,5 +56,11 @@ public class StudentDAO {
 		return result;
 	}
 
+	public void updateStudent(Student student, Session session) {
+		Transaction updateTransaction = session.beginTransaction();
+		session.update(student);
+		session.flush();
+		updateTransaction.commit();
+	}
 
 }

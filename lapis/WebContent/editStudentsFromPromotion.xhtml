@@ -76,7 +76,7 @@
 					<p:column headerText="INE">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{student.ucpNumber}" />
+								<h:outputText value="#{student.ine}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText value="#{student.ine}" style="width:100%" label="ine" />
@@ -100,6 +100,11 @@
 					</p:column>
 	
 				</p:dataTable>
+			</h:panelGrid>	
+			
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:commandButton value="Save Changes" id="creation"
+					update="growl" action="#{editStudentsFromPromotionBean.updateFields}" />
 			</h:panelGrid>	
 		</h:form>
 
