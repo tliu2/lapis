@@ -24,8 +24,8 @@ public class FilterViewBean implements Serializable {
 
 	private ProjectDAO projectDAO = new ProjectDAO();
 
-	@ManagedProperty(value = "#{SearchProjectToDetailledProject}")
-	private SearchProjectToDetailledProjectBean navig;
+	@ManagedProperty(value = "#{SearchProjectToDetailedProject}")
+	private SearchProjectToDetailedProjectBean navig;
 
 	private Session session = DBConnection.getSession();
 
@@ -80,11 +80,11 @@ public class FilterViewBean implements Serializable {
 		this.session = session;
 	}
 
-	public SearchProjectToDetailledProjectBean getNavig() {
+	public SearchProjectToDetailedProjectBean getNavig() {
 		return navig;
 	}
 
-	public void setNavig(SearchProjectToDetailledProjectBean navig) {
+	public void setNavig(SearchProjectToDetailedProjectBean navig) {
 		this.navig = navig;
 	}
 
