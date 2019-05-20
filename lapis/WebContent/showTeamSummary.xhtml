@@ -30,7 +30,7 @@
 	<h:form id="form">
 		<p:growl id="msgs" showDetail="true" />
 
-		<p:treeTable value="#{ttEditView.root}" editable="true"
+		<p:treeTable value="#{summary.root}" editable="true"
 			var="treeData" style="margin-bottom:20px">
 			<f:facet name="header">
             Row Editing
@@ -66,8 +66,22 @@
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
 		</p:treeTable>
-		
+
+		<p:dataTable var="scores" value="#{summary.studentScores}">
+			<p:column headerText="Name">
+				<h:outputText value="#{scores.student.firstname}" />
+			</p:column>
+
+			<p:column headerText="Scores">
+				<h:outputText value="#{scores.finalScore}" />
+			</p:column>
+
+		</p:dataTable>
+
 	</h:form>
 </h:body>
 </html>
