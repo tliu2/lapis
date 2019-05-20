@@ -61,16 +61,35 @@ public class EvaluateTeamBean implements Serializable {
 		FacesMessage msg = new FacesMessage("Document Edited", ((TreeNode) event.getObject()).toString());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		TreeNode node = ((TreeNode) event.getObject());
-
-		if (evaluationScoreDAO.updateEvaluationScoreWithId(((TreeData) node.getData()).getId(),
-				Integer.parseInt(((TreeData) node.getData()).getScore()),
-				((TreeData) node.getData()).getDescription())) {
-			FacesMessage msg1 = new FacesMessage("Update successfull");
-			FacesContext.getCurrentInstance().addMessage(null, msg1);
-		} else {
-			FacesMessage msg2 = new FacesMessage("Update failed");
-			FacesContext.getCurrentInstance().addMessage(null, msg2);
+		
+		if(((TreeData) node.getParent().getData()).getId() != -1) { // its a student
+			if (evaluationScoreDAO.updateEvaluationScoreWithId(((TreeData) node.getData()).getId(),
+					Integer.parseInt(((TreeData) node.getData()).getScore()),
+					((TreeData) node.getData()).getDescription())) {
+				System.out.println(((TreeData) node.getData()).getDescription());
+				System.out.println(((TreeData) node.getParent()).getId());
+				
+				FacesMessage msg1 = new FacesMessage("Update successfull");
+				FacesContext.getCurrentInstance().addMessage(null, msg1);
+			} else {
+				FacesMessage msg2 = new FacesMessage("Update failed");
+				FacesContext.getCurrentInstance().addMessage(null, msg2);
+			}
 		}
+		else {
+			evaluationScoreDAO.updateEvaluationScoreWithId(((TreeData) node.getData()).getId(),
+					Integer.parseInt(((TreeData) node.getData()).getScore()),
+					((TreeData) node.getData()).getDescription());
+			
+			for(int index = 0; index < node.getChildCount(); index++) {
+				System.out.println(node.getChildCount());
+				System.out.println("ID : "+ (((TreeData)node.getChildren().get(index).getData()).getId()));
+				evaluationScoreDAO.updateEvaluationScoreWithId(((TreeData)node.getChildren().get(index).getData()).getId(),
+						Integer.parseInt(((TreeData)node.getData()).getScore()),(((TreeData)node.getData()).getDescription()));
+			}
+		}
+				
+			
 
 	}
 

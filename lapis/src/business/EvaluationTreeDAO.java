@@ -36,10 +36,11 @@ public class EvaluationTreeDAO {
 					root);
 
 			for (StudentScore studentScore : studentScoresList) {
+				System.out.println("ID == "+studentScore.getStudent().getId());
 				TreeNode studentLeaf = new DefaultTreeNode(new TreeData(
 						studentScore.getStudent().getFirstname() + " " + studentScore.getStudent().getLastname(),
-						Double.toString(studentScore.getScores().get(i).getScore()), "",
-						studentScore.getStudent().getId()), evaluationRoot);
+						Double.toString(studentScore.getScores().get(i).getScore()), studentScore.getScores().get(i).getDescription(),
+						studentScore.getScores().get(i).getId()), evaluationRoot);
 
 			}
 		}
