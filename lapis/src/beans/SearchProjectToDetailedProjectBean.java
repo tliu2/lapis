@@ -5,7 +5,7 @@ import javax.faces.bean.ManagedBean;
 
 import persistence.Project;
 
-@ManagedBean(name = "SearchProjectToDetailedProject", eager = true)
+@ManagedBean(name = "searchProjectToDetailedProject", eager = true)
 @ApplicationScoped
 public class SearchProjectToDetailedProjectBean {
 	private Project project;

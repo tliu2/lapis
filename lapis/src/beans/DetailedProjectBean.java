@@ -35,7 +35,7 @@ public class DetailedProjectBean {
 	
 	public DetailedProjectDAO detailedProject = new DetailedProjectDAO();
 	
-	@ManagedProperty("#{searchProjectToDetailedProject}")
+	@ManagedProperty(value = "#{searchProjectToDetailedProject}")
 	private SearchProjectToDetailedProjectBean searchProjectToDetailedProject;
 
 	public DetailedProjectBean() {
