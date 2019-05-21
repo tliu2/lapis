@@ -37,7 +37,7 @@ public class FilterViewBean implements Serializable {
 	public String transitionToDetailledProject() {
 		//System.out.println(selectedProject.toString());
 		navig.setProject(selectedProject);
-		return "searchProjectToDetailledProject";
+		return "detailedProject";
 	}
 
 	public List<Project> getProjects() {
