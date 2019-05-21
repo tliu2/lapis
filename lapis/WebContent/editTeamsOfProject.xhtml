@@ -6,11 +6,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>Select Team</title>
+	<title>Edit Team</title>
 </h:head>
 <h:body>
 	<div align="center">
-		<h1 class="ui-widget-header ui-corner-all">Select Team</h1>
+		<h1 class="ui-widget-header ui-corner-all">Edit Team</h1>
 		<br />
 		<h:form id="form">
 			<p:growl id="growl" showDetail="true" />
@@ -18,8 +18,8 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="years" value="University Year: " />
-				<p:selectOneMenu id="years"
-					value="#{editTeamsOfProjectBean.year}" style="width:150px">
+				<p:selectOneMenu id="years" value="#{editTeamsOfProjectBean.year}"
+					style="width:150px">
 					<p:ajax listener="#{editTeamsOfProjectBean.onChange}"
 						update="promo" />
 					<f:selectItem itemLabel="Select One" itemValue=""
@@ -28,17 +28,17 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="promo" value="Promotion: " />
-				<p:selectOneMenu id="promo"
-					value="#{editTeamsOfProjectBean.promo}" style="width:150px">
+				<p:selectOneMenu id="promo" value="#{editTeamsOfProjectBean.promo}"
+					style="width:150px">
 					<p:ajax listener="#{editTeamsOfProjectBean.onChangeCourse}"
-						update="course"/>
-							<p:ajax listener="#{editTeamsOfProjectBean.onChangeCourse}"
-						update="pickList"/>
+						update="course" />
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeCourse}"
+						update="pickList" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{editTeamsOfProjectBean.promotions}" />
 				</p:selectOneMenu>
- 
+
 				<p:outputLabel for="course" value="Course: " />
 				<p:selectOneMenu id="course"
 					value="#{editTeamsOfProjectBean.course}" style="width:150px">
@@ -52,35 +52,39 @@
 				<p:outputLabel for="project" value="Project: " />
 				<p:selectOneMenu id="project"
 					value="#{editTeamsOfProjectBean.project}" style="width:150px">
-					<p:ajax listener="#{editTeamsOfProjectBean.onChangeTeam}" 
+					<p:ajax listener="#{editTeamsOfProjectBean.onChangeTeam}"
 						update="team" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{editTeamsOfProjectBean.projects}" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel for="team" value="Team: " />
-				<p:selectOneMenu id="team"
-					value="#{editTeamsOfProjectBean.team}" style="width:150px">
+				<p:selectOneMenu id="team" value="#{editTeamsOfProjectBean.team}"
+					style="width:150px">
 					<p:ajax listener="#{editTeamsOfProjectBean.onChangeStudent}" />
-					<p:ajax listener="#{editTeamsOfProjectBean.updateFields}" update="pickList" />
+					<p:ajax listener="#{editTeamsOfProjectBean.updateFields}"
+						update="pickList" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{editTeamsOfProjectBean.teams}" />
 				</p:selectOneMenu>
-				
-			</h:panelGrid>		
-			
-			
-	<p:growl id="msg" showDetail="true" escape="false" />
-     
-    <h3 style="margin-top: 0">Basic PickList</h3>
-    <p:pickList id="pickList" value="#{editTeamsOfProjectBean.studentListModel}" var="studentListModel" itemLabel="#{studentListModel}" itemValue="#{studentListModel}" />
-			
+
+			</h:panelGrid>
+
+
+			<p:growl id="msg" showDetail="true" escape="false" />
+
+			<h3 style="margin-top: 0">Basic PickList</h3>
+			<p:pickList id="pickList"
+				value="#{editTeamsOfProjectBean.studentListModel}"
+				var="studentListModel" itemLabel="#{studentListModel}"
+				itemValue="#{studentListModel}" />
+
 			<p:commandButton value="updateTeam" id="addDomainButton"
-				action="#{editTeamsOfProjectBean.updateTeamDataBase}" >
+				action="#{editTeamsOfProjectBean.updateTeamDataBase}">
 			</p:commandButton>
-    
+
 		</h:form>
 	</div>
 	<br />

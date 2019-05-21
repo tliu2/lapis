@@ -18,18 +18,17 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="years" value="University Year: " />
-				<p:selectOneMenu id="years"
-					value="#{selectProjectBean.year}" style="width:150px">
-					<p:ajax listener="#{selectProjectBean.onChange}"
-						update="promo" />
+				<p:selectOneMenu id="years" value="#{selectProjectBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{selectProjectBean.onChange}" update="promo" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{selectProjectBean.years}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="promo" value="Promotion: " />
-				<p:selectOneMenu id="promo"
-					value="#{selectProjectBean.promo}" style="width:150px">
+				<p:selectOneMenu id="promo" value="#{selectProjectBean.promo}"
+					style="width:150px">
 					<p:ajax listener="#{selectProjectBean.onChangeCourse}"
 						update="course" />
 					<f:selectItem itemLabel="Select One" itemValue=""
@@ -38,8 +37,8 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="course" value="Course: " />
-				<p:selectOneMenu id="course"
-					value="#{selectProjectBean.course}" style="width:150px">
+				<p:selectOneMenu id="course" value="#{selectProjectBean.course}"
+					style="width:150px">
 					<p:ajax listener="#{selectProjectBean.onChangeProject}"
 						update="project" />
 					<f:selectItem itemLabel="Select One" itemValue=""
@@ -48,13 +47,13 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="project" value="Project: " />
-				<p:selectOneMenu id="project"
-					value="#{selectProjectBean.project}" style="width:150px">
+				<p:selectOneMenu id="project" value="#{selectProjectBean.project}"
+					style="width:150px">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{selectProjectBean.projects}" />
 				</p:selectOneMenu>
-				
+
 				<p:commandButton value="Let's add some criterion" id="creation"
 					action="#{selectProjectBean.toLinkEvaluationToProject}" />
 
