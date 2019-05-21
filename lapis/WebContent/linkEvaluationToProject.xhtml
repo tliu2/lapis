@@ -32,7 +32,8 @@
 							<h:outputText value="#{evaluation.criterion.name}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu value="#{evaluation.criterion.name}" style="width:100%">
+							<h:selectOneMenu value="#{evaluation.criterion.name}"
+								style="width:100%">
 								<f:selectItems value="#{evalTab.criteriaName}" var="criterion"
 									itemLabel="#{criterion}" itemValue="#{criterion}" />
 							</h:selectOneMenu>
@@ -46,7 +47,8 @@
 							<h:outputText value="#{evaluation.percentage}" />
 						</f:facet>
 						<f:facet name="input">
-							<h:selectOneMenu value="#{evaluation.percentage}" style="width:100%">
+							<h:selectOneMenu value="#{evaluation.percentage}"
+								style="width:100%">
 								<f:selectItems value="#{evalTab.percentages}" var="percentage"
 									itemLabel="#{percentage}" itemValue="#{percentage}" />
 							</h:selectOneMenu>

@@ -5,29 +5,30 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<h:head>
-		<title>Add new language</title>
-	
-		<style type="text/css">
-			.ui-datalist {
-				width: 300px;
-				margin-bottom: 20px;
-			}
-			
-			.ui-datalist-item {
-				padding: 3px;
-			}
-			
-			.paginated .ui-datalist-data {
-				padding-left: 20px;
-			}
-		</style>
-	</h:head>
-	<h:body>
+
+<h:head>
+	<title>Add new language</title>
+
+	<style type="text/css">
+.ui-datalist {
+	width: 300px;
+	margin-bottom: 20px;
+}
+
+.ui-datalist-item {
+	padding: 3px;
+}
+
+.paginated .ui-datalist-data {
+	padding-left: 20px;
+}
+</style>
+</h:head>
+<h:body>
 
 	<div align="center">
-		<h1 class="ui-widget-header ui-corner-all">Create a new Language for projects</h1>
+		<h1 class="ui-widget-header ui-corner-all">Create a new Language
+			for projects</h1>
 		<br />
 		<h:form>
 			<p:growl id="growl" life="2000" />
@@ -51,8 +52,8 @@
 
 
 
-				<p:commandButton value="Create Language" id="creation" update="growl"
-					action="#{addLanguageBean.createLanguage}" />
+				<p:commandButton value="Create Language" id="creation"
+					update="growl" action="#{addLanguageBean.createLanguage}" />
 			</h:panelGrid>
 
 		</h:form>

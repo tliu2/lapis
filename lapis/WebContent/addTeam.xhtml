@@ -51,12 +51,13 @@
 						noSelectionOption="true" />
 					<f:selectItems value="#{addTeamBean.projects}" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel for="number" value="Number of teams to create: " />
-			  	<h:panelGrid columns="1" style="margin-bottom: 10px">
-			        <p:inputText id="number" value="#{addTeamBean.nbTeams}" />
-			        <p:slider for="number" minValue="#{addTeamBean.min}" maxValue="#{addTeamBean.max}"/>
-			    </h:panelGrid>
+				<h:panelGrid columns="1" style="margin-bottom: 10px">
+					<p:inputText id="number" value="#{addTeamBean.nbTeams}" />
+					<p:slider for="number" minValue="#{addTeamBean.min}"
+						maxValue="#{addTeamBean.max}" />
+				</h:panelGrid>
 
 
 				<p:commandButton value="Create Team" id="creation" update="growl"

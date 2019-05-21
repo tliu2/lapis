@@ -15,7 +15,7 @@
 		<br />
 		<h:form>
 			<p:growl id="growl" life="2000" />
-			
+
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="years" value="University Year: " />
@@ -44,7 +44,7 @@
 				<p:inputText id="ine" value="#{addStudentBean.ine}" />
 				<p:outputLabel for="ucpNumber" value="UCP Number" />
 				<p:inputText id="ucpNumber" value="#{addStudentBean.ucpNumber}" />
-				
+
 				<p:commandButton value="Create student" id="creation" update="growl"
 					action="#{addStudentBean.createStudent}" />
 			</h:panelGrid>

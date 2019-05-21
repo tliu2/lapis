@@ -6,52 +6,65 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-	<title>Create new promotion</title>
+	<title>View project</title>
 </h:head>
 <h:body>
 	<div align="center">
 		<h1 class="ui-widget-header ui-corner-all">View Projects</h1>
 		<br />
- 
-<h:form>
-    <p:dataTable var="project" value="#{dtFilterView.projects}" widgetVar="projectTable"
-                 emptyMessage="No projects found with given criteria" filteredValue="#{dtFilterView.filteredProjects}">
- 
-        <f:facet name="header">
-            <p:outputPanel>
-                <h:outputText value="Search all fields:" />
-                <p:inputText id="globalFilter" onkeyup="PF('projectTable').filter()" style="width:150px" placeholder="Enter keyword"/>
-            </p:outputPanel>
-        </f:facet>
- 
-        <p:column filterBy="#{project.id}" headerText="Id" footerText="contains" filterMatchMode="contains">
-            <h:outputText value="#{project.id}" />
-        </p:column>
-        
-        <p:column filterBy="#{project.course.promotion.year.toString()}" headerText="Year" footerText="contains" filterMatchMode="contains">
-            <h:outputText value="#{project.course.promotion.year.toString()}" />
-        </p:column>
-        
-        <p:column filterBy="#{project.course.promotion.toString()}" headerText="Promotion" footerText="contains" filterMatchMode="contains">
-            <h:outputText value="#{project.course.promotion.toString()}" />
-        </p:column>
-        
-        <p:column filterBy="#{project.course.name}" headerText="Course" footerText="contains" filterMatchMode="contains">
-            <h:outputText value="#{project.course.name}" />
-        </p:column>
- 
-		<p:column filterBy="#{project.subject}" headerText="Project" footerText="contains" filterMatchMode="contains">
-            <h:outputText value="#{project.subject}"/>
-        </p:column>
-        
-        <p:column style="width:32px;text-align: center">
-             <p:commandButton action="#{dtFilterView.transitionToDetailledProject}" icon="pi pi-search" title="View">
-                <f:setPropertyActionListener value="#{project}" target="#{dtFilterView.selectedProject}" />
-            </p:commandButton>
-        </p:column>
-     
-    </p:dataTable>
-</h:form>
+
+		<h:form>
+			<p:dataTable var="project" value="#{dtFilterView.projects}"
+				widgetVar="projectTable"
+				emptyMessage="No projects found with given criteria"
+				filteredValue="#{dtFilterView.filteredProjects}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Search all fields:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('projectTable').filter()" style="width:150px"
+							placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column filterBy="#{project.id}" headerText="Id"
+					footerText="contains" filterMatchMode="contains">
+					<h:outputText value="#{project.id}" />
+				</p:column>
+
+				<p:column filterBy="#{project.course.promotion.year.toString()}"
+					headerText="Year" footerText="contains" filterMatchMode="contains">
+					<h:outputText value="#{project.course.promotion.year.toString()}" />
+				</p:column>
+
+				<p:column filterBy="#{project.course.promotion.toString()}"
+					headerText="Promotion" footerText="contains"
+					filterMatchMode="contains">
+					<h:outputText value="#{project.course.promotion.toString()}" />
+				</p:column>
+
+				<p:column filterBy="#{project.course.name}" headerText="Course"
+					footerText="contains" filterMatchMode="contains">
+					<h:outputText value="#{project.course.name}" />
+				</p:column>
+
+				<p:column filterBy="#{project.subject}" headerText="Project"
+					footerText="contains" filterMatchMode="contains">
+					<h:outputText value="#{project.subject}" />
+				</p:column>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton
+						action="#{dtFilterView.transitionToDetailledProject}"
+						icon="pi pi-search" title="View">
+						<f:setPropertyActionListener value="#{project}"
+							target="#{dtFilterView.selectedProject}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
 	</div>
 
 </h:body>

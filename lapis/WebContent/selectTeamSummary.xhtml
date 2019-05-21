@@ -18,18 +18,17 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="years" value="University Year: " />
-				<p:selectOneMenu id="years"
-					value="#{selectTeamSummaryBean.year}" style="width:150px">
-					<p:ajax listener="#{selectTeamSummaryBean.onChange}"
-						update="promo" />
+				<p:selectOneMenu id="years" value="#{selectTeamSummaryBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{selectTeamSummaryBean.onChange}" update="promo" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{selectTeamSummaryBean.years}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="promo" value="Promotion: " />
-				<p:selectOneMenu id="promo"
-					value="#{selectTeamSummaryBean.promo}" style="width:150px">
+				<p:selectOneMenu id="promo" value="#{selectTeamSummaryBean.promo}"
+					style="width:150px">
 					<p:ajax listener="#{selectTeamSummaryBean.onChangeCourse}"
 						update="course" />
 					<f:selectItem itemLabel="Select One" itemValue=""
@@ -38,8 +37,8 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="course" value="Course: " />
-				<p:selectOneMenu id="course"
-					value="#{selectTeamSummaryBean.course}" style="width:150px">
+				<p:selectOneMenu id="course" value="#{selectTeamSummaryBean.course}"
+					style="width:150px">
 					<p:ajax listener="#{selectTeamSummaryBean.onChangeProject}"
 						update="project" />
 					<f:selectItem itemLabel="Select One" itemValue=""
@@ -50,21 +49,21 @@
 				<p:outputLabel for="project" value="Project: " />
 				<p:selectOneMenu id="project"
 					value="#{selectTeamSummaryBean.project}" style="width:150px">
-					<p:ajax listener="#{selectTeamSummaryBean.onChangeTeam}" 
+					<p:ajax listener="#{selectTeamSummaryBean.onChangeTeam}"
 						update="team" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{selectTeamSummaryBean.projects}" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel for="team" value="Team: " />
-				<p:selectOneMenu id="team"
-					value="#{selectTeamSummaryBean.team}" style="width:150px">
+				<p:selectOneMenu id="team" value="#{selectTeamSummaryBean.team}"
+					style="width:150px">
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{selectTeamSummaryBean.teams}" />
 				</p:selectOneMenu>
-				
+
 				<p:commandButton value="Submit" id="creation"
 					action="#{selectTeamSummaryBean.toTeamSummary}" />
 

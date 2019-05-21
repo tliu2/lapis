@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-	<title>Add new course</title>
+	<title>Evaluate team</title>
 </h:head>
 
 <h:body>
@@ -30,19 +30,19 @@
 	<h:form id="form">
 		<p:growl id="msgs" showDetail="true" />
 
-		<p:treeTable value="#{ttEditView.root}" editable="true"
-			var="treeData" style="margin-bottom:20px">
+		<p:treeTable value="#{ttEditView.root}" editable="true" var="treeData"
+			style="margin-bottom:20px">
 			<f:facet name="header">
-            Row Editing
+            Evaluate
         </f:facet>
 
 			<p:ajax event="rowEdit" listener="#{ttEditView.onRowEdit}"
 				update=":form:msgs" />
-			<p:ajax event="rowEditCancel"
-				listener="#{ttEditView.onRowCancel}" update=":form:msgs" />
+			<p:ajax event="rowEditCancel" listener="#{ttEditView.onRowCancel}"
+				update=":form:msgs" />
 
 			<p:column headerText="Evaluation">
-						<h:outputText value="#{treeData.name}" />
+				<h:outputText value="#{treeData.name}" />
 			</p:column>
 			<p:column headerText="Score">
 				<p:cellEditor>
@@ -50,8 +50,9 @@
 						<h:outputText value="#{treeData.score}" />
 					</f:facet>
 					<f:facet name="input">
-					<h:selectOneMenu value="#{treeData.score}"   style="width:100%">
-							<f:selectItems value="#{treeData.scoreList}" var="score" itemLabel="#{score}" itemValue="#{score}"  />
+						<h:selectOneMenu value="#{treeData.score}" style="width:100%">
+							<f:selectItems value="#{treeData.scoreList}" var="score"
+								itemLabel="#{score}" itemValue="#{score}" />
 						</h:selectOneMenu>
 					</f:facet>
 				</p:cellEditor>
@@ -70,7 +71,7 @@
 				<p:rowEditor />
 			</p:column>
 		</p:treeTable>
-		
+
 	</h:form>
 </h:body>
 </html>
