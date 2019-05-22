@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Index</title>
+</h:head>
+<h:body>
+	<p:megaMenu orientation="#{index.orientation}" style="margin-top:20px">
+		<p:submenu label="Recherche" icon="pi pi-check">
+			<p:column>
+				<p:submenu label="Visualisation">
+					<p:menuitem value="Projet" url="showProjects.jsf" />
+				</p:submenu>
+			</p:column>
+
+			<p:column>
+				<p:submenu label="Evaluation">
+					<p:menuitem value="Projet" url="#" />
+					<p:menuitem value="Assiociation Evaluation/Projet" url="#" />
+				</p:submenu>
+			</p:column>
+		</p:submenu>
+
+		<p:submenu label="Ajout">
+			<p:column>
+				<p:submenu>
+					<p:menuitem value="Promotion" url="#" />
+					<p:menuitem value="Etudiant" url="#" />
+					<p:menuitem value="Module" url="#" />
+					<p:menuitem value="Projet" url="#" />
+					<p:menuitem value="Team" url="#" />
+					<p:menuitem value="Criteria" url="#" />
+				</p:submenu>
+			</p:column>
+		</p:submenu>
+
+		<p:submenu label="Modifier" icon="pi pi-pencil">
+			<p:column>
+				<p:submenu>
+					<p:menuitem value="Projet" url="#" />
+					<p:menuitem value="Etudiants" url="#" />
+					<p:menuitem value="Team" url="#" />
+					<p:menuitem value="Criteria" url="#" />
+					<p:menuitem value="Evaluation" url="#" />
+				</p:submenu>
+			</p:column>
+
+		</p:submenu>
+	</p:megaMenu>
+</h:body>
+</html>
