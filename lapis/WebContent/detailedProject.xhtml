@@ -13,9 +13,16 @@
 	<div align="center">
 		<h:form>
 
-
-			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-				<h:outputText id="Subject" value="#{detailedProject.subject}" />
+			<h:outputText id="Subject" value="#{detailedProject.subject}" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="50">
+				<h:outputText id="Description" value="#{detailedProject.description}" />
+				<h:outputText id="SupervisorName" value="#{detailedProject.supervisorName}" />
+				
+				<h:outputText id="Domains" value="#{detailedProject.domainsName}" />
+				<h:outputText id="ToolContents" value="#{detailedProject.toolContentsName}" />
+				
+				<h:outputText id="Languages" value="#{detailedProject.languagesName}" />
+				<h:outputText id="Teams" value="#{detailedProject.studentsName}" />
 				
 
 			</h:panelGrid>

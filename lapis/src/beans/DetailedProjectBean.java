@@ -1,9 +1,9 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -13,8 +13,8 @@ import persistence.Domain;
 import persistence.Language;
 import persistence.Project;
 import persistence.ProjectInfo;
+import persistence.Student;
 import persistence.Team;
-import persistence.Tool;
 import persistence.ToolContent;
 
 @ManagedBean(name = "detailedProject")
@@ -27,10 +27,14 @@ public class DetailedProjectBean {
 	String supervisorName;
 	ProjectInfo projectInfo;
 	List<Domain> domains;
+	List<String> domainsName = new ArrayList<String>();
 	List<ToolContent> toolContents;
-	List<Tool> tools;
+	List<String> toolContentsName = new ArrayList<String>();
 	List<Language> languages;
+	List<String> languagesName = new ArrayList<String>();
 	List<Team> teams;
+	List<Student> students = new ArrayList<Student>();
+	List<String> studentsName = new ArrayList<String>();
 	Boolean hof;
 	
 	public DetailedProjectDAO detailedProject = new DetailedProjectDAO();
@@ -48,13 +52,31 @@ public class DetailedProjectBean {
 		subject = selectedProject.getSubject();
 		projectInfo = detailedProject.readProjectInfo(selectedProject);
 		description = projectInfo.getDetailedDescription();
+		supervisorName = projectInfo.getSupervisorName();
 		domains = projectInfo.getDomaines();
+		for (Domain domain : domains) {
+			domainsName.add(domain.getName());
+		}
 		toolContents = projectInfo.getToolContents();
-		for (ToolContent toolContent : toolContents) {
-			tools.add(toolContent.getTool());
+		for (ToolContent toolcontent : toolContents) {
+			toolContentsName.add(toolcontent.getName());
 		}
 		languages = projectInfo.getLanguages();
+		for (Language language : languages) {
+			languagesName.add(language.getName());
+		}
 		teams = detailedProject.readTeam(selectedProject);
+		for (Team team : teams) {
+			List<Student> stud = new ArrayList<Student>();
+			
+			stud = team.getStudents();
+			for (Student student : stud) {
+				students.add(student);
+			}
+		}
+		for (Student student : students) {
+			studentsName.add(student.getFirstname()+" "+student.getLastname());
+		}
 		hof = projectInfo.isHof();
 	}
 
@@ -114,14 +136,6 @@ public class DetailedProjectBean {
 		this.toolContents = toolContents;
 	}
 
-	public List<Tool> getTools() {
-		return tools;
-	}
-
-	public void setTools(List<Tool> tools) {
-		this.tools = tools;
-	}
-
 	public List<Language> getLanguages() {
 		return languages;
 	}
@@ -160,6 +174,46 @@ public class DetailedProjectBean {
 
 	public void setSearchProjectToDetailedProject(SearchProjectToDetailedProjectBean searchProjectToDetailedProject) {
 		this.searchProjectToDetailedProject = searchProjectToDetailedProject;
+	}
+
+	public List<String> getDomainsName() {
+		return domainsName;
+	}
+
+	public void setDomainsName(List<String> domainsName) {
+		this.domainsName = domainsName;
+	}
+
+	public List<String> getToolContentsName() {
+		return toolContentsName;
+	}
+
+	public void setToolContentsName(List<String> toolContentsName) {
+		this.toolContentsName = toolContentsName;
+	}
+
+	public List<String> getLanguagesName() {
+		return languagesName;
+	}
+
+	public void setLanguagesName(List<String> languagesName) {
+		this.languagesName = languagesName;
+	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+	public List<String> getStudentsName() {
+		return studentsName;
+	}
+
+	public void setStudentsName(List<String> studentsName) {
+		this.studentsName = studentsName;
 	}
 	
 }
