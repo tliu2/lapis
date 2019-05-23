@@ -10,42 +10,42 @@
 </h:head>
 <h:body>
 	<p:megaMenu orientation="#{index.orientation}" style="margin-top:20px">
-		<p:submenu label="Recherche" icon="pi pi-check">
+		<p:submenu label="Search" icon="pi pi-check">
 			<p:column>
-				<p:submenu label="Visualisation">
-					<p:menuitem value="Projet" url="showProjects.jsf" />
+				<p:submenu label="Visualization">
+					<p:menuitem value="Project" url="showProjects.jsf" />
 				</p:submenu>
 			</p:column>
 
 			<p:column>
 				<p:submenu label="Evaluation">
-					<p:menuitem value="Projet" url="#" />
-					<p:menuitem value="Assiociation Evaluation/Projet" url="#" />
+					<p:menuitem value="Project" url="selectTeam.jsf" />
+					<p:menuitem value="Assiociation Evaluation/Project" url="selectProject.jsf" />
 				</p:submenu>
 			</p:column>
 		</p:submenu>
 
-		<p:submenu label="Ajout">
+		<p:submenu label="Add">
 			<p:column>
 				<p:submenu>
-					<p:menuitem value="Promotion" url="#" />
-					<p:menuitem value="Etudiant" url="#" />
-					<p:menuitem value="Module" url="#" />
-					<p:menuitem value="Projet" url="#" />
-					<p:menuitem value="Team" url="#" />
-					<p:menuitem value="Criteria" url="#" />
+					<p:menuitem value="Promotion" url="addPromo.jsf" />
+					<p:menuitem value="Students" url="addStudent.jsf" />
+					<p:menuitem value="Course" url="addCourse.jsf" />
+					<p:menuitem value="Project" url="addProject.jsf" />
+					<p:menuitem value="Team" url="addTeam.jsf" />
+					<p:menuitem value="Criteria" url="addCriterion.jsf" />
 				</p:submenu>
 			</p:column>
 		</p:submenu>
 
-		<p:submenu label="Modifier" icon="pi pi-pencil">
+		<p:submenu label="Update" icon="pi pi-pencil">
 			<p:column>
 				<p:submenu>
-					<p:menuitem value="Projet" url="#" />
-					<p:menuitem value="Etudiants" url="#" />
-					<p:menuitem value="Team" url="#" />
-					<p:menuitem value="Criteria" url="#" />
-					<p:menuitem value="Evaluation" url="#" />
+					<p:menuitem value="Project" url="addProjectInfo.jsf" />
+					<p:menuitem value="Students" url="editStudentsFromPromotion.jsf" />
+					<p:menuitem value="Team" url="editTeamsOfProject.jsf" />
+					<p:menuitem value="Criteria" url="editCriterion.jsf" />
+					<p:menuitem value="Evaluation" url="selectTeam.jsf" />
 				</p:submenu>
 			</p:column>
 
