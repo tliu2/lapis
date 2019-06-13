@@ -34,7 +34,6 @@ public class StudentsCriterionNotesBean {
 
 	@PostConstruct
 	public void init() {
-		System.out.println("ok bro");
 		createBarModel();
 	}
 
