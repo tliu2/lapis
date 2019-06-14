@@ -25,4 +25,10 @@ public class EvaluationDAO {
 		readTransaction.commit();
 	}
 
+	public void updateEval(Evaluation eval, Session session) {
+		Transaction updateTransaction = session.beginTransaction();
+		session.update(eval);
+		session.flush(); 
+		updateTransaction.commit();
+	}
 }

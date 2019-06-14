@@ -69,4 +69,23 @@ public class ProjectDAO {
 
 		return result;
 	}
+	
+	public void updateInfo(Project project, Session session) {
+		Transaction updateTransaction = session.beginTransaction();
+		session.update(project);
+		session.flush();
+		updateTransaction.commit();
+	}
+	
+	public Project getProjectFromProjectString(String projectName, Session session) { 
+		Project result;
+		Transaction readTransaction = session.beginTransaction();
+		String[] split = projectName.split("-");
+		Query readQuery = session.createQuery("from Project p where p.subject = :subject");
+		readQuery.setString("subject", split[1]);
+		List resultQuery = readQuery.list();
+		result = (Project) resultQuery.get(0);
+		readTransaction.commit();
+		return result;
+	}
 }

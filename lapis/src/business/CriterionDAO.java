@@ -51,4 +51,27 @@ public class CriterionDAO {
 		updateQuery.executeUpdate();
 		updateTransaction.commit();
 	}
+	
+	public List<Criterion> readAllCriterion(Session session) {
+		Transaction readTransaction = session.beginTransaction();
+
+		Query readQuery = session.createQuery("from Criterion");
+		List result = readQuery.list();
+		readTransaction.commit();
+
+		return result;
+	}
+	
+	public Criterion getOneCriterionByName(String name) {
+		Criterion result;
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Criterion c where c.name = :name");
+		readQuery.setString("name", name);
+		List resultQuery = readQuery.list();
+		result = (Criterion) resultQuery.get(0);
+		readTransaction.commit();
+
+		return result;
+	}
 }
