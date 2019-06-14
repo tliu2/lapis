@@ -787,10 +787,10 @@ public class InitialDataCreation {
 		session.persist(evaluationScore832);
 					//student4
 		List<EvaluationScore> evaluationScoreList84 = new ArrayList<EvaluationScore>(); 
-		EvaluationScore evaluationScore841 = new EvaluationScore(evaluation31, 15, "Tres Bien.");
+		EvaluationScore evaluationScore841 = new EvaluationScore(evaluation11, 15, "Tres Bien.");
 		evaluationScoreList74.add(evaluationScore841);
 		session.persist(evaluationScore841);
-		EvaluationScore evaluationScore842 = new EvaluationScore(evaluation32, 20, "Excellent.");
+		EvaluationScore evaluationScore842 = new EvaluationScore(evaluation14, 20, "Excellent.");
 		evaluationScoreList74.add(evaluationScore842);
 		session.persist(evaluationScore842);
 			// team9
@@ -804,10 +804,10 @@ public class InitialDataCreation {
 		session.persist(evaluationScore912);
 				//student2
 		List<EvaluationScore> evaluationScoreList92 = new ArrayList<EvaluationScore>();
-		EvaluationScore evaluationScore921 = new EvaluationScore(evaluation31, 15, "Tres Bien.");
+		EvaluationScore evaluationScore921 = new EvaluationScore(evaluation21, 15, "Tres Bien.");
 		evaluationScoreList65.add(evaluationScore921);
 		session.persist(evaluationScore921);
-		EvaluationScore evaluationScore922 = new EvaluationScore(evaluation32, 16, "Tres Bien.");
+		EvaluationScore evaluationScore922 = new EvaluationScore(evaluation31, 16, "Tres Bien.");
 		evaluationScoreList65.add(evaluationScore922);
 		session.persist(evaluationScore922);
 		
