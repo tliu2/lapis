@@ -32,7 +32,7 @@ import persistence.StudentScore;
 import persistence.UniversityYear;
 
 @ManagedBean
-public class HofOccurenceByYear {
+public class HofOccurenceByYearBean {
 
 	private LineChartModel lineModel;
 	private Map<String, List<String>> data = new HashMap<String, List<String>>();
@@ -45,7 +45,7 @@ public class HofOccurenceByYear {
 	private StudentScoreDAO studentScoreDAO = new StudentScoreDAO();
 
 
-	public HofOccurenceByYear() {
+	public HofOccurenceByYearBean() {
 		createLineModel();
 	}
 
