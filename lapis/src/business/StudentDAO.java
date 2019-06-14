@@ -62,5 +62,14 @@ public class StudentDAO {
 		session.flush();
 		updateTransaction.commit();
 	}
+	
+	public List<Student> readStudentById(int id, Session session) {
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from Student s where s.id = :id");
+		readQuery.setInteger("id", id);
+		List result = readQuery.list();
+		readTransaction.commit();
 
+		return result;
+	}
 }

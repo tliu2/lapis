@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -22,6 +23,7 @@ import org.primefaces.model.chart.LineChartModel;
 import business.CourseDAO;
 import business.DBConnection;
 import business.PromotionDAO;
+import business.StudentDAO;
 import business.TeamDAO;
 import business.UniversityYearDAO;
 import persistence.Criterion;
@@ -39,6 +41,7 @@ public class StudentsCriterionNotesBestBean {
 	private BarChartModel barModel;
 	
 	private TeamDAO teamDAO = new TeamDAO();
+	private StudentDAO studentDAO = new StudentDAO();
 	
 	private Session session = DBConnection.getSession();
 
@@ -71,53 +74,75 @@ public class StudentsCriterionNotesBestBean {
     }
 	
 	private BarChartModel initBarModel() {
+	
+		HashMap<String,Integer> criterionMap = new HashMap<String,Integer>();
+		HashMap<String,Integer> occurenceMap = new HashMap<String,Integer>();
+		BarChartModel model = new BarChartModel();
+		ChartSeries criterionBar = new ChartSeries();
+		List<Team> allTeamList = teamDAO.readAllTeam(session); 
+		List<Team> teamList =  new ArrayList<Team>();
+		Student student = (Student) (studentDAO.readStudentById(7,session).get(0));
 		
-        BarChartModel model = new BarChartModel();
+		for(Team currentTeam : allTeamList) {
+			if(currentTeam.getStudents().contains(student)) {
+				teamList.add(currentTeam);
+			}
+		}
+		
+		for(Team team : teamList) {
+			
+			int index = 0;
+			for(Student currentStudent : team.getStudents()) {
+				
+				index++;
+				if(currentStudent.getIne() == student.getIne()) {
+					
+					List<StudentScore> studentScoreList = team.getStudentScores();
+					StudentScore studentScore = studentScoreList.get(index-1); 
+					List<EvaluationScore> evaluationScorelist = studentScore.getScores();
+					criterionBar.setLabel(student.getFirstname() +' ' + student.getLastname());
+					for(EvaluationScore evaluationScore : evaluationScorelist) {
+						
+			    	   Evaluation evaluation = evaluationScore.getEvaluation();
+			    	   String criterionName =  evaluation.getCriterion().getName();
+			    	   int score = evaluationScore.getScore();
+				    	   if(criterionMap.containsKey(criterionName)) {
+				    		   
+				    		   if(criterionMap.get(criterionName) > 10) {
+				    			   
+					    		   occurenceMap.put(criterionName, occurenceMap.get(criterionName) +1);
+					    		   criterionMap.put(criterionName, (criterionMap.get(criterionName) + score));
+				    		   }
+				    	   }
+				    	   else {
+				    		   if(score > 10) {
+				    			   
+					    		   occurenceMap.put(criterionName, 1);
+					    		   criterionMap.put(criterionName, score /(occurenceMap.get(criterionName)));
+				    		   }
+				    	   }
+			        }
+				}
+			}
+		}
+		
+		for(String criterion : criterionMap.keySet())
+			criterionBar.set(criterion, criterionMap.get(criterion));
         
-       List<Team> teamlist = teamDAO.readTeamById(1, session); 
-       Team team = teamlist.get(0);//pour le moment la team 1
-       
-       
-       List<Student> studentList = team.getStudents();
-       Student student = studentList.get(0);
-       List<StudentScore> studentScoreList = team.getStudentScores();
-       StudentScore studentscore = studentScoreList.get(0);//pour le moment le premier student
-       
-       List<EvaluationScore> evaluationScorelist = studentscore.getScores();
-        
-       ChartSeries criterionBar = new ChartSeries();
-	   criterionBar.setLabel(student.getFirstname() +' ' + student.getLastname());
-	   
-       for(EvaluationScore evaluationScore : evaluationScorelist) {
-    	   
-    	   Evaluation evaluation = evaluationScore.getEvaluation();
-    	   
-    	   String criterionName =  evaluation.getCriterion().getName();
-    	   int score = evaluationScore.getScore();
-    	   
-           criterionBar.set(criterionName, score);
-         
-       }
-       
-       model.addSeries(criterionBar);
-       return model;
+		model.addSeries(criterionBar);
+		return model;
     }
-
 
 	public TeamDAO getTeamDAO() {
 		return teamDAO;
 	}
 
-
 	public void setTeamDAO(TeamDAO teamDAO) {
 		this.teamDAO = teamDAO;
 	}
 
-
 	public void setBarModel(BarChartModel barModel) {
 		this.barModel = barModel;
 	}
-
-	
-	
+		
 }
