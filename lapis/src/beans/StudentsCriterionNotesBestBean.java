@@ -96,7 +96,7 @@ public class StudentsCriterionNotesBestBean {
 			if (currentTeam.getStudents().contains(student)) {
 				teamList.add(currentTeam);
 			}
-		}
+		} 
 
 		for (Team team : teamList) {
 
