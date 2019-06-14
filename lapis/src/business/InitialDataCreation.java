@@ -309,6 +309,7 @@ public class InitialDataCreation {
 		session.persist(project3);
 		session.persist(project4);
 		session.persist(project5);
+		session.persist(project6);
 
 		// Domain
 		Domain domain = new Domain("Info");
