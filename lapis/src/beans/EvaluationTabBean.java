@@ -47,7 +47,7 @@ public class EvaluationTabBean implements Serializable {
 	private ProjectToCriteriaBean projectToCriteria;
 
 	public EvaluationTabBean() {
-
+ 
 	}
 
 	@PostConstruct
