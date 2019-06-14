@@ -35,6 +35,16 @@ public class ProjectInfoDAO {
 		readTransaction.commit();
 		return result;
 	}
+	
+	public List<ProjectInfo> getProjectInfoHofByYear(int year) {
+		Session session = DBConnection.getSession();
+		Transaction readTransaction = session.beginTransaction();
+		Query readQuery = session.createQuery("from ProjectInfo pi where pi.isHof = true and pi.project.course.promotion.year.first = :year");
+		readQuery.setInteger("year", year);
+		List result = readQuery.list();
+		readTransaction.commit();
+		return result;
+	}
 
 	public void updateInfo(ProjectInfo projectInfo, Session session) {
 		Transaction updateTransaction = session.beginTransaction();
