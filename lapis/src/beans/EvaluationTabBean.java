@@ -12,7 +12,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -24,6 +23,7 @@ import persistence.Criterion;
 import persistence.Evaluation;
 import persistence.Project;
 
+@SuppressWarnings("serial")
 @ManagedBean(name = "evalTab")
 @ViewScoped
 public class EvaluationTabBean implements Serializable {

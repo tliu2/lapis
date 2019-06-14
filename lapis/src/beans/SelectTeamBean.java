@@ -13,7 +13,6 @@ import javax.faces.bean.ViewScoped;
 import org.hibernate.Session;
 
 import business.CourseDAO;
-import business.CriteriaToProjectDAO;
 import business.DBConnection;
 import business.ProjectDAO;
 import business.PromotionDAO;
@@ -54,7 +53,6 @@ public class SelectTeamBean {
 	
 	private Session session = DBConnection.getSession();
 	
-	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
@@ -322,14 +320,6 @@ public class SelectTeamBean {
 
 	public void setData(Map<String, List<String>> data) {
 		this.data = data;
-	}
-
-	public CriteriaToProjectDAO getCriteriaToProjectDAO() {
-		return criteriaToProjectDAO;
-	}
-
-	public void setCriteriaToProjectDAO(CriteriaToProjectDAO criteriaToProjectDAO) {
-		this.criteriaToProjectDAO = criteriaToProjectDAO;
 	}
 
 	public Map<String, List<String>> getDataTeam() {

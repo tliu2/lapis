@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class TreeData implements Serializable, Comparable<TreeData> {
 
 	private String name;

@@ -6,33 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-
 import org.hibernate.Session;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.PieChartModel;
-
-import business.CourseDAO;
 import business.DBConnection;
-import business.PromotionDAO;
 import business.StudentDAO;
 import business.TeamDAO;
-import business.UniversityYearDAO;
-import persistence.Criterion;
 import persistence.Evaluation;
 import persistence.EvaluationScore;
-import persistence.Project;
-import persistence.Promotion;
 import persistence.Student;
 import persistence.StudentScore;
 import persistence.Team;

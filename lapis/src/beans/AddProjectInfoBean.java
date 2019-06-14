@@ -10,15 +10,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 
 import org.hibernate.Session;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DualListModel;
-
-import com.sun.org.apache.bcel.internal.generic.ALOAD;
 
 import business.CourseDAO;
 import business.DBConnection;
@@ -27,13 +22,10 @@ import business.LanguageDAO;
 import business.ProjectDAO;
 import business.ProjectInfoDAO;
 import business.PromotionDAO;
-import business.StudentDAO;
-import business.ToolContentDAO;
 import business.ToolDAO;
 import business.UniversityYearDAO;
 import persistence.Course;
 import persistence.Domain;
-import persistence.Evaluation;
 import persistence.Language;
 import persistence.Project;
 import persistence.ProjectInfo;
@@ -85,7 +77,6 @@ public class AddProjectInfoBean {
 
 	private ProjectInfoDAO projectInfoDAO = new ProjectInfoDAO();
 	private ToolDAO toolDAO = new ToolDAO();
-	private ToolContentDAO toolContentDAO = new ToolContentDAO();
 	private DomainDAO domainDAO = new DomainDAO();
 	private LanguageDAO languageDAO = new LanguageDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();

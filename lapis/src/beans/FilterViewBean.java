@@ -14,6 +14,7 @@ import business.DBConnection;
 import business.ProjectDAO;
 import persistence.Project;
 
+@SuppressWarnings("serial")
 @ManagedBean(name = "dtFilterView")
 @ViewScoped
 public class FilterViewBean implements Serializable {

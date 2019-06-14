@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -23,6 +22,7 @@ import business.TeamDAO;
 import persistence.Team;
 import persistence.TreeData;
 
+@SuppressWarnings("serial")
 @ManagedBean(name = "ttEditView")
 @ViewScoped
 public class EvaluateTeamBean implements Serializable {
@@ -66,8 +66,8 @@ public class EvaluateTeamBean implements Serializable {
 			if (evaluationScoreDAO.updateEvaluationScoreWithId(((TreeData) node.getData()).getId(),
 					Integer.parseInt(((TreeData) node.getData()).getScore()),
 					((TreeData) node.getData()).getDescription())) {
-				System.out.println(((TreeData) node.getData()).getDescription());
-				System.out.println(((TreeData) node.getParent()).getId());
+//				System.out.println(((TreeData) node.getData()).getDescription());
+//				System.out.println(((TreeData) node.getParent()).getId());
 				
 				FacesMessage msg1 = new FacesMessage("Update successfull");
 				FacesContext.getCurrentInstance().addMessage(null, msg1);

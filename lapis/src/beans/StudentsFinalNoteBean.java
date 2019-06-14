@@ -1,25 +1,12 @@
 package beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-
-import business.CourseDAO;
-import business.PromotionDAO;
-import business.UniversityYearDAO;
-import persistence.Promotion;
 
 @ManagedBean
 public class StudentsFinalNoteBean {

@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import business.CourseDAO;
-import business.CriteriaToProjectDAO;
 import business.ProjectDAO;
 import business.PromotionDAO;
 import business.UniversityYearDAO;
@@ -43,7 +42,6 @@ public class SelectProjectBean {
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	// private StudentDAO studentDAO = new StudentDAO();
-	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
@@ -271,14 +269,6 @@ public class SelectProjectBean {
 
 	public void setData(Map<String, List<String>> data) {
 		this.data = data;
-	}
-
-	public CriteriaToProjectDAO getCriteriaToProjectDAO() {
-		return criteriaToProjectDAO;
-	}
-
-	public void setCriteriaToProjectDAO(CriteriaToProjectDAO criteriaToProjectDAO) {
-		this.criteriaToProjectDAO = criteriaToProjectDAO;
 	}
 
 	public ProjectToCriteriaBean getProjectToCriteria() {

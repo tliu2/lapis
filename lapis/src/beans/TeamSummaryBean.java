@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -24,6 +23,7 @@ import persistence.StudentScore;
 import persistence.Team;
 import persistence.TreeData;
 
+@SuppressWarnings("serial")
 @ManagedBean(name = "summary")
 @ViewScoped
 public class TeamSummaryBean implements Serializable {

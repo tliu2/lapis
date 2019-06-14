@@ -13,7 +13,6 @@ import org.hibernate.Session;
 import org.primefaces.model.DualListModel;
 
 import business.CourseDAO;
-import business.CriteriaToProjectDAO;
 import business.DBConnection;
 import business.ProjectDAO;
 import business.PromotionDAO;
@@ -61,7 +60,6 @@ public class EditTeamsOfProjectBean {
 	private String description;
 	private List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
-	private CriteriaToProjectDAO criteriaToProjectDAO = new CriteriaToProjectDAO();
 	private ProjectDAO projectDAO = new ProjectDAO();
 	private CourseDAO courseDAO = new CourseDAO();
 	private PromotionDAO promoDAO = new PromotionDAO();
@@ -428,14 +426,6 @@ public class EditTeamsOfProjectBean {
 
 	public void setEvaluations(List<Evaluation> evaluations) {
 		this.evaluations = evaluations;
-	}
-
-	public CriteriaToProjectDAO getCriteriaToProjectDAO() {
-		return criteriaToProjectDAO;
-	}
-
-	public void setCriteriaToProjectDAO(CriteriaToProjectDAO criteriaToProjectDAO) {
-		this.criteriaToProjectDAO = criteriaToProjectDAO;
 	}
 
 	public ProjectDAO getProjectDAO() {

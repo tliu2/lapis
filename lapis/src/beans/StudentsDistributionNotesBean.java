@@ -6,32 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CategoryAxis;
-import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.PieChartModel;
 
-import business.CourseDAO;
-import business.CriteriaToProjectDAO;
-import business.PromotionDAO;
 import business.StudentDAO;
 import business.StudentScoreDAO;
-import business.UniversityYearDAO;
-import persistence.Course;
-import persistence.Project;
-import persistence.Promotion;
+
 import persistence.Student;
 import persistence.StudentScore;
-import persistence.Team;
-import persistence.UniversityYear;
 
 @ManagedBean
 public class StudentsDistributionNotesBean {
