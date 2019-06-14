@@ -61,42 +61,26 @@ public class StudentsCriterionNotesBestBean {
 		for (Student student : allStudents) {
 			students.add(student.getFirstname()+" "+student.getLastname()+ " "+student.getId());
 		}
+		
 		createBarModel();
 	}
 
+	
+	
 	private void createBarModel() {
-		barModel = new BarChartModel();
-		
-		barModel.setTitle("Bar Chart");
-		barModel.setLegendPosition("ne");
-
-		Axis xAxis = barModel.getAxis(AxisType.X);
-		xAxis.setLabel("Criterion");
-
-		Axis yAxis = barModel.getAxis(AxisType.Y);
-		yAxis.setLabel("Note");
-		yAxis.setMin(0);
-		yAxis.setMax(20);
-		
-		
-	}
-
-
-
-	private BarChartModel initBarModel(Student student) {
-		//System.out.println(student.getFirstname()+student.getLastname()+student.getId());
 		HashMap<String, Integer> criterionMap = new HashMap<String, Integer>();
 		HashMap<String, Integer> occurenceMap = new HashMap<String, Integer>();
-		barModel = new BarChartModel();
-		
+		 barModel = new BarChartModel();
+		ChartSeries criterionBar = new ChartSeries();
 		List<Team> allTeamList = teamDAO.readAllTeam(session);
 		List<Team> teamList = new ArrayList<Team>();
+		Student student = (Student) (studentDAO.readStudentById(7, session).get(0));
 
 		for (Team currentTeam : allTeamList) {
 			if (currentTeam.getStudents().contains(student)) {
 				teamList.add(currentTeam);
 			}
-		} 
+		}
 
 		for (Team team : teamList) {
 
@@ -138,7 +122,87 @@ public class StudentsCriterionNotesBestBean {
 			criterionBar.set(criterion, criterionMap.get(criterion));
 
 		barModel.addSeries(criterionBar);
-		return barModel;
+		
+		barModel.setTitle("Bar Chart");
+		barModel.setLegendPosition("ne");
+
+		Axis xAxis = barModel.getAxis(AxisType.X);
+		xAxis.setLabel("Criterion");
+
+		Axis yAxis = barModel.getAxis(AxisType.Y);
+		yAxis.setLabel("Note");
+		yAxis.setMin(0);
+		yAxis.setMax(20);
+	}
+
+
+
+	private void initBarModel(Student student) {
+		//System.out.println(student.getFirstname()+student.getLastname()+student.getId());
+		HashMap<String, Integer> criterionMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> occurenceMap = new HashMap<String, Integer>();
+		barModel = new BarChartModel();
+		
+		List<Team> allTeamList = teamDAO.readAllTeam(session);
+		List<Team> teamList = new ArrayList<Team>();
+
+		for (Team currentTeam : allTeamList) {
+			if (currentTeam.getStudents().contains(student)) {
+				teamList.add(currentTeam);
+			}
+		} 
+
+		for (Team team : teamList) {
+
+			int index = 0;
+			for (Student currentStudent : team.getStudents()) {
+
+				index++;
+				if (currentStudent.getId() == student.getId()) {
+
+					List<StudentScore> studentScoreList = team.getStudentScores();
+					StudentScore studentScore = studentScoreList.get(index - 1);
+					List<EvaluationScore> evaluationScorelist = studentScore.getScores();
+					criterionBar.setLabel(student.getFirstname() + ' ' + student.getLastname());
+					for (EvaluationScore evaluationScore : evaluationScorelist) {
+
+						Evaluation evaluation = evaluationScore.getEvaluation();
+						String criterionName = evaluation.getCriterion().getName();
+						int score = evaluationScore.getScore();
+						if (criterionMap.containsKey(criterionName)) {
+
+							if (criterionMap.get(criterionName) > 10) {
+
+								occurenceMap.put(criterionName, occurenceMap.get(criterionName) + 1);
+								criterionMap.put(criterionName, (criterionMap.get(criterionName) + score));
+							}
+						} else {
+							if (score > 10) {
+
+								occurenceMap.put(criterionName, 1);
+								criterionMap.put(criterionName, score / (occurenceMap.get(criterionName)));
+							}
+						}
+					}
+				}
+			}
+		}
+
+		for (String criterion : criterionMap.keySet())
+			criterionBar.set(criterion, criterionMap.get(criterion));
+
+		barModel.addSeries(criterionBar);
+		
+		barModel.setTitle("Bar Chart");
+		barModel.setLegendPosition("ne");
+
+		Axis xAxis = barModel.getAxis(AxisType.X);
+		xAxis.setLabel("Criterion");
+
+		Axis yAxis = barModel.getAxis(AxisType.Y);
+		yAxis.setLabel("Note");
+		yAxis.setMin(0);
+		yAxis.setMax(20);
 	}
 
 	public void onChange() {
