@@ -50,13 +50,18 @@
 			</p:column>
 
 		</p:submenu>
-		
 		<p:submenu label="Suivi" icon="pi pi-pencil">
-			<p:column>
-				<p:submenu>
-					<p:menuitem value="Student Note Distribution" url="studentsDistributionNotes.jsf" />
+		
+		<p:column>
+				<p:submenu label="Student">
+						<p:menuitem value="Student Note Distribution" url="studentsDistributionNotes.jsf" />
 					<p:menuitem value="Student Best Note Criteria " url="studentsCriterionNotesBest.jsf" />
-					
+				</p:submenu>
+			</p:column>
+			
+			<p:column>
+				<p:submenu label="Hall of fame">
+						<p:menuitem value="Hof occurence by year" url="hofNbProjectsbyYear.jsf" />
 				</p:submenu>
 			</p:column>
 
