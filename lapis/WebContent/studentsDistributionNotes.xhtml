@@ -11,13 +11,34 @@
 <h:body>
 
 	<div align="center">
-		<h1 class="ui-widget-header ui-corner-all">Student notes</h1>
+		<h1 class="ui-widget-header ui-corner-all">Note Distribution</h1>
 		<br />
-		<p:chart type="pie" model="#{studentsDistributionNotesBean.pieModel}" style="width:400px;height:300px" />
+		<h:form>
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:growl id="growl" life="2000" />
 
+				
+				<p:outputLabel for="students" />
+				<p:selectOneMenu id="students"
+					value="#{studentsDistributionNotesBean.student}"
+					style="width:150px" align="center">
+					<p:ajax listener="#{studentsDistributionNotesBean.onChange}"
+						update="pie" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{studentsDistributionNotesBean.students}" />
+				</p:selectOneMenu>
+
+			<div align="center">
+					<p:chart id="pie" type="pie"
+						model="#{studentsDistributionNotesBean.pieModel}"
+						style="width:400px;height:300px" />
+
+				</div>
+
+			</h:panelGrid>
+		</h:form>
 	</div>
 	<br />
-	<br />
-
 </h:body>
 </html>
