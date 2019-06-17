@@ -67,7 +67,7 @@ public class StudentsCriterionNotesBestBean {
 		
 		initBarModel();
 	}
-
+ 
 	public BarChartModel initBarModelStudent(Student student) {
 		
 		barModel = new BarChartModel();
