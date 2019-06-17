@@ -1,6 +1,7 @@
 package business;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -31,7 +32,164 @@ public class InitialDataCreation {
 		SchemaExport schemaExport = new SchemaExport(config);
 		schemaExport.create(true, true);
 	}
+	
+	public static void InitTestBigData(Session session) {
+		
+		int START_YEAR = 2000;
+		int END_YEAR = 2010; 
+		int nbStudents = 500;
+		
+		
+		
+		List<UniversityYear> years = new ArrayList<UniversityYear>();
+		List<Promotion> promos = new ArrayList<Promotion>();
+		List<Student> studentList = new ArrayList<Student>();
+		List<Course> courseList = new ArrayList<Course>();
+		List<Criterion> criterionList = new ArrayList<Criterion>();
+		List<Project> projectList = new ArrayList<Project>();
+		List<Evaluation> evaluationList = new ArrayList<Evaluation>();
+		
+		// University Year
+		PersistUniversityYear(START_YEAR, END_YEAR, session, years);
+		//Promotion
+		PersistPromotion(session, promos, years);
+		//Students
+		PersistStudent(session, promos, studentList, nbStudents);
+		//Course
+		PersistCourse(session, promos, courseList);
+		//Criterion
+		PersistCriterion(session, criterionList);
+		//project
+		PersistProject(session, projectList, courseList, evaluationList);
+		
+	}
+	
+	private static void PersistStudent(Session session, List<Promotion> promos, List<Student> studentList, int nbStudents) {
+		String[] firstNameArray = {"Sheena Botkin","Michelle Engles","Aubrey Ceniceros","Autumn","Marlon","Jani",
+				"Bettina","Maribel","Jeneva","Luna","Ulysses","Jerri","Amos","Stephane","Annelle","Karry",
+				"Dahlia","Isabelle","Jimmie","Haley","Talia","Vivian","Maryjane","Mabel","Willy",
+				"Earleen","Kaylee","Deanne","Dayle","Ellan","Boris","Magen","Contessa","Babara","Rosio",
+				"Arlie","Lauryn","Wanita","Una","Lanelle","Tula","Corrin","Kasi","Jarvis","January","Liane",
+				"Bebe","Tanisha","Lavon","Hedwig","Marcelle","Florentino","Efrain"};
+ 
+		String[] lastNameArray = {"Botkin","Engles","Ceniceros","Borg","Mariner","Labrum","Sidener","Newberg","Rosamond","Uresti"};
+		
+		List<String> firstNamelist = Arrays.asList(firstNameArray);
+		List<String> lastNamelist = Arrays.asList(lastNameArray);
+		
+		for(int index = 0; index < nbStudents; index++) {
+			Student student = new Student(firstNamelist.get(index%firstNamelist.size()),lastNamelist.get(index/firstNamelist.size()), (1000000+index)+"ZJ87Z", Integer.toString(217000000+index), promos.get(index%promos.size()));
+			studentList.add(student);
+		}
+		
+		for (Student student : studentList) {
+			session.persist(student);
+		}
+		
+	}
 
+	public static void PersistPromotion(Session session, List<Promotion> promos, List<UniversityYear> years) {
+		for(int index = 0; index < years.size(); index ++) {
+			for(int licenceIndex = 1; licenceIndex <= 3; licenceIndex ++) {
+				Promotion promotion = new Promotion(years.get(index),"Licence",licenceIndex);
+				promos.add(promotion);
+			}
+			for(int masterIndex = 1; masterIndex <= 2; masterIndex ++) {
+				Promotion promotion = new Promotion(years.get(index),"Master",masterIndex);
+				promos.add(promotion);
+			}
+			
+		}
+		
+		for (Promotion promotion : promos) {
+			session.persist(promotion);
+		}
+	}
+
+	public static void PersistCourse(Session session, List<Promotion> promos, List<Course> courseList) {
+		
+		for(int index = 0; index < promos.size(); index++) {
+			if(promos.get(index).getDiplomaName() == "Licence" && promos.get(index).getLevel() == 1) {
+				Course course = new Course(promos.get(index),"Math");
+				courseList.add(course);
+				course = new Course(promos.get(index),"Physique");
+				courseList.add(course);
+				course = new Course(promos.get(index),"Chimie");
+				courseList.add(course);
+				
+			}
+			else if(promos.get(index).getDiplomaName() == "Licence" && promos.get(index).getLevel() == 2) {
+				Course course = new Course(promos.get(index),"GLP");
+				courseList.add(course);
+			}
+			else if(promos.get(index).getDiplomaName() == "Licence" && promos.get(index).getLevel() == 3) {
+				Course course = new Course(promos.get(index),"GPI");
+				courseList.add(course);
+				course = new Course(promos.get(index),"Architecture");
+				courseList.add(course);
+				course = new Course(promos.get(index),"OS");
+				courseList.add(course);
+			}
+			else if(promos.get(index).getDiplomaName() == "Master" && promos.get(index).getLevel() == 1) {
+				Course course = new Course(promos.get(index),"COO");
+				courseList.add(course);
+			}
+			else if(promos.get(index).getDiplomaName() == "Master" && promos.get(index).getLevel() == 2) {
+				Course course = new Course(promos.get(index),"GP");
+				courseList.add(course);
+			}
+			else {System.out.println("persist course bug\n");}
+		}
+		
+		session.persist(courseList);
+	}
+	
+	public static void PersistCriterion(Session session,List<Criterion> criterionList) {
+				Criterion criterion1 = new Criterion("Fonctionnalities", "Well or not ?");
+				criterionList.add(criterion1);
+				Criterion criterion2 = new Criterion("Fluidity", "Well or not ?");
+				criterionList.add(criterion2);
+				Criterion criterion3 = new Criterion("Usage of the tools imposed", "Well or not ?");
+				criterionList.add(criterion3);
+				Criterion criterion4 = new Criterion("Comment", "Well or not ?");
+				criterionList.add(criterion4);
+				Criterion criterion5 = new Criterion("Facility of re-use", "Well or not ?");
+				criterionList.add(criterion5);
+				Criterion criterion6 = new Criterion("Structure of the code", "Well or not ?");
+				criterionList.add(criterion6);
+				Criterion criterion7 = new Criterion("Usage of the course notions", "Well or not ?");
+				criterionList.add(criterion7);
+				Criterion criterion8 = new Criterion("Generation of traces", "Well or not ?");
+				criterionList.add(criterion8);
+				Criterion criterion9 = new Criterion("Gestion of the exceptions", "Well or not ?");
+				criterionList.add(criterion9);
+				Criterion criterion10 = new Criterion("Ergonomic", "Well or not ?");
+				criterionList.add(criterion10);
+				Criterion criterion11 = new Criterion("Esthetical", "Well or not ?");
+				criterionList.add(criterion11);
+				Criterion criterion12 = new Criterion("Mini demonstration", "Well or not ?");
+				criterionList.add(criterion12);
+				Criterion criterion13 = new Criterion("Structure of the report", "Well or not ?");
+				criterionList.add(criterion13);
+				Criterion criterion14 = new Criterion("UML Diagram", "Well or not ?");
+				criterionList.add(criterion14);
+				Criterion criterion15 = new Criterion("Presence, ponctuality, assiduity & participation", "Well or not ?");
+				criterionList.add(criterion15);
+				
+				session.persist(criterionList);
+	}
+	
+	public static void PersistProject(Session session, List<Project> projectList , List<Course> courseList, List<Evaluation> evaluationList) {
+		
+		
+		
+		for(int index = 0; index < courseList.size(); index++) {
+			Project project = new Project("Random Name", "Description rapide", courseList.get(index), evaluationList, 1, 3, 30);
+			projectList.add(project);
+		}
+		
+		session.persist(projectList);
+	}
 	public static void InitTestData(Session session) {
 
 		int START_YEAR = 2000;
@@ -1069,8 +1227,9 @@ public class InitialDataCreation {
 		Session session = DBConnection.getSession();
 		Transaction persistTransaction1 = session.beginTransaction();
 
-		InitTestData(session);
-
+		//InitTestData(session);
+		InitTestBigData(session);
+		
 		persistTransaction1.commit();
 		session.close();
 	}
