@@ -17,8 +17,25 @@
 			<h:panelGrid columns="1" cellpadding="5">
 				<p:growl id="growl" life="2000" />
 
+				<p:outputLabel for="years" value="University Year: " />
+				<p:selectOneMenu id="years" value="#{studentsDistributionNotesBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{studentsDistributionNotesBean.onChangeUY}" update="promo" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{studentsDistributionNotesBean.years}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="promo" value="Promotion: " />
+				<p:selectOneMenu id="promo" value="#{studentsDistributionNotesBean.promo}"
+					style="width:150px">
+					<p:ajax listener="#{studentsDistributionNotesBean.onChangePromo}" update="students" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{studentsDistributionNotesBean.promotions}" />
+				</p:selectOneMenu>
 				
-				<p:outputLabel for="students" />
+				<p:outputLabel for="students" value="Student"/>
 				<p:selectOneMenu id="students"
 					value="#{studentsDistributionNotesBean.student}"
 					style="width:150px" align="center">
