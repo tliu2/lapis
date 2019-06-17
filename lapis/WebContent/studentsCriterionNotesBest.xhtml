@@ -14,9 +14,7 @@
 		<h1 class="ui-widget-header ui-corner-all">Student best notes criterion</h1>
 		<br />
 		<h:form>
-			<h:panelGrid columns="1" cellpadding="5">
 				<p:growl id="growl" life="2000" />
-
 				
 				<p:outputLabel for="students" />
 				<p:selectOneMenu id="students"
@@ -33,9 +31,7 @@
 					
 					<p:chart type="bar" id="bar" model="#{studentsCriterionNotesBestBean.barModel}"
 						style="height:300px" />
-			 
 				</div>
-			</h:panelGrid>
 		</h:form>
 	</div>
 	<br />
