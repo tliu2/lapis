@@ -59,6 +59,8 @@ public class InitialDataCreation {
 		PersistCourse(session, promos, courseList);
 		//Criterion
 		PersistCriterion(session, criterionList);
+		//Evaluation
+		PersistEvaluation(session, evaluationList, criterionList);
 		//project
 		PersistProject(session, projectList, courseList, evaluationList);
 		
@@ -179,8 +181,14 @@ public class InitialDataCreation {
 				session.persist(criterionList);
 	}
 	
+	public static void PersistEvaluation(Session session, List<Evaluation> evaluationList, List<Criterion> criterionList) {
+		for(int index=0; index<5; index++) {
+			Evaluation eval = new Evaluation(criterionList.get(index), 20);
+			evaluationList.add(eval);
+		}
+	}
+	
 	public static void PersistProject(Session session, List<Project> projectList , List<Course> courseList, List<Evaluation> evaluationList) {
-		
 		
 		
 		for(int index = 0; index < courseList.size(); index++) {
@@ -190,6 +198,7 @@ public class InitialDataCreation {
 		
 		session.persist(projectList);
 	}
+	
 	public static void InitTestData(Session session) {
 
 		int START_YEAR = 2000;
