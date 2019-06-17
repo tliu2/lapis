@@ -98,12 +98,12 @@ public class StudentsCriterionNotesBestBean {
 						int score = evaluationScore.getScore();
 						if (criterionMap.containsKey(criterionName)) {
 
-							if (criterionMap.get(criterionName) > 10) {
+							if (criterionMap.get(criterionName) >= 10) {
 								occurenceMap.put(criterionName, occurenceMap.get(criterionName) + 1);
 								criterionMap.put(criterionName, (criterionMap.get(criterionName) + score));
 							}
 						}else {
-							if (score > 10) {
+							if (score >= 10) {
 								occurenceMap.put(criterionName, 1);
 								criterionMap.put(criterionName, score / (occurenceMap.get(criterionName)));
 							}
