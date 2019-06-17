@@ -2,7 +2,9 @@ package business;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -45,12 +47,13 @@ public class InitialDataCreation {
 		List<Course> courseList = new ArrayList<Course>();
 		List<Criterion> criterionList = new ArrayList<Criterion>();
 		List<Project> projectList = new ArrayList<Project>();
-		List<Evaluation> evaluationList = new ArrayList<Evaluation>();
 		List<Language> languageList = new ArrayList<Language>();
 		List<Domain> domainList = new ArrayList<Domain>();
 		List<ToolContent> toolContentList = new ArrayList<ToolContent>();
 		List<Tool> toolList = new ArrayList<Tool>();
 		List<ProjectInfo> projectInfoList = new ArrayList<ProjectInfo>();
+		
+		List<ArrayList<Evaluation>> evaluationsList = new ArrayList<ArrayList<Evaluation>>();
 
 		// University Year
 		PersistUniversityYear(START_YEAR, END_YEAR, session, years);
@@ -63,9 +66,9 @@ public class InitialDataCreation {
 		// Criterion
 		PersistCriterion(session, criterionList);
 		//Evaluation
-		PersistEvaluation(session, evaluationList, criterionList);
+		PersistEvaluation(session, evaluationsList, criterionList);
 		// project
-		PersistProject(session, projectList, courseList, evaluationList);
+		PersistProject(session, projectList, courseList, evaluationsList);
 		// Language
 		PersistLanguage(session, languageList);
 		// Domain
@@ -76,10 +79,14 @@ public class InitialDataCreation {
 		PersistProjectInfo(session, projectList, domainList, toolContentList, languageList, projectInfoList);
 	}
 	
-	public static void PersistEvaluation(Session session, List<Evaluation> evaluationList, List<Criterion> criterionList) {
-		for(int index=0; index<5; index++) {
-			Evaluation eval = new Evaluation(criterionList.get(index), 20);
-			evaluationList.add(eval);
+	public static void PersistEvaluation(Session session, List<ArrayList<Evaluation>> evaluationsList, List<Criterion> criterionList) {
+		ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
+		for(int index=0; index <90; index++ ) {
+			for(int j=0; j<5; j++) {
+				Evaluation eval = new Evaluation(criterionList.get(j), 20);
+				evaluationList.add(eval);
+			}
+			evaluationsList.add(evaluationList);
 		}
 	}
 	
@@ -217,10 +224,10 @@ public class InitialDataCreation {
 	}
 
 	public static void PersistProject(Session session, List<Project> projectList, List<Course> courseList,
-			List<Evaluation> evaluationList) {
+			List<ArrayList<Evaluation>> evaluationsList) {
 
 		for (int index = 0; index < courseList.size(); index++) {
-			Project project = new Project("Random Name", "Description rapide", courseList.get(index), evaluationList, 1,
+			Project project = new Project("Random Name", "Description rapide", courseList.get(index), evaluationsList.get(index), 1,
 					3, 30);
 			projectList.add(project);
 		}
