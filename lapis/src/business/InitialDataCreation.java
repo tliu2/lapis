@@ -123,7 +123,7 @@ public class InitialDataCreation {
 			Student student = new Student(firstNamelist.get(index % firstNamelist.size()),
 					lastNamelist.get(index / firstNamelist.size()), (1000000 + index) + "ZJ87Z",
 					Integer.toString(217000000 + index), promos.get(index % promos.size()));
-			studentList.add(student);
+			studentList.add(student); 
 		}
 
 		for (Student student : studentList) {
