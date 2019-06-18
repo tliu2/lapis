@@ -80,14 +80,13 @@ public class InitialDataCreation {
 	}
 	
 	public static void PersistEvaluation(Session session, List<ArrayList<Evaluation>> evaluationsList, List<Criterion> criterionList) {
-		ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
 		for(int index=0; index <90; index++ ) {
+			ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
 			for(int j=0; j<5; j++) {
 				Evaluation eval = new Evaluation(criterionList.get(j), 20);
 				evaluationList.add(eval);
 			}
 			evaluationsList.add(evaluationList);
-			evaluationList.clear();
 		}
 		
 		for(ArrayList<Evaluation> evaluations: evaluationsList) {
