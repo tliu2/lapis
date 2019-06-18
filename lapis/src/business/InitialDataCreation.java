@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -52,6 +53,7 @@ public class InitialDataCreation {
 		List<ToolContent> toolContentList = new ArrayList<ToolContent>();
 		List<Tool> toolList = new ArrayList<Tool>();
 		List<ProjectInfo> projectInfoList = new ArrayList<ProjectInfo>();
+		List<EvaluationScore> evaluationScoreList = new ArrayList<EvaluationScore>();
 		
 		List<ArrayList<Evaluation>> evaluationsList = new ArrayList<ArrayList<Evaluation>>();
 
@@ -77,9 +79,24 @@ public class InitialDataCreation {
 		PersistTool(session, toolContentList, toolList);
 		// projectinfo
 		PersistProjectInfo(session, projectList, domainList, toolContentList, languageList, projectInfoList);
+		//evaluationScore
+		PersistEvaluationScore(session,evaluationScoreList, evaluationsList);
+	}
+	
+	public static void PersistEvaluationScore(Session session,List<EvaluationScore> evaluationScoreList, List<ArrayList<Evaluation>> evaluationsList) {
+		for(int index=0; index < evaluationsList.size()*evaluationsList.get(0).size(); index++) {
+			Random rand = new Random(); int nombreAleatoire = rand.nextInt(21);
+			EvaluationScore evaluationScore = new EvaluationScore(evaluationsList.get(index/5).get(index%5), nombreAleatoire, "Description");
+			evaluationScoreList.add(evaluationScore);
+		}
+		
+		for(EvaluationScore evaluationScore : evaluationScoreList) {
+			session.persist(evaluationScore);
+		}
 	}
 	
 	public static void PersistEvaluation(Session session, List<ArrayList<Evaluation>> evaluationsList, List<Criterion> criterionList) {
+		
 		for(int index=0; index <90; index++ ) {
 			ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
 			for(int j=0; j<5; j++) {
@@ -112,7 +129,7 @@ public class InitialDataCreation {
 
 	private static void PersistStudent(Session session, List<Promotion> promos, List<Student> studentList,
 			int nbStudents) {
-		String[] firstNameArray = { "Sheena Botkin", "Michelle Engles", "Aubrey Ceniceros", "Autumn", "Marlon", "Jani",
+		String[] firstNameArray = { "Sheena", "Michelle", "Aubrey", "Autumn", "Marlon", "Jani",
 				"Bettina", "Maribel", "Jeneva", "Luna", "Ulysses", "Jerri", "Amos", "Stephane", "Annelle", "Karry",
 				"Dahlia", "Isabelle", "Jimmie", "Haley", "Talia", "Vivian", "Maryjane", "Mabel", "Willy", "Earleen",
 				"Kaylee", "Deanne", "Dayle", "Ellan", "Boris", "Magen", "Contessa", "Babara", "Rosio", "Arlie",
