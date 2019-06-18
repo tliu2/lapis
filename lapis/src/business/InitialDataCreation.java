@@ -85,9 +85,11 @@ public class InitialDataCreation {
 	
 	public static void PersistEvaluationScore(Session session,List<EvaluationScore> evaluationScoreList, List<ArrayList<Evaluation>> evaluationsList) {
 		for(int index=0; index < evaluationsList.size()*evaluationsList.get(0).size(); index++) {
-			Random rand = new Random(); int nombreAleatoire = rand.nextInt(21);
-			EvaluationScore evaluationScore = new EvaluationScore(evaluationsList.get(index/5).get(index%5), nombreAleatoire, "Description");
-			evaluationScoreList.add(evaluationScore);
+			for(int j = 0; j<10; j++) {
+				Random rand = new Random(); int nombreAleatoire = rand.nextInt(21);
+				EvaluationScore evaluationScore = new EvaluationScore(evaluationsList.get(index/5).get(index%5), nombreAleatoire, "Description");
+				evaluationScoreList.add(evaluationScore);
+			}
 		}
 		
 		for(EvaluationScore evaluationScore : evaluationScoreList) {
@@ -97,7 +99,7 @@ public class InitialDataCreation {
 	
 	public static void PersistEvaluation(Session session, List<ArrayList<Evaluation>> evaluationsList, List<Criterion> criterionList) {
 		
-		for(int index=0; index <90; index++ ) {
+		for(int index=0; index <100; index++ ) {
 			ArrayList<Evaluation> evaluationList = new ArrayList<Evaluation>();
 			for(int j=0; j<5; j++) {
 				Evaluation eval = new Evaluation(criterionList.get(j), 20);
@@ -250,6 +252,12 @@ public class InitialDataCreation {
 			List<ArrayList<Evaluation>> evaluationsList) {
 		
 		for (int index = 0; index < courseList.size(); index++) {
+			Project project = new Project("Random Name", "Description rapide", courseList.get(index), evaluationsList.get(index), 1,
+					3, 30);
+			projectList.add(project);
+		}
+		
+		for(int index = 0; index<10; index++) {
 			Project project = new Project("Random Name", "Description rapide", courseList.get(index), evaluationsList.get(index), 1,
 					3, 30);
 			projectList.add(project);
