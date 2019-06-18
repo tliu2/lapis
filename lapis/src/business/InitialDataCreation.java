@@ -87,6 +87,13 @@ public class InitialDataCreation {
 				evaluationList.add(eval);
 			}
 			evaluationsList.add(evaluationList);
+			evaluationList.clear();
+		}
+		
+		for(ArrayList<Evaluation> evaluations: evaluationsList) {
+			for(Evaluation evaluation: evaluations) {
+				session.persist(evaluation);
+			}
 		}
 	}
 	
@@ -225,7 +232,7 @@ public class InitialDataCreation {
 
 	public static void PersistProject(Session session, List<Project> projectList, List<Course> courseList,
 			List<ArrayList<Evaluation>> evaluationsList) {
-
+		
 		for (int index = 0; index < courseList.size(); index++) {
 			Project project = new Project("Random Name", "Description rapide", courseList.get(index), evaluationsList.get(index), 1,
 					3, 30);
