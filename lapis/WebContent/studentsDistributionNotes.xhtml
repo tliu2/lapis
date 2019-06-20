@@ -35,12 +35,10 @@
 					<f:selectItems value="#{studentsDistributionNotesBean.promotions}" />
 				</p:selectOneMenu>
 				
-				<p:outputLabel for="students" value="Student"/>
-				<p:selectOneMenu id="students"
-					value="#{studentsDistributionNotesBean.student}"
-					style="width:150px" align="center">
-					<p:ajax listener="#{studentsDistributionNotesBean.onChange}"
-						update="pie" />
+				<p:outputLabel for="students" value="Student " />
+				<p:selectOneMenu id="students" value="#{studentsDistributionNotesBean.student}"
+					style="width:150px">
+					<p:ajax listener="#{studentsDistributionNotesBean.onChangeStudent}" update="pie" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
 					<f:selectItems value="#{studentsDistributionNotesBean.students}" />

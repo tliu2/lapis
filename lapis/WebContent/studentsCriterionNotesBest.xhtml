@@ -14,24 +14,44 @@
 		<h1 class="ui-widget-header ui-corner-all">Student best notes criterion</h1>
 		<br />
 		<h:form>
+			<h:panelGrid columns="1" cellpadding="5">
 				<p:growl id="growl" life="2000" />
-				
-				<p:outputLabel for="students" />
-				<p:selectOneMenu id="students"
-					value="#{studentsCriterionNotesBestBean.student}"
-					style="width:150px" align="center">
-					<p:ajax listener="#{studentsCriterionNotesBestBean.onChange}"
-						update="bar" />
+
+				<p:outputLabel for="years" value="University Year: " />
+				<p:selectOneMenu id="years" value="#{studentsCriterionNotesBestBean.year}"
+					style="width:150px">
+					<p:ajax listener="#{studentsCriterionNotesBestBean.onChangeUY}" update="promo" />
 					<f:selectItem itemLabel="Select One" itemValue=""
 						noSelectionOption="true" />
+					<f:selectItems value="#{studentsCriterionNotesBestBean.years}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="promo" value="Promotion: " />
+				<p:selectOneMenu id="promo" value="#{studentsCriterionNotesBestBean.promo}"
+					style="width:150px">
+					<p:ajax listener="#{studentsCriterionNotesBestBean.onChangePromo}" update="students" />
+					<f:selectItem itemLabel="Select One" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{studentsCriterionNotesBestBean.promotions}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="students" value="Student: "/>
+				<p:selectOneMenu id="students" value="#{studentsCriterionNotesBestBean.student}"
+					style="width:150px" align="center">
+					<p:ajax listener="#{studentsCriterionNotesBestBean.onChange}" update="bar" />
+					<f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{studentsCriterionNotesBestBean.students}" />
 				</p:selectOneMenu>
 				
-				<div align="center">
-					
-					<p:chart type="bar" id="bar" model="#{studentsCriterionNotesBestBean.barModel}"
-						style="height:300px" />
-				</div>
+			</h:panelGrid>
+			
+			<div align="center">
+				
+				<p:chart type="bar" id="bar" model="#{studentsCriterionNotesBestBean.barModel}"
+					style="height:300px" />
+			</div>
+
+			
 		</h:form>
 	</div> 
 	<br />
